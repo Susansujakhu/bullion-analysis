@@ -31,6 +31,8 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # A hung fetch must not sit there burning Actions minutes.
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

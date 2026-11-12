@@ -19,6 +19,8 @@ concurrency:
 jobs:
   digest:
     runs-on: ubuntu-latest
+    # A hung fetch must not sit there burning Actions minutes.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
