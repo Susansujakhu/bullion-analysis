@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-12T18:26:22.084Z",
+  "generatedAt": "2026-11-12T18:28:05.610Z",
   "asOf": {
     "record": "2026-11-13",
-    "spot": "2026-11-12T18:26:11Z",
+    "spot": "2026-11-12T18:27:41Z",
     "fx": "2026-11-11",
     "nepalMeasured": "2026-11-09",
     "staleDays": 4,
     "isLive": false
   },
   "international": {
-    "goldUsdPerOz": 3881.7,
-    "silverUsdPerOz": 50.283,
-    "goldUsdPerGram": 124.8,
+    "goldUsdPerOz": 3881.5,
+    "silverUsdPerOz": 50.297,
+    "goldUsdPerGram": 124.79,
     "source": "gold-api.com (spot)"
   },
   "fx": {
@@ -22,9 +22,9 @@
     "asOf": "2026-11-11"
   },
   "parity": {
-    "nprPerTola": 219204,
-    "nprPer10g": 187936,
-    "nprPerGram": 18794,
+    "nprPerTola": 219193,
+    "nprPer10g": 187926,
+    "nprPerGram": 18793,
     "silverNprPerTola": 2840
   },
   "buildUp": {
@@ -32,36 +32,36 @@
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 219204,
+        "amount": 219193,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 221396,
+        "amount": 221385,
         "add": 2192
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 230728,
+        "amount": 230716,
         "add": 9331
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 260722,
-        "add": 29995
+        "amount": 260709,
+        "add": 29993
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 268544,
-        "add": 7822
+        "amount": 268531,
+        "add": 7821
       }
     ],
-    "expectedRetailNprPerTola": 268544,
-    "expectedRetailNprPer10g": 230237,
+    "expectedRetailNprPerTola": 268531,
+    "expectedRetailNprPer10g": 230225,
     "impliedMarkupPct": 22.51,
     "assumptionsUnverified": [
       {
@@ -83,15 +83,15 @@
   },
   "indicated": {
     "_note": "Today's world price and rupee carried through the measured local markup. What a tola should cost now.",
-    "nprPerTola": 268268,
-    "nprPer10g": 230000,
-    "nprPerGram": 23000,
-    "atMedianPremiumNprPerTola": 265005,
+    "nprPerTola": 268254,
+    "nprPer10g": 229988,
+    "nprPerGram": 22999,
+    "atMedianPremiumNprPerTola": 264992,
     "usingPremiumPct": 22.38,
-    "silverNprPerTola": 3688,
+    "silverNprPerTola": 3689,
     "lastPublishedNprPerTola": 284300,
     "repriceGapPct": -5.64,
-    "repriceGapNpr": -16032
+    "repriceGapNpr": -16046
   },
   "measured": {
     "date": "2026-11-09",

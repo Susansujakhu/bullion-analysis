@@ -6,9 +6,9 @@
 
 | | |
 |---|---|
-| Gold | **$3,881.7 / troy oz** |
-| Silver | $50.283 / troy oz |
-| Gold per gram | $124.8 |
+| Gold | **$3,881.5 / troy oz** |
+| Silver | $50.297 / troy oz |
+| Gold per gram | $124.79 |
 | USD/NPR (NRB selling, 2026-11-11) | 150.59 |
 | INR/NPR | 1.6015 |
 
@@ -16,9 +16,9 @@ Sources: gold-api.com (spot); Nepal Rastra Bank (official).
 
 ## 2. What that makes a tola worth, before Nepal touches it
 
-`3881.7 ÷ 31.1034768 × 150.59 × 11.6638038`
+`3881.5 ÷ 31.1034768 × 150.59 × 11.6638038`
 
-= **NPR 2,19,204 per tola** · NPR 1,87,936 per 10 g · NPR 18,794 per gram
+= **NPR 2,19,193 per tola** · NPR 1,87,926 per 10 g · NPR 18,793 per gram
 
 Silver parity: NPR 2,840 per tola.
 
@@ -28,22 +28,22 @@ FENEGOSIDA last published on **2026-11-09**, 4 days ago — the local market is 
 
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated gold rate** | **NPR 2,68,268** | NPR 2,30,000 |
-| At the 1-year median markup instead | NPR 2,65,005 | — |
+| **Indicated gold rate** | **NPR 2,68,254** | NPR 2,29,988 |
+| At the 1-year median markup instead | NPR 2,64,992 | — |
 | Last actually published (2026-11-09) | NPR 2,84,300 | — |
-| Indicated silver | NPR 3,688 | — |
+| Indicated silver | NPR 3,689 | — |
 
-**Expect the next print around -5.6% lower** than the last one (NPR -16,032 per tola), if the markup holds.
+**Expect the next print around -5.6% lower** than the last one (NPR -16,046 per tola), if the markup holds.
 
 ### Where that markup goes
 
 | Step | Adds | Running total / tola |
 |---|---:|---:|
-| International value of 1 tola | — | NPR 2,19,204 |
-| Freight, insurance, bank commission | NPR 2,192 | NPR 2,21,396 |
-| Customs duty | NPR 9,331 | NPR 2,30,728 |
-| VAT @ 13% | NPR 29,995 | NPR 2,60,722 |
-| Dealer margin | NPR 7,822 | NPR 2,68,544 |
+| International value of 1 tola | — | NPR 2,19,193 |
+| Freight, insurance, bank commission | NPR 2,192 | NPR 2,21,385 |
+| Customs duty | NPR 9,331 | NPR 2,30,716 |
+| VAT @ 13% | NPR 29,993 | NPR 2,60,709 |
+| Dealer margin | NPR 7,821 | NPR 2,68,531 |
 
 This ladder totals +22.51% against a markup actually observed at +22.38%. The two are built differently on purpose: the ladder is an explanation assembled from tax assumptions, the observed figure is measured from published prices.
 
@@ -84,4 +84,4 @@ Over 1 month the Nepali rate moved -3.9%: -2.4% of it from the world gold price,
 
 ---
 
-Generated 2026-11-12T18:26:22.084Z · 109 same-day observations · flags: premium-high, nepal-market-closed, nepal-data-stale, reprice-pending
+Generated 2026-11-12T18:28:05.610Z · 109 same-day observations · flags: premium-high, nepal-market-closed, nepal-data-stale, reprice-pending
