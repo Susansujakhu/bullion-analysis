@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-12T18:04:59.422Z",
+  "generatedAt": "2026-11-12T18:26:22.084Z",
   "asOf": {
-    "record": "2026-11-12",
-    "spot": "2026-11-12T17:56:41Z",
+    "record": "2026-11-13",
+    "spot": "2026-11-12T18:26:11Z",
     "fx": "2026-11-11",
     "nepalMeasured": "2026-11-09",
-    "staleDays": 3,
+    "staleDays": 4,
     "isLive": false
   },
   "international": {
-    "goldUsdPerOz": 3875.2,
-    "silverUsdPerOz": 50.156,
-    "goldUsdPerGram": 124.59,
+    "goldUsdPerOz": 3881.7,
+    "silverUsdPerOz": 50.283,
+    "goldUsdPerGram": 124.8,
     "source": "gold-api.com (spot)"
   },
   "fx": {
@@ -22,47 +22,47 @@
     "asOf": "2026-11-11"
   },
   "parity": {
-    "nprPerTola": 218837,
-    "nprPer10g": 187621,
-    "nprPerGram": 18762,
-    "silverNprPerTola": 2832
+    "nprPerTola": 219204,
+    "nprPer10g": 187936,
+    "nprPerGram": 18794,
+    "silverNprPerTola": 2840
   },
   "buildUp": {
     "steps": [
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 218837,
+        "amount": 219204,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 221026,
-        "add": 2188
+        "amount": 221396,
+        "add": 2192
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 230357,
+        "amount": 230728,
         "add": 9331
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 260303,
-        "add": 29946
+        "amount": 260722,
+        "add": 29995
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 268112,
-        "add": 7809
+        "amount": 268544,
+        "add": 7822
       }
     ],
-    "expectedRetailNprPerTola": 268112,
-    "expectedRetailNprPer10g": 229867,
-    "impliedMarkupPct": 22.52,
+    "expectedRetailNprPerTola": 268544,
+    "expectedRetailNprPer10g": 230237,
+    "impliedMarkupPct": 22.51,
     "assumptionsUnverified": [
       {
         "key": "customsDutyNprPer10g",
@@ -83,15 +83,15 @@
   },
   "indicated": {
     "_note": "Today's world price and rupee carried through the measured local markup. What a tola should cost now.",
-    "nprPerTola": 267818,
-    "nprPer10g": 229615,
-    "nprPerGram": 22961,
-    "atMedianPremiumNprPerTola": 264562,
+    "nprPerTola": 268268,
+    "nprPer10g": 230000,
+    "nprPerGram": 23000,
+    "atMedianPremiumNprPerTola": 265005,
     "usingPremiumPct": 22.38,
-    "silverNprPerTola": 3679,
+    "silverNprPerTola": 3688,
     "lastPublishedNprPerTola": 284300,
-    "repriceGapPct": -5.8,
-    "repriceGapNpr": -16482
+    "repriceGapPct": -5.64,
+    "repriceGapNpr": -16032
   },
   "measured": {
     "date": "2026-11-09",
@@ -107,7 +107,7 @@
     "meanPct": 20.87,
     "medianPct": 20.89,
     "sdPct": 1.61,
-    "vsExpectedRetailPct": 6.04,
+    "vsExpectedRetailPct": 5.87,
     "regimeShift": {
       "date": "2026-06-01",
       "stepPp": 9.4,
