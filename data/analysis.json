@@ -1,0 +1,2403 @@
+{
+  "generatedAt": "2026-11-12T18:04:59.422Z",
+  "asOf": {
+    "record": "2026-11-12",
+    "spot": "2026-11-12T17:56:41Z",
+    "fx": "2026-11-11",
+    "nepalMeasured": "2026-11-09",
+    "staleDays": 3,
+    "isLive": false
+  },
+  "international": {
+    "goldUsdPerOz": 3875.2,
+    "silverUsdPerOz": 50.156,
+    "goldUsdPerGram": 124.59,
+    "source": "gold-api.com (spot)"
+  },
+  "fx": {
+    "usdNpr": 150.59,
+    "usdNprBuy": 149.99,
+    "inrNpr": 1.6015,
+    "source": "Nepal Rastra Bank (official)",
+    "asOf": "2026-11-11"
+  },
+  "parity": {
+    "nprPerTola": 218837,
+    "nprPer10g": 187621,
+    "nprPerGram": 18762,
+    "silverNprPerTola": 2832
+  },
+  "buildUp": {
+    "steps": [
+      {
+        "key": "parity",
+        "label": "International value of 1 tola",
+        "amount": 218837,
+        "add": null
+      },
+      {
+        "key": "handling",
+        "label": "Freight, insurance, bank commission",
+        "amount": 221026,
+        "add": 2188
+      },
+      {
+        "key": "duty",
+        "label": "Customs duty",
+        "amount": 230357,
+        "add": 9331
+      },
+      {
+        "key": "vat",
+        "label": "VAT @ 13%",
+        "amount": 260303,
+        "add": 29946
+      },
+      {
+        "key": "margin",
+        "label": "Dealer margin",
+        "amount": 268112,
+        "add": 7809
+      }
+    ],
+    "expectedRetailNprPerTola": 268112,
+    "expectedRetailNprPer10g": 229867,
+    "impliedMarkupPct": 22.52,
+    "assumptionsUnverified": [
+      {
+        "key": "customsDutyNprPer10g",
+        "value": 8000,
+        "source": "Finance Act, specific duty per 10g on gold imports - CONFIRM CURRENT VALUE"
+      },
+      {
+        "key": "importHandlingRate",
+        "value": 0.01,
+        "source": "bank import commission, insurance, freight, assay - estimate"
+      },
+      {
+        "key": "dealerMarginRate",
+        "value": 0.03,
+        "source": "FENEGOSIDA member retail margin on the published rate - estimate"
+      }
+    ]
+  },
+  "indicated": {
+    "_note": "Today's world price and rupee carried through the measured local markup. What a tola should cost now.",
+    "nprPerTola": 267818,
+    "nprPer10g": 229615,
+    "nprPerGram": 22961,
+    "atMedianPremiumNprPerTola": 264562,
+    "usingPremiumPct": 22.38,
+    "silverNprPerTola": 3679,
+    "lastPublishedNprPerTola": 284300,
+    "repriceGapPct": -5.8,
+    "repriceGapNpr": -16482
+  },
+  "measured": {
+    "date": "2026-11-09",
+    "actualNprPerTola": 284300,
+    "actualNprPerGram": 24375,
+    "silverNprPerTola": 3855,
+    "parityNprPerTola": 232305,
+    "premiumPct": 22.38,
+    "premiumNpr": 51995,
+    "silverPremiumPct": 29.9,
+    "percentile": 83.5,
+    "historyDays": 109,
+    "meanPct": 20.87,
+    "medianPct": 20.89,
+    "sdPct": 1.61,
+    "vsExpectedRetailPct": 6.04,
+    "regimeShift": {
+      "date": "2026-06-01",
+      "stepPp": 9.4,
+      "beforePct": 11.98,
+      "afterPct": 21.33,
+      "rankedAgainstDaysSince": 109
+    }
+  },
+  "moves": [
+    {
+      "label": "1 week",
+      "from": "2026-11-02",
+      "spotPct": 3.6502418379685597,
+      "fxPct": -1.0970242396373786,
+      "nepalPct": 3.6456434560699913,
+      "premiumPointChange": 1.3371943505806172,
+      "attribution": {
+        "totalPct": 3.6456434560699913,
+        "fromSpotPct": 3.6502418379685597,
+        "fromFxPct": -1.0970242396373786,
+        "fromPremiumPct": 1.104706698829938,
+        "shares": {
+          "spot": 61.95333593793861,
+          "fx": 19.06166441521028,
+          "premium": 18.984999646851104
+        }
+      }
+    },
+    {
+      "label": "1 month",
+      "from": "2026-10-09",
+      "spotPct": -2.4144392002466653,
+      "fxPct": -2.9646816189739633,
+      "nepalPct": -3.8552587081501555,
+      "premiumPointChange": 1.8486055039852012,
+      "attribution": {
+        "totalPct": -3.8552587081501555,
+        "fromSpotPct": -2.4144392002466653,
+        "fromFxPct": -2.9646816189739633,
+        "fromPremiumPct": 1.533682493610966,
+        "shares": {
+          "spot": 35.03722965332201,
+          "fx": 43.14334663399732,
+          "premium": 21.819423712680667
+        }
+      }
+    },
+    {
+      "label": "3 months",
+      "from": "2026-08-11",
+      "spotPct": -7.354033910517677,
+      "fxPct": -1.4595196020681933,
+      "nepalPct": -7.66482624228646,
+      "premiumPointChange": 1.3802784137317374,
+      "attribution": {
+        "totalPct": -7.66482624228646,
+        "fromSpotPct": -7.354033910517677,
+        "fromFxPct": -1.4595196020681933,
+        "fromPremiumPct": 1.1407060844868422,
+        "shares": {
+          "spot": 74.57264470281443,
+          "fx": 14.353950145363203,
+          "premium": 11.073405151822367
+        }
+      }
+    },
+    {
+      "label": "1 year",
+      "from": "2025-11-12",
+      "spotPct": -2.351908107081835,
+      "fxPct": 6.013237572172936,
+      "nepalPct": 16.851623510069878,
+      "premiumPointChange": 13.962730252584764,
+      "attribution": {
+        "totalPct": 16.851623510069878,
+        "fromSpotPct": -2.351908107081835,
+        "fromFxPct": 6.013237572172936,
+        "fromPremiumPct": 12.878412167862518,
+        "shares": {
+          "spot": 11.704861433375635,
+          "fx": 28.718031700428543,
+          "premium": 59.57710686619583
+        }
+      }
+    }
+  ],
+  "verdict": "local-expensive",
+  "headline": "Nepali gold carried a +22.38% markup over the world price on 2026-11-09 - its 83rd percentile. Dear by local standards.",
+  "flags": [
+    "premium-high",
+    "nepal-market-closed",
+    "nepal-data-stale",
+    "reprice-pending"
+  ],
+  "series": [
+    {
+      "d": "2025-11-12",
+      "spot": 4213.6,
+      "fx": 142.02,
+      "parity": 224406,
+      "actual": 243300,
+      "premium": 8.42,
+      "silver": 3175
+    },
+    {
+      "d": "2025-11-13",
+      "spot": 4194.5,
+      "fx": 142.12,
+      "parity": 223546,
+      "actual": 250200,
+      "premium": 11.92,
+      "silver": 3345
+    },
+    {
+      "d": "2025-11-14",
+      "spot": 4094.2,
+      "fx": 142.17,
+      "parity": 218277,
+      "actual": 249700,
+      "premium": 14.4,
+      "silver": 3285
+    },
+    {
+      "d": "2025-11-17",
+      "spot": 4074.5,
+      "fx": 142.3,
+      "parity": 217426,
+      "actual": 243300,
+      "premium": 11.9,
+      "silver": 3155
+    },
+    {
+      "d": "2025-11-18",
+      "spot": 4066.5,
+      "fx": 142.12,
+      "parity": 216724,
+      "actual": 239500,
+      "premium": 10.51,
+      "silver": 3090
+    },
+    {
+      "d": "2025-11-19",
+      "spot": 4082.8,
+      "fx": 142.08,
+      "parity": 217532,
+      "actual": 242300,
+      "premium": 11.39,
+      "silver": 3150
+    },
+    {
+      "d": "2025-11-20",
+      "spot": 4060,
+      "fx": 142.05,
+      "parity": 216271,
+      "actual": 243000,
+      "premium": 12.36,
+      "silver": 3185
+    },
+    {
+      "d": "2025-11-21",
+      "spot": 4079.5,
+      "fx": 142.24,
+      "parity": 217601,
+      "actual": 241700,
+      "premium": 11.08,
+      "silver": 3100
+    },
+    {
+      "d": "2025-11-24",
+      "spot": 4094.2,
+      "fx": 143.48,
+      "parity": 220288,
+      "actual": 242700,
+      "premium": 10.17,
+      "silver": 3115
+    },
+    {
+      "d": "2025-11-25",
+      "spot": 4140,
+      "fx": 143.08,
+      "parity": 222132,
+      "actual": 247900,
+      "premium": 11.6,
+      "silver": 3200
+    },
+    {
+      "d": "2025-11-26",
+      "spot": 4165.2,
+      "fx": 143.06,
+      "parity": 223453,
+      "actual": 248800,
+      "premium": 11.34,
+      "silver": 3220
+    },
+    {
+      "d": "2025-11-28",
+      "spot": 4254.9,
+      "fx": 143.2,
+      "parity": 228488,
+      "actual": 250600,
+      "premium": 9.68,
+      "silver": 3345
+    },
+    {
+      "d": "2025-12-01",
+      "spot": 4274.8,
+      "fx": 143.44,
+      "parity": 229941,
+      "actual": 253600,
+      "premium": 10.29,
+      "silver": 3535
+    },
+    {
+      "d": "2025-12-02",
+      "spot": 4220.8,
+      "fx": 143.58,
+      "parity": 227258,
+      "actual": 253300,
+      "premium": 11.46,
+      "silver": 3545
+    },
+    {
+      "d": "2025-12-03",
+      "spot": 4232.5,
+      "fx": 144.1,
+      "parity": 228714,
+      "actual": 254100,
+      "premium": 11.1,
+      "silver": 3655
+    },
+    {
+      "d": "2025-12-04",
+      "spot": 4243,
+      "fx": 144.61,
+      "parity": 230093,
+      "actual": 253300,
+      "premium": 10.09,
+      "silver": 3625
+    },
+    {
+      "d": "2025-12-05",
+      "spot": 4243,
+      "fx": 144.27,
+      "parity": 229552,
+      "actual": 252400,
+      "premium": 9.95,
+      "silver": 3555
+    },
+    {
+      "d": "2025-12-08",
+      "spot": 4217.7,
+      "fx": 144.28,
+      "parity": 228199,
+      "actual": 252900,
+      "premium": 10.82,
+      "silver": 3585
+    },
+    {
+      "d": "2025-12-09",
+      "spot": 4236.2,
+      "fx": 144.42,
+      "parity": 229422,
+      "actual": 251900,
+      "premium": 9.8,
+      "silver": 3600
+    },
+    {
+      "d": "2025-12-10",
+      "spot": 4224.7,
+      "fx": 144.11,
+      "parity": 228308,
+      "actual": 252100,
+      "premium": 10.42,
+      "silver": 3750
+    },
+    {
+      "d": "2025-12-11",
+      "spot": 4313,
+      "fx": 144.25,
+      "parity": 233306,
+      "actual": 253100,
+      "premium": 8.48,
+      "silver": 3805
+    },
+    {
+      "d": "2025-12-12",
+      "spot": 4328.3,
+      "fx": 144.9,
+      "parity": 235189,
+      "actual": 256600,
+      "premium": 9.1,
+      "silver": 3905
+    },
+    {
+      "d": "2025-12-15",
+      "spot": 4335.2,
+      "fx": 144.97,
+      "parity": 235678,
+      "actual": 260700,
+      "premium": 10.62,
+      "silver": 3870
+    },
+    {
+      "d": "2025-12-16",
+      "spot": 4332.3,
+      "fx": 145.48,
+      "parity": 236349,
+      "actual": 259000,
+      "premium": 9.58,
+      "silver": 3885
+    },
+    {
+      "d": "2025-12-17",
+      "spot": 4373.9,
+      "fx": 145.95,
+      "parity": 239389,
+      "actual": 259700,
+      "premium": 8.48,
+      "silver": 4055
+    },
+    {
+      "d": "2025-12-18",
+      "spot": 4364.5,
+      "fx": 144.92,
+      "parity": 237189,
+      "actual": 260400,
+      "premium": 9.79,
+      "silver": 4080
+    },
+    {
+      "d": "2025-12-19",
+      "spot": 4387.3,
+      "fx": 144.69,
+      "parity": 238049,
+      "actual": 258400,
+      "premium": 8.55,
+      "silver": 4005
+    },
+    {
+      "d": "2025-12-22",
+      "spot": 4469.4,
+      "fx": 143.14,
+      "parity": 239906,
+      "actual": 261700,
+      "premium": 9.08,
+      "silver": 4235
+    },
+    {
+      "d": "2025-12-23",
+      "spot": 4505.7,
+      "fx": 143.75,
+      "parity": 242885,
+      "actual": 267200,
+      "premium": 10.01,
+      "silver": 4255
+    },
+    {
+      "d": "2025-12-24",
+      "spot": 4502.8,
+      "fx": 143.75,
+      "parity": 242729,
+      "actual": 268100,
+      "premium": 10.45,
+      "silver": 4420
+    },
+    {
+      "d": "2025-12-26",
+      "spot": 4552.7,
+      "fx": 143.96,
+      "parity": 245778,
+      "actual": 269300,
+      "premium": 9.57,
+      "silver": 4565
+    },
+    {
+      "d": "2025-12-29",
+      "spot": 4343.6,
+      "fx": 144.07,
+      "parity": 234668,
+      "actual": 270000,
+      "premium": 15.06,
+      "silver": 4895
+    },
+    {
+      "d": "2025-12-30",
+      "spot": 4386.3,
+      "fx": 144.27,
+      "parity": 237304,
+      "actual": 262100,
+      "premium": 10.45,
+      "silver": 4590
+    },
+    {
+      "d": "2025-12-31",
+      "spot": 4341.1,
+      "fx": 143.97,
+      "parity": 234371,
+      "actual": 261000,
+      "premium": 11.36,
+      "silver": 4470
+    },
+    {
+      "d": "2026-01-02",
+      "spot": 4329.6,
+      "fx": 144.25,
+      "parity": 234204,
+      "actual": 262500,
+      "premium": 12.08,
+      "silver": 4525
+    },
+    {
+      "d": "2026-01-05",
+      "spot": 4451.5,
+      "fx": 144.62,
+      "parity": 241416,
+      "actual": 265000,
+      "premium": 9.77,
+      "silver": 4686
+    },
+    {
+      "d": "2026-01-06",
+      "spot": 4496.1,
+      "fx": 144.75,
+      "parity": 244054,
+      "actual": 268100,
+      "premium": 9.85,
+      "silver": 4880
+    },
+    {
+      "d": "2026-01-07",
+      "spot": 4462.5,
+      "fx": 144.57,
+      "parity": 241929,
+      "actual": 267700,
+      "premium": 10.65,
+      "silver": 4935
+    },
+    {
+      "d": "2026-01-08",
+      "spot": 4460.7,
+      "fx": 144.12,
+      "parity": 241079,
+      "actual": 265700,
+      "premium": 10.21,
+      "silver": 4835
+    },
+    {
+      "d": "2026-01-09",
+      "spot": 4500.9,
+      "fx": 144.34,
+      "parity": 243622,
+      "actual": 267800,
+      "premium": 9.92,
+      "silver": 4780
+    },
+    {
+      "d": "2026-01-12",
+      "spot": 4614.7,
+      "fx": 144.57,
+      "parity": 250180,
+      "actual": 274700,
+      "premium": 9.8,
+      "silver": 5195
+    },
+    {
+      "d": "2026-01-13",
+      "spot": 4599.1,
+      "fx": 144.55,
+      "parity": 249300,
+      "actual": 276500,
+      "premium": 10.91,
+      "silver": 5340
+    },
+    {
+      "d": "2026-01-14",
+      "spot": 4635.7,
+      "fx": 144.61,
+      "parity": 251388,
+      "actual": 278000,
+      "premium": 10.59,
+      "silver": 5655
+    },
+    {
+      "d": "2026-01-15",
+      "spot": 4623.7,
+      "fx": 144.78,
+      "parity": 251032,
+      "actual": 276500,
+      "premium": 10.15,
+      "silver": 5485
+    },
+    {
+      "d": "2026-01-16",
+      "spot": 4595.4,
+      "fx": 144.78,
+      "parity": 249496,
+      "actual": 277200,
+      "premium": 11.1,
+      "silver": 5645
+    },
+    {
+      "d": "2026-01-20",
+      "spot": 4765.8,
+      "fx": 145.76,
+      "parity": 260499,
+      "actual": 284700,
+      "premium": 9.29,
+      "silver": 5880
+    },
+    {
+      "d": "2026-01-21",
+      "spot": 4837.5,
+      "fx": 145.87,
+      "parity": 264617,
+      "actual": 295100,
+      "premium": 11.52,
+      "silver": 5920
+    },
+    {
+      "d": "2026-01-22",
+      "spot": 4913.4,
+      "fx": 147.02,
+      "parity": 270888,
+      "actual": 292200,
+      "premium": 7.87,
+      "silver": 5870
+    },
+    {
+      "d": "2026-01-23",
+      "spot": 4979.7,
+      "fx": 146.92,
+      "parity": 274357,
+      "actual": 301400,
+      "premium": 9.86,
+      "silver": 6190
+    },
+    {
+      "d": "2026-01-26",
+      "spot": 5082.5,
+      "fx": 147.41,
+      "parity": 280954,
+      "actual": 309000,
+      "premium": 9.98,
+      "silver": 6765
+    },
+    {
+      "d": "2026-01-27",
+      "spot": 5082.6,
+      "fx": 147.41,
+      "parity": 280960,
+      "actual": 309300,
+      "premium": 10.09,
+      "silver": 6870
+    },
+    {
+      "d": "2026-01-28",
+      "spot": 5303.6,
+      "fx": 147.06,
+      "parity": 292480,
+      "actual": 318800,
+      "premium": 9,
+      "silver": 7300
+    },
+    {
+      "d": "2026-01-29",
+      "spot": 5318.4,
+      "fx": 147.16,
+      "parity": 293496,
+      "actual": 339300,
+      "premium": 15.61,
+      "silver": 7505
+    },
+    {
+      "d": "2026-01-30",
+      "spot": 4745.1,
+      "fx": 147.44,
+      "parity": 262357,
+      "actual": 318800,
+      "premium": 21.51,
+      "silver": 7065
+    },
+    {
+      "d": "2026-02-02",
+      "spot": 4652.6,
+      "fx": 147.48,
+      "parity": 257312,
+      "actual": 286600,
+      "premium": 11.38,
+      "silver": 5200
+    },
+    {
+      "d": "2026-02-03",
+      "spot": 4935,
+      "fx": 146.73,
+      "parity": 271542,
+      "actual": 290300,
+      "premium": 6.91,
+      "silver": 5335
+    },
+    {
+      "d": "2026-02-04",
+      "spot": 4950.8,
+      "fx": 144.73,
+      "parity": 268698,
+      "actual": 304700,
+      "premium": 13.4,
+      "silver": 5600
+    },
+    {
+      "d": "2026-02-05",
+      "spot": 4889.5,
+      "fx": 145,
+      "parity": 265867,
+      "actual": 295200,
+      "premium": 11.03,
+      "silver": 4980
+    },
+    {
+      "d": "2026-02-06",
+      "spot": 4979.8,
+      "fx": 144.88,
+      "parity": 270553,
+      "actual": 291000,
+      "premium": 7.56,
+      "silver": 4710
+    },
+    {
+      "d": "2026-02-09",
+      "spot": 5079.4,
+      "fx": 145.36,
+      "parity": 276878,
+      "actual": 304600,
+      "premium": 10.01,
+      "silver": 5250
+    },
+    {
+      "d": "2026-02-10",
+      "spot": 5031,
+      "fx": 145.52,
+      "parity": 274542,
+      "actual": 305500,
+      "premium": 11.28,
+      "silver": 5240
+    },
+    {
+      "d": "2026-02-11",
+      "spot": 5098.5,
+      "fx": 145.23,
+      "parity": 277671,
+      "actual": 306600,
+      "premium": 10.42,
+      "silver": 5290
+    },
+    {
+      "d": "2026-02-12",
+      "spot": 4948.4,
+      "fx": 145.43,
+      "parity": 269867,
+      "actual": 306500,
+      "premium": 13.57,
+      "silver": 5340
+    },
+    {
+      "d": "2026-02-13",
+      "spot": 5046.3,
+      "fx": 145.25,
+      "parity": 274866,
+      "actual": 303500,
+      "premium": 10.42,
+      "silver": 5000
+    },
+    {
+      "d": "2026-02-17",
+      "spot": 4905.9,
+      "fx": 145.35,
+      "parity": 267402,
+      "actual": 301900,
+      "premium": 12.9,
+      "silver": 4885
+    },
+    {
+      "d": "2026-02-18",
+      "spot": 5009.5,
+      "fx": 145.38,
+      "parity": 273105,
+      "actual": 300400,
+      "premium": 9.99,
+      "silver": 4880
+    },
+    {
+      "d": "2026-02-19",
+      "spot": 4997.4,
+      "fx": 145.38,
+      "parity": 272446,
+      "actual": 304700,
+      "premium": 11.84,
+      "silver": 5060
+    },
+    {
+      "d": "2026-02-20",
+      "spot": 5080.9,
+      "fx": 145.38,
+      "parity": 276998,
+      "actual": 304700,
+      "premium": 10,
+      "silver": 5050
+    },
+    {
+      "d": "2026-02-23",
+      "spot": 5225.6,
+      "fx": 145.88,
+      "parity": 285866,
+      "actual": 313500,
+      "premium": 9.67,
+      "silver": 5595
+    },
+    {
+      "d": "2026-02-24",
+      "spot": 5176.3,
+      "fx": 145.72,
+      "parity": 282859,
+      "actual": 314800,
+      "premium": 11.29,
+      "silver": 5585
+    },
+    {
+      "d": "2026-02-25",
+      "spot": 5226.2,
+      "fx": 145.83,
+      "parity": 285801,
+      "actual": 314800,
+      "premium": 10.15,
+      "silver": 5715
+    },
+    {
+      "d": "2026-02-26",
+      "spot": 5194.2,
+      "fx": 145.82,
+      "parity": 284032,
+      "actual": 315400,
+      "premium": 11.04,
+      "silver": 5725
+    },
+    {
+      "d": "2026-02-27",
+      "spot": 5247.9,
+      "fx": 145.76,
+      "parity": 286850,
+      "actual": 314900,
+      "premium": 9.78,
+      "silver": 5740
+    },
+    {
+      "d": "2026-03-02",
+      "spot": 5311.6,
+      "fx": 145.87,
+      "parity": 290551,
+      "actual": 326100,
+      "premium": 12.23,
+      "silver": 6020
+    },
+    {
+      "d": "2026-03-03",
+      "spot": 5123.7,
+      "fx": 146.66,
+      "parity": 281791,
+      "actual": 328600,
+      "premium": 16.61,
+      "silver": 5815
+    },
+    {
+      "d": "2026-03-04",
+      "spot": 5134.7,
+      "fx": 146.66,
+      "parity": 282396,
+      "actual": 317600,
+      "premium": 12.47,
+      "silver": 5540
+    },
+    {
+      "d": "2026-03-06",
+      "spot": 5158.7,
+      "fx": 146.87,
+      "parity": 284122,
+      "actual": 313400,
+      "premium": 10.3,
+      "silver": 5445
+    },
+    {
+      "d": "2026-03-09",
+      "spot": 5103.7,
+      "fx": 147.09,
+      "parity": 281514,
+      "actual": 313200,
+      "premium": 11.26,
+      "silver": 5410
+    },
+    {
+      "d": "2026-03-10",
+      "spot": 5242.1,
+      "fx": 148.03,
+      "parity": 290996,
+      "actual": 317000,
+      "premium": 8.94,
+      "silver": 5720
+    },
+    {
+      "d": "2026-03-11",
+      "spot": 5179.1,
+      "fx": 147.2,
+      "parity": 285886,
+      "actual": 319000,
+      "premium": 11.58,
+      "silver": 5720
+    },
+    {
+      "d": "2026-03-12",
+      "spot": 5125.8,
+      "fx": 147.57,
+      "parity": 283655,
+      "actual": 317000,
+      "premium": 11.76,
+      "silver": 5515
+    },
+    {
+      "d": "2026-03-13",
+      "spot": 5061.7,
+      "fx": 147.81,
+      "parity": 280564,
+      "actual": 314200,
+      "premium": 11.99,
+      "silver": 5495
+    },
+    {
+      "d": "2026-03-16",
+      "spot": 5002.2,
+      "fx": 148.24,
+      "parity": 278072,
+      "actual": 309500,
+      "premium": 11.3,
+      "silver": 5265
+    },
+    {
+      "d": "2026-03-17",
+      "spot": 5008.2,
+      "fx": 148.18,
+      "parity": 278293,
+      "actual": 309900,
+      "premium": 11.36,
+      "silver": 5335
+    },
+    {
+      "d": "2026-03-18",
+      "spot": 4896.2,
+      "fx": 148.1,
+      "parity": 271923,
+      "actual": 307700,
+      "premium": 13.16,
+      "silver": 5150
+    },
+    {
+      "d": "2026-03-19",
+      "spot": 4605.7,
+      "fx": 148.52,
+      "parity": 256514,
+      "actual": 302300,
+      "premium": 17.85,
+      "silver": 5010
+    },
+    {
+      "d": "2026-03-20",
+      "spot": 4574.9,
+      "fx": 148.52,
+      "parity": 254799,
+      "actual": 294500,
+      "premium": 15.58,
+      "silver": 4895
+    },
+    {
+      "d": "2026-03-23",
+      "spot": 4407.3,
+      "fx": 150.24,
+      "parity": 248307,
+      "actual": 275500,
+      "premium": 10.95,
+      "silver": 4425
+    },
+    {
+      "d": "2026-03-24",
+      "spot": 4402,
+      "fx": 150.67,
+      "parity": 248719,
+      "actual": 273900,
+      "premium": 10.12,
+      "silver": 4505
+    },
+    {
+      "d": "2026-03-25",
+      "spot": 4552.3,
+      "fx": 150.49,
+      "parity": 256903,
+      "actual": 288500,
+      "premium": 12.3,
+      "silver": 4920
+    },
+    {
+      "d": "2026-03-26",
+      "spot": 4376.3,
+      "fx": 150.67,
+      "parity": 247266,
+      "actual": 285600,
+      "premium": 15.5,
+      "silver": 4820
+    },
+    {
+      "d": "2026-03-27",
+      "spot": 4492.5,
+      "fx": 150.67,
+      "parity": 253832,
+      "actual": 281000,
+      "premium": 10.7,
+      "silver": 4670
+    },
+    {
+      "d": "2026-03-30",
+      "spot": 4526,
+      "fx": 152.01,
+      "parity": 257999,
+      "actual": 283500,
+      "premium": 9.88,
+      "silver": 4700
+    },
+    {
+      "d": "2026-03-31",
+      "spot": 4647.6,
+      "fx": 152.04,
+      "parity": 264983,
+      "actual": 290200,
+      "premium": 9.52,
+      "silver": 4845
+    },
+    {
+      "d": "2026-04-01",
+      "spot": 4813.1,
+      "fx": 152.04,
+      "parity": 274419,
+      "actual": 297600,
+      "premium": 8.45,
+      "silver": 4945
+    },
+    {
+      "d": "2026-04-02",
+      "spot": 4679.7,
+      "fx": 152.04,
+      "parity": 266813,
+      "actual": 294000,
+      "premium": 10.19,
+      "silver": 4780
+    },
+    {
+      "d": "2026-04-06",
+      "spot": 4684.7,
+      "fx": 149.27,
+      "parity": 262232,
+      "actual": 291400,
+      "premium": 11.12,
+      "silver": 4780
+    },
+    {
+      "d": "2026-04-07",
+      "spot": 4684.7,
+      "fx": 149.2,
+      "parity": 262109,
+      "actual": 291800,
+      "premium": 11.33,
+      "silver": 4820
+    },
+    {
+      "d": "2026-04-08",
+      "spot": 4777.2,
+      "fx": 149.12,
+      "parity": 267141,
+      "actual": 299000,
+      "premium": 11.93,
+      "silver": 5025
+    },
+    {
+      "d": "2026-04-09",
+      "spot": 4818,
+      "fx": 148.44,
+      "parity": 268194,
+      "actual": 294700,
+      "premium": 9.88,
+      "silver": 4875
+    },
+    {
+      "d": "2026-04-10",
+      "spot": 4787.4,
+      "fx": 148.56,
+      "parity": 266706,
+      "actual": 296900,
+      "premium": 11.32,
+      "silver": 4960
+    },
+    {
+      "d": "2026-04-13",
+      "spot": 4767.4,
+      "fx": 148.67,
+      "parity": 265789,
+      "actual": 296700,
+      "premium": 11.63,
+      "silver": 4900
+    },
+    {
+      "d": "2026-04-14",
+      "spot": 4850.1,
+      "fx": 149.71,
+      "parity": 272291,
+      "actual": 299800,
+      "premium": 10.1,
+      "silver": 5065
+    },
+    {
+      "d": "2026-04-15",
+      "spot": 4823.6,
+      "fx": 149.71,
+      "parity": 270803,
+      "actual": 302700,
+      "premium": 11.78,
+      "silver": 5220
+    },
+    {
+      "d": "2026-04-16",
+      "spot": 4808.3,
+      "fx": 149.7,
+      "parity": 269926,
+      "actual": 302800,
+      "premium": 12.18,
+      "silver": 5250
+    },
+    {
+      "d": "2026-04-17",
+      "spot": 4879.6,
+      "fx": 149.42,
+      "parity": 273416,
+      "actual": 299800,
+      "premium": 9.65,
+      "silver": 5130
+    },
+    {
+      "d": "2026-04-20",
+      "spot": 4828.8,
+      "fx": 148.99,
+      "parity": 269791,
+      "actual": 299700,
+      "premium": 11.09,
+      "silver": 5190
+    },
+    {
+      "d": "2026-04-21",
+      "spot": 4719.6,
+      "fx": 149.31,
+      "parity": 264256,
+      "actual": 301300,
+      "premium": 14.02,
+      "silver": 5160
+    },
+    {
+      "d": "2026-04-22",
+      "spot": 4753,
+      "fx": 149.91,
+      "parity": 267196,
+      "actual": 300500,
+      "premium": 12.46,
+      "silver": 5130
+    },
+    {
+      "d": "2026-04-23",
+      "spot": 4724,
+      "fx": 150.38,
+      "parity": 266398,
+      "actual": 298700,
+      "premium": 12.13,
+      "silver": 5020
+    },
+    {
+      "d": "2026-04-24",
+      "spot": 4740.9,
+      "fx": 150.88,
+      "parity": 268240,
+      "actual": 296500,
+      "premium": 10.54,
+      "silver": 4945
+    },
+    {
+      "d": "2026-04-27",
+      "spot": 4693.7,
+      "fx": 151.1,
+      "parity": 265957,
+      "actual": 300500,
+      "premium": 12.99,
+      "silver": 5045
+    },
+    {
+      "d": "2026-04-28",
+      "spot": 4608.4,
+      "fx": 151.01,
+      "parity": 260968,
+      "actual": 297500,
+      "premium": 14,
+      "silver": 4945
+    },
+    {
+      "d": "2026-04-29",
+      "spot": 4561.5,
+      "fx": 151.57,
+      "parity": 259270,
+      "actual": 294500,
+      "premium": 13.59,
+      "silver": 4915
+    },
+    {
+      "d": "2026-04-30",
+      "spot": 4629.6,
+      "fx": 152.06,
+      "parity": 263991,
+      "actual": 292700,
+      "premium": 10.87,
+      "silver": 4810
+    },
+    {
+      "d": "2026-05-01",
+      "spot": 4644.5,
+      "fx": 152.16,
+      "parity": 265015,
+      "actual": 296100,
+      "premium": 11.73,
+      "silver": 4945
+    },
+    {
+      "d": "2026-05-04",
+      "spot": 4533.3,
+      "fx": 152.16,
+      "parity": 258670,
+      "actual": 294800,
+      "premium": 13.97,
+      "silver": 5030
+    },
+    {
+      "d": "2026-05-05",
+      "spot": 4568.5,
+      "fx": 152.45,
+      "parity": 261175,
+      "actual": 291000,
+      "premium": 11.42,
+      "silver": 4880
+    },
+    {
+      "d": "2026-05-06",
+      "spot": 4694.3,
+      "fx": 152.76,
+      "parity": 268913,
+      "actual": 296800,
+      "premium": 10.37,
+      "silver": 5055
+    },
+    {
+      "d": "2026-05-07",
+      "spot": 4710.9,
+      "fx": 151.68,
+      "parity": 267956,
+      "actual": 298600,
+      "premium": 11.44,
+      "silver": 5155
+    },
+    {
+      "d": "2026-05-08",
+      "spot": 4730.7,
+      "fx": 151.11,
+      "parity": 268071,
+      "actual": 299900,
+      "premium": 11.87,
+      "silver": 5275
+    },
+    {
+      "d": "2026-05-11",
+      "spot": 4728.7,
+      "fx": 151.48,
+      "parity": 268614,
+      "actual": 298500,
+      "premium": 11.13,
+      "silver": 5340
+    },
+    {
+      "d": "2026-05-12",
+      "spot": 4686.7,
+      "fx": 152.8,
+      "parity": 268548,
+      "actual": 302900,
+      "premium": 12.79,
+      "silver": 5695
+    },
+    {
+      "d": "2026-05-13",
+      "spot": 4706.7,
+      "fx": 153.31,
+      "parity": 270594,
+      "actual": 302200,
+      "premium": 11.68,
+      "silver": 5710
+    },
+    {
+      "d": "2026-05-14",
+      "spot": 4685.3,
+      "fx": 153.44,
+      "parity": 269592,
+      "actual": 302500,
+      "premium": 12.21,
+      "silver": 5745
+    },
+    {
+      "d": "2026-05-15",
+      "spot": 4561.9,
+      "fx": 153.53,
+      "parity": 262646,
+      "actual": 298500,
+      "premium": 13.65,
+      "silver": 5390
+    },
+    {
+      "d": "2026-05-18",
+      "spot": 4558,
+      "fx": 153.85,
+      "parity": 262968,
+      "actual": 294800,
+      "premium": 12.1,
+      "silver": 5040
+    },
+    {
+      "d": "2026-05-19",
+      "spot": 4511.2,
+      "fx": 154.46,
+      "parity": 261300,
+      "actual": 295300,
+      "premium": 13.01,
+      "silver": 5085
+    },
+    {
+      "d": "2026-05-20",
+      "spot": 4535.3,
+      "fx": 154.76,
+      "parity": 263206,
+      "actual": 292000,
+      "premium": 10.94,
+      "silver": 4960
+    },
+    {
+      "d": "2026-05-21",
+      "spot": 4542.5,
+      "fx": 155.22,
+      "parity": 264408,
+      "actual": 293800,
+      "premium": 11.12,
+      "silver": 5050
+    },
+    {
+      "d": "2026-05-22",
+      "spot": 4523.2,
+      "fx": 154.23,
+      "parity": 261605,
+      "actual": 293700,
+      "premium": 12.27,
+      "silver": 5115
+    },
+    {
+      "d": "2026-05-26",
+      "spot": 4502.3,
+      "fx": 152.68,
+      "parity": 257779,
+      "actual": 291500,
+      "premium": 13.08,
+      "silver": 5060
+    },
+    {
+      "d": "2026-05-27",
+      "spot": 4448.4,
+      "fx": 153.4,
+      "parity": 255894,
+      "actual": 290500,
+      "premium": 13.52,
+      "silver": 5080
+    },
+    {
+      "d": "2026-05-28",
+      "spot": 4499.3,
+      "fx": 153.41,
+      "parity": 258839,
+      "actual": 285000,
+      "premium": 10.11,
+      "silver": 4865
+    },
+    {
+      "d": "2026-05-29",
+      "spot": 4593,
+      "fx": 153.41,
+      "parity": 264230,
+      "actual": 290600,
+      "premium": 9.98,
+      "silver": 5040
+    },
+    {
+      "d": "2026-06-01",
+      "spot": 4506.3,
+      "fx": 152.31,
+      "parity": 257383,
+      "actual": 310900,
+      "premium": 20.79,
+      "silver": 5355
+    },
+    {
+      "d": "2026-06-02",
+      "spot": 4519.9,
+      "fx": 152.29,
+      "parity": 258126,
+      "actual": 311300,
+      "premium": 20.6,
+      "silver": 5405
+    },
+    {
+      "d": "2026-06-03",
+      "spot": 4466.9,
+      "fx": 152.73,
+      "parity": 255836,
+      "actual": 311300,
+      "premium": 21.68,
+      "silver": 5370
+    },
+    {
+      "d": "2026-06-04",
+      "spot": 4505,
+      "fx": 153.44,
+      "parity": 259218,
+      "actual": 311100,
+      "premium": 20.01,
+      "silver": 5285
+    },
+    {
+      "d": "2026-06-05",
+      "spot": 4365.3,
+      "fx": 153.56,
+      "parity": 251376,
+      "actual": 309000,
+      "premium": 22.92,
+      "silver": 5230
+    },
+    {
+      "d": "2026-06-08",
+      "spot": 4363.4,
+      "fx": 152.22,
+      "parity": 249074,
+      "actual": 299900,
+      "premium": 20.41,
+      "silver": 4905
+    },
+    {
+      "d": "2026-06-09",
+      "spot": 4286.4,
+      "fx": 153.44,
+      "parity": 246639,
+      "actual": 301900,
+      "premium": 22.41,
+      "silver": 4925
+    },
+    {
+      "d": "2026-06-10",
+      "spot": 4133.3,
+      "fx": 152.87,
+      "parity": 236947,
+      "actual": 291800,
+      "premium": 23.15,
+      "silver": 4740
+    },
+    {
+      "d": "2026-06-11",
+      "spot": 4114,
+      "fx": 152.73,
+      "parity": 235624,
+      "actual": 286700,
+      "premium": 21.68,
+      "silver": 4650
+    },
+    {
+      "d": "2026-06-12",
+      "spot": 4238.8,
+      "fx": 153.52,
+      "parity": 244028,
+      "actual": 292000,
+      "premium": 19.66,
+      "silver": 4840
+    },
+    {
+      "d": "2026-06-15",
+      "spot": 4351.6,
+      "fx": 152.48,
+      "parity": 248824,
+      "actual": 298200,
+      "premium": 19.84,
+      "silver": 5015
+    },
+    {
+      "d": "2026-06-16",
+      "spot": 4354.4,
+      "fx": 151.84,
+      "parity": 247940,
+      "actual": 298500,
+      "premium": 20.39,
+      "silver": 4990
+    },
+    {
+      "d": "2026-06-17",
+      "spot": 4381.4,
+      "fx": 151.6,
+      "parity": 249083,
+      "actual": 297300,
+      "premium": 19.36,
+      "silver": 4980
+    },
+    {
+      "d": "2026-06-18",
+      "spot": 4245.9,
+      "fx": 151.55,
+      "parity": 241300,
+      "actual": 297200,
+      "premium": 23.17,
+      "silver": 4945
+    },
+    {
+      "d": "2026-06-22",
+      "spot": 4202.7,
+      "fx": 151.22,
+      "parity": 238325,
+      "actual": 288700,
+      "premium": 21.14,
+      "silver": 4730
+    },
+    {
+      "d": "2026-06-23",
+      "spot": 4149.4,
+      "fx": 151.79,
+      "parity": 236189,
+      "actual": 287100,
+      "premium": 21.56,
+      "silver": 4590
+    },
+    {
+      "d": "2026-06-24",
+      "spot": 4008.8,
+      "fx": 151.88,
+      "parity": 228321,
+      "actual": 283500,
+      "premium": 24.17,
+      "silver": 4485
+    },
+    {
+      "d": "2026-06-25",
+      "spot": 4047.6,
+      "fx": 151.77,
+      "parity": 230364,
+      "actual": 278300,
+      "premium": 20.81,
+      "silver": 4235
+    },
+    {
+      "d": "2026-06-26",
+      "spot": 4096.3,
+      "fx": 151.34,
+      "parity": 232475,
+      "actual": 279100,
+      "premium": 20.06,
+      "silver": 4180
+    },
+    {
+      "d": "2026-06-29",
+      "spot": 4038.9,
+      "fx": 151.34,
+      "parity": 229218,
+      "actual": 282400,
+      "premium": 23.2,
+      "silver": 4310
+    },
+    {
+      "d": "2026-06-30",
+      "spot": 4038.5,
+      "fx": 151.57,
+      "parity": 229543,
+      "actual": 277900,
+      "premium": 21.07,
+      "silver": 4285
+    },
+    {
+      "d": "2026-07-01",
+      "spot": 4082.4,
+      "fx": 151.76,
+      "parity": 232329,
+      "actual": 277300,
+      "premium": 19.36,
+      "silver": 4270
+    },
+    {
+      "d": "2026-07-02",
+      "spot": 4125.7,
+      "fx": 152.7,
+      "parity": 236248,
+      "actual": 283500,
+      "premium": 20,
+      "silver": 4450
+    },
+    {
+      "d": "2026-07-06",
+      "spot": 4167.5,
+      "fx": 152.64,
+      "parity": 238548,
+      "actual": 289400,
+      "premium": 21.32,
+      "silver": 4585
+    },
+    {
+      "d": "2026-07-07",
+      "spot": 4157.4,
+      "fx": 152.94,
+      "parity": 238437,
+      "actual": 288000,
+      "premium": 20.79,
+      "silver": 4555
+    },
+    {
+      "d": "2026-07-08",
+      "spot": 4082.4,
+      "fx": 152.26,
+      "parity": 233095,
+      "actual": 287100,
+      "premium": 23.17,
+      "silver": 4500
+    },
+    {
+      "d": "2026-07-09",
+      "spot": 4140.8,
+      "fx": 153.2,
+      "parity": 237889,
+      "actual": 284700,
+      "premium": 19.68,
+      "silver": 4340
+    },
+    {
+      "d": "2026-07-10",
+      "spot": 4113.7,
+      "fx": 152.93,
+      "parity": 235916,
+      "actual": 287400,
+      "premium": 21.82,
+      "silver": 4510
+    },
+    {
+      "d": "2026-07-13",
+      "spot": 4005.7,
+      "fx": 152.83,
+      "parity": 229572,
+      "actual": 285200,
+      "premium": 24.23,
+      "silver": 4375
+    },
+    {
+      "d": "2026-07-14",
+      "spot": 4069.7,
+      "fx": 153.3,
+      "parity": 233957,
+      "actual": 284000,
+      "premium": 21.39,
+      "silver": 4360
+    },
+    {
+      "d": "2026-07-15",
+      "spot": 4051.8,
+      "fx": 154.23,
+      "parity": 234341,
+      "actual": 284800,
+      "premium": 21.53,
+      "silver": 4415
+    },
+    {
+      "d": "2026-07-16",
+      "spot": 3992.1,
+      "fx": 154.32,
+      "parity": 231023,
+      "actual": 285200,
+      "premium": 23.45,
+      "silver": 4325
+    },
+    {
+      "d": "2026-07-17",
+      "spot": 4018.8,
+      "fx": 154.46,
+      "parity": 232779,
+      "actual": 282100,
+      "premium": 21.19,
+      "silver": 4200
+    },
+    {
+      "d": "2026-07-20",
+      "spot": 4015.9,
+      "fx": 154.36,
+      "parity": 232460,
+      "actual": 284600,
+      "premium": 22.43,
+      "silver": 4320
+    },
+    {
+      "d": "2026-07-21",
+      "spot": 4076.4,
+      "fx": 154.62,
+      "parity": 236360,
+      "actual": 285600,
+      "premium": 20.83,
+      "silver": 4370
+    },
+    {
+      "d": "2026-07-22",
+      "spot": 4151.9,
+      "fx": 154.28,
+      "parity": 240208,
+      "actual": 291000,
+      "premium": 21.14,
+      "silver": 4480
+    },
+    {
+      "d": "2026-07-23",
+      "spot": 4050.2,
+      "fx": 154.81,
+      "parity": 235129,
+      "actual": 291300,
+      "premium": 23.89,
+      "silver": 4505
+    },
+    {
+      "d": "2026-07-24",
+      "spot": 4070.8,
+      "fx": 154.82,
+      "parity": 236340,
+      "actual": 285500,
+      "premium": 20.8,
+      "silver": 4350
+    },
+    {
+      "d": "2026-07-27",
+      "spot": 4077,
+      "fx": 154.81,
+      "parity": 236685,
+      "actual": 288500,
+      "premium": 21.89,
+      "silver": 4445
+    },
+    {
+      "d": "2026-07-28",
+      "spot": 4038.7,
+      "fx": 153.76,
+      "parity": 232871,
+      "actual": 284200,
+      "premium": 22.04,
+      "silver": 4310
+    },
+    {
+      "d": "2026-07-29",
+      "spot": 4036.3,
+      "fx": 153.67,
+      "parity": 232597,
+      "actual": 283200,
+      "premium": 21.76,
+      "silver": 4320
+    },
+    {
+      "d": "2026-07-30",
+      "spot": 4100.1,
+      "fx": 153.34,
+      "parity": 235766,
+      "actual": 284000,
+      "premium": 20.46,
+      "silver": 4310
+    },
+    {
+      "d": "2026-07-31",
+      "spot": 4107,
+      "fx": 153.4,
+      "parity": 236255,
+      "actual": 285000,
+      "premium": 20.63,
+      "silver": 4360
+    },
+    {
+      "d": "2026-08-03",
+      "spot": 4090.5,
+      "fx": 152.92,
+      "parity": 234570,
+      "actual": 284000,
+      "premium": 21.07,
+      "silver": 4350
+    },
+    {
+      "d": "2026-08-04",
+      "spot": 4152.6,
+      "fx": 152.85,
+      "parity": 238022,
+      "actual": 283800,
+      "premium": 19.23,
+      "silver": 4380
+    },
+    {
+      "d": "2026-08-05",
+      "spot": 4305.2,
+      "fx": 152.91,
+      "parity": 246866,
+      "actual": 288000,
+      "premium": 16.66,
+      "silver": 4475
+    },
+    {
+      "d": "2026-08-06",
+      "spot": 4299.6,
+      "fx": 152.5,
+      "parity": 245883,
+      "actual": 296000,
+      "premium": 20.38,
+      "silver": 4570
+    },
+    {
+      "d": "2026-08-07",
+      "spot": 4399.7,
+      "fx": 152.66,
+      "parity": 251872,
+      "actual": 296900,
+      "premium": 17.88,
+      "silver": 4580
+    },
+    {
+      "d": "2026-08-10",
+      "spot": 4419.7,
+      "fx": 152.64,
+      "parity": 252984,
+      "actual": 301500,
+      "premium": 19.18,
+      "silver": 4670
+    },
+    {
+      "d": "2026-08-11",
+      "spot": 4441.1,
+      "fx": 152.79,
+      "parity": 254458,
+      "actual": 307900,
+      "premium": 21,
+      "silver": 4780
+    },
+    {
+      "d": "2026-08-12",
+      "spot": 4467.5,
+      "fx": 153,
+      "parity": 256323,
+      "actual": 306700,
+      "premium": 19.65,
+      "silver": 4745
+    },
+    {
+      "d": "2026-08-13",
+      "spot": 4420.4,
+      "fx": 152.84,
+      "parity": 253355,
+      "actual": 306200,
+      "premium": 20.86,
+      "silver": 4750
+    },
+    {
+      "d": "2026-08-14",
+      "spot": 4437.3,
+      "fx": 153.01,
+      "parity": 254607,
+      "actual": 301600,
+      "premium": 18.46,
+      "silver": 4660
+    },
+    {
+      "d": "2026-08-17",
+      "spot": 4473.7,
+      "fx": 152.99,
+      "parity": 256662,
+      "actual": 306800,
+      "premium": 19.53,
+      "silver": 4770
+    },
+    {
+      "d": "2026-08-18",
+      "spot": 4420.6,
+      "fx": 153.27,
+      "parity": 254080,
+      "actual": 306800,
+      "premium": 20.75,
+      "silver": 4755
+    },
+    {
+      "d": "2026-08-19",
+      "spot": 4545.3,
+      "fx": 153.4,
+      "parity": 261468,
+      "actual": 304100,
+      "premium": 16.3,
+      "silver": 4595
+    },
+    {
+      "d": "2026-08-20",
+      "spot": 4571.4,
+      "fx": 153.51,
+      "parity": 263158,
+      "actual": 313400,
+      "premium": 19.09,
+      "silver": 4855
+    },
+    {
+      "d": "2026-08-21",
+      "spot": 4680.6,
+      "fx": 153.44,
+      "parity": 269322,
+      "actual": 316700,
+      "premium": 17.59,
+      "silver": 4985
+    },
+    {
+      "d": "2026-08-24",
+      "spot": 4697.8,
+      "fx": 153.42,
+      "parity": 270276,
+      "actual": 322700,
+      "premium": 19.4,
+      "silver": 4965
+    },
+    {
+      "d": "2026-08-25",
+      "spot": 4694.5,
+      "fx": 153.5,
+      "parity": 270227,
+      "actual": 322200,
+      "premium": 19.23,
+      "silver": 4900
+    },
+    {
+      "d": "2026-08-26",
+      "spot": 4653.3,
+      "fx": 152.97,
+      "parity": 266931,
+      "actual": 322100,
+      "premium": 20.67,
+      "silver": 4975
+    },
+    {
+      "d": "2026-08-27",
+      "spot": 4664,
+      "fx": 152.97,
+      "parity": 267545,
+      "actual": 320900,
+      "premium": 19.94,
+      "silver": 4965
+    },
+    {
+      "d": "2026-08-28",
+      "spot": 4529.9,
+      "fx": 153.17,
+      "parity": 260192,
+      "actual": 318500,
+      "premium": 22.41,
+      "silver": 4965
+    },
+    {
+      "d": "2026-08-31",
+      "spot": 4481.5,
+      "fx": 152.91,
+      "parity": 256975,
+      "actual": 306600,
+      "premium": 19.31,
+      "silver": 4780
+    },
+    {
+      "d": "2026-09-01",
+      "spot": 4396.4,
+      "fx": 152.57,
+      "parity": 251535,
+      "actual": 306100,
+      "premium": 21.69,
+      "silver": 4765
+    },
+    {
+      "d": "2026-09-02",
+      "spot": 4414.6,
+      "fx": 152.23,
+      "parity": 252013,
+      "actual": 297300,
+      "premium": 17.97,
+      "silver": 4580
+    },
+    {
+      "d": "2026-09-03",
+      "spot": 4539.9,
+      "fx": 152.26,
+      "parity": 259217,
+      "actual": 304900,
+      "premium": 17.62,
+      "silver": 4725
+    },
+    {
+      "d": "2026-09-04",
+      "spot": 4476.6,
+      "fx": 151.48,
+      "parity": 254293,
+      "actual": 307400,
+      "premium": 20.88,
+      "silver": 4765
+    },
+    {
+      "d": "2026-09-08",
+      "spot": 4439,
+      "fx": 151.48,
+      "parity": 252157,
+      "actual": 305400,
+      "premium": 21.11,
+      "silver": 4790
+    },
+    {
+      "d": "2026-09-09",
+      "spot": 4460.7,
+      "fx": 152.02,
+      "parity": 254293,
+      "actual": 302400,
+      "premium": 18.92,
+      "silver": 4750
+    },
+    {
+      "d": "2026-09-10",
+      "spot": 4407.3,
+      "fx": 152.48,
+      "parity": 252009,
+      "actual": 305800,
+      "premium": 21.34,
+      "silver": 4855
+    },
+    {
+      "d": "2026-09-11",
+      "spot": 4408.9,
+      "fx": 153.01,
+      "parity": 252977,
+      "actual": 301000,
+      "premium": 18.98,
+      "silver": 4600
+    },
+    {
+      "d": "2026-09-14",
+      "spot": 4351.9,
+      "fx": 153.19,
+      "parity": 250000,
+      "actual": 301000,
+      "premium": 20.4,
+      "silver": 4620
+    },
+    {
+      "d": "2026-09-15",
+      "spot": 4332.8,
+      "fx": 153.19,
+      "parity": 248903,
+      "actual": 300100,
+      "premium": 20.57,
+      "silver": 4600
+    },
+    {
+      "d": "2026-09-16",
+      "spot": 4387.5,
+      "fx": 153.84,
+      "parity": 253115,
+      "actual": 301800,
+      "premium": 19.23,
+      "silver": 4685
+    },
+    {
+      "d": "2026-09-17",
+      "spot": 4399.7,
+      "fx": 153.84,
+      "parity": 253819,
+      "actual": 299500,
+      "premium": 18,
+      "silver": 4625
+    },
+    {
+      "d": "2026-09-18",
+      "spot": 4424.9,
+      "fx": 153.8,
+      "parity": 255206,
+      "actual": 303100,
+      "premium": 18.77,
+      "silver": 4775
+    },
+    {
+      "d": "2026-09-21",
+      "spot": 4383.9,
+      "fx": 153.7,
+      "parity": 252677,
+      "actual": 303900,
+      "premium": 20.27,
+      "silver": 4805
+    },
+    {
+      "d": "2026-09-22",
+      "spot": 4376.4,
+      "fx": 153.61,
+      "parity": 252097,
+      "actual": 302200,
+      "premium": 19.87,
+      "silver": 4775
+    },
+    {
+      "d": "2026-09-23",
+      "spot": 4318.4,
+      "fx": 153.25,
+      "parity": 248173,
+      "actual": 302300,
+      "premium": 21.81,
+      "silver": 4815
+    },
+    {
+      "d": "2026-09-24",
+      "spot": 4298,
+      "fx": 153.49,
+      "parity": 247388,
+      "actual": 299100,
+      "premium": 20.9,
+      "silver": 4650
+    },
+    {
+      "d": "2026-09-25",
+      "spot": 4321.2,
+      "fx": 153.84,
+      "parity": 249290,
+      "actual": 298600,
+      "premium": 19.78,
+      "silver": 4620
+    },
+    {
+      "d": "2026-09-28",
+      "spot": 4168.4,
+      "fx": 153.61,
+      "parity": 240115,
+      "actual": 294300,
+      "premium": 22.57,
+      "silver": 4510
+    },
+    {
+      "d": "2026-09-29",
+      "spot": 4179.7,
+      "fx": 153.88,
+      "parity": 241190,
+      "actual": 290500,
+      "premium": 20.44,
+      "silver": 4395
+    },
+    {
+      "d": "2026-09-30",
+      "spot": 4186.7,
+      "fx": 153.88,
+      "parity": 241594,
+      "actual": 293300,
+      "premium": 21.4,
+      "silver": 4425
+    },
+    {
+      "d": "2026-10-01",
+      "spot": 4202.3,
+      "fx": 153.64,
+      "parity": 242116,
+      "actual": 293300,
+      "premium": 21.14,
+      "silver": 4425
+    },
+    {
+      "d": "2026-10-02",
+      "spot": 4162.3,
+      "fx": 154.41,
+      "parity": 241013,
+      "actual": 294800,
+      "premium": 22.32,
+      "silver": 4450
+    },
+    {
+      "d": "2026-10-05",
+      "spot": 4156.8,
+      "fx": 154.41,
+      "parity": 240694,
+      "actual": 291500,
+      "premium": 21.11,
+      "silver": 4430
+    },
+    {
+      "d": "2026-10-06",
+      "spot": 4187.1,
+      "fx": 154.38,
+      "parity": 242402,
+      "actual": 291500,
+      "premium": 20.25,
+      "silver": 4415
+    },
+    {
+      "d": "2026-10-07",
+      "spot": 4140.7,
+      "fx": 154.58,
+      "parity": 240026,
+      "actual": 292300,
+      "premium": 21.78,
+      "silver": 4425
+    },
+    {
+      "d": "2026-10-08",
+      "spot": 4157,
+      "fx": 155.15,
+      "parity": 241859,
+      "actual": 292800,
+      "premium": 21.06,
+      "silver": 4390
+    },
+    {
+      "d": "2026-10-09",
+      "spot": 4216.3,
+      "fx": 155.16,
+      "parity": 245325,
+      "actual": 295700,
+      "premium": 20.53,
+      "silver": 4405
+    },
+    {
+      "d": "2026-10-12",
+      "spot": 4190.6,
+      "fx": 155.08,
+      "parity": 243704,
+      "actual": 294400,
+      "premium": 20.8,
+      "silver": 4415
+    },
+    {
+      "d": "2026-10-13",
+      "spot": 4177.3,
+      "fx": 153.54,
+      "parity": 240518,
+      "actual": 292200,
+      "premium": 21.49,
+      "silver": 4355
+    },
+    {
+      "d": "2026-10-14",
+      "spot": 4107.9,
+      "fx": 152.76,
+      "parity": 235321,
+      "actual": 289500,
+      "premium": 23.02,
+      "silver": 4255
+    },
+    {
+      "d": "2026-10-15",
+      "spot": 4170.1,
+      "fx": 152.55,
+      "parity": 238556,
+      "actual": 288400,
+      "premium": 20.89,
+      "silver": 4035
+    },
+    {
+      "d": "2026-10-16",
+      "spot": 4181.1,
+      "fx": 152.4,
+      "parity": 238950,
+      "actual": 290100,
+      "premium": 21.41,
+      "silver": 4150
+    },
+    {
+      "d": "2026-10-19",
+      "spot": 4160.1,
+      "fx": 152.24,
+      "parity": 237500,
+      "actual": 290200,
+      "premium": 22.19,
+      "silver": 4185
+    },
+    {
+      "d": "2026-10-26",
+      "spot": 4038.4,
+      "fx": 152.21,
+      "parity": 230507,
+      "actual": 281500,
+      "premium": 22.12,
+      "silver": 3995
+    },
+    {
+      "d": "2026-10-27",
+      "spot": 4074.6,
+      "fx": 152.6,
+      "parity": 233169,
+      "actual": 282300,
+      "premium": 21.07,
+      "silver": 3970
+    },
+    {
+      "d": "2026-10-28",
+      "spot": 4051.6,
+      "fx": 152.49,
+      "parity": 231686,
+      "actual": 283200,
+      "premium": 22.23,
+      "silver": 3980
+    },
+    {
+      "d": "2026-10-29",
+      "spot": 4031.4,
+      "fx": 152.66,
+      "parity": 230788,
+      "actual": 283500,
+      "premium": 22.84,
+      "silver": 3930
+    },
+    {
+      "d": "2026-10-30",
+      "spot": 3898.9,
+      "fx": 152.72,
+      "parity": 223290,
+      "actual": 280300,
+      "premium": 25.53,
+      "silver": 3825
+    },
+    {
+      "d": "2026-11-02",
+      "spot": 3969.6,
+      "fx": 152.23,
+      "parity": 226610,
+      "actual": 274300,
+      "premium": 21.05,
+      "silver": 3720
+    },
+    {
+      "d": "2026-11-03",
+      "spot": 3940.4,
+      "fx": 152.15,
+      "parity": 224824,
+      "actual": 275000,
+      "premium": 22.32,
+      "silver": 3675
+    },
+    {
+      "d": "2026-11-04",
+      "spot": 4073,
+      "fx": 151.89,
+      "parity": 231993,
+      "actual": 275600,
+      "premium": 18.8,
+      "silver": 3655
+    },
+    {
+      "d": "2026-11-05",
+      "spot": 4113.5,
+      "fx": 151.73,
+      "parity": 234053,
+      "actual": 288900,
+      "premium": 23.43,
+      "silver": 3920
+    },
+    {
+      "d": "2026-11-06",
+      "spot": 4074.9,
+      "fx": 151.47,
+      "parity": 231459,
+      "actual": 283000,
+      "premium": 22.27,
+      "silver": 3810
+    },
+    {
+      "d": "2026-11-09",
+      "spot": 4114.5,
+      "fx": 150.56,
+      "parity": 232305,
+      "actual": 284300,
+      "premium": 22.38,
+      "silver": 3855
+    }
+  ]
+}

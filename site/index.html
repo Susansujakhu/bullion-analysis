@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bullion Analysis — Nepal vs the world price</title>
+<style>
+  :root{
+    --bg:#faf9f7; --panel:#fff; --ink:#1a1714; --muted:#6b635a; --line:#e6e1d9;
+    --gold:#b8862b; --gold-soft:#f0e3c8; --silver:#8a8d93;
+    --up:#b23c2e; --down:#2f7a55; --accent:#1f4e79;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme=light]){
+      --bg:#14120f; --panel:#1d1a16; --ink:#f0ebe3; --muted:#a09688; --line:#332e27;
+      --gold:#d9a842; --gold-soft:#3a2f1a; --silver:#9fa3aa;
+      --up:#e8705c; --down:#57b685; --accent:#7fb3e0;
+    }
+  }
+  :root[data-theme=dark]{
+    --bg:#14120f; --panel:#1d1a16; --ink:#f0ebe3; --muted:#a09688; --line:#332e27;
+    --gold:#d9a842; --gold-soft:#3a2f1a; --silver:#9fa3aa;
+    --up:#e8705c; --down:#57b685; --accent:#7fb3e0;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 20px 72px}
+  header{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}
+  h1{font-size:1.45rem;margin:0 0 6px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:.9rem}
+  .headline{font-size:1.15rem;line-height:1.45;margin:22px 0 28px;padding:16px 18px;
+    background:var(--gold-soft);border-left:3px solid var(--gold);border-radius:0 8px 8px 0}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin-bottom:28px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+  .card .value{font-size:1.5rem;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .card .note{font-size:.8rem;color:var(--muted);margin-top:6px}
+  .card.hero{background:linear-gradient(135deg,var(--gold-soft),var(--panel));border-color:var(--gold)}
+  .card.hero .value{font-size:1.85rem;color:var(--gold)}
+  h2{font-size:1rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+    margin:36px 0 14px;font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;font-variant-numeric:tabular-nums}
+  th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th:first-child,td:first-child{text-align:left}
+  th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  tbody tr:last-child td{border-bottom:none}
+  .scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:4px 14px}
+  .up{color:var(--up)} .down{color:var(--down)}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+  figcaption{font-size:.82rem;color:var(--muted);margin-top:10px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .flags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .flag{font:600 .7rem/1 var(--mono);text-transform:uppercase;letter-spacing:.05em;
+    padding:6px 9px;border-radius:5px;background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)}
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:.82rem;color:var(--muted)}
+  code{font:.85em var(--mono);background:var(--gold-soft);padding:1px 5px;border-radius:3px}
+  .err{padding:20px;border:1px solid var(--up);border-radius:10px;color:var(--up)}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><p class="sub">Loading…</p></div>
+
+<script>
+const npr = n => n==null ? '—' : 'NPR ' + Number(n).toLocaleString('en-IN');
+const pct = (n,d=2) => n==null ? '—' : (n>0?'+':'') + Number(n).toFixed(d) + '%';
+const cls = n => n==null ? '' : n>0 ? 'up' : n<0 ? 'down' : '';
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+fetch('analysis.json?' + Date.now())
+  .then(r => { if(!r.ok) throw new Error('analysis.json not found (HTTP '+r.status+')'); return r.json(); })
+  .then(render)
+  .catch(e => {
+    document.getElementById('app').innerHTML =
+      '<div class="err"><strong>Could not load data.</strong><br>' + esc(e.message) +
+      '<br><br>Run <code>npm run fetch &amp;&amp; npm run analyse</code>, then reload.</div>';
+  });
+
+function render(a){
+  const m = a.measured, ind = a.indicated;
+  const h = [];
+
+  h.push(`<header>
+    <h1>Bullion Analysis — Nepal vs the world price</h1>
+    <div class="sub">World price as of ${esc(a.asOf.record)} · Nepali rate measured ${esc(a.asOf.nepalMeasured)}${
+      a.asOf.isLive ? ' (live)' : ` (${a.asOf.staleDays} day${a.asOf.staleDays===1?'':'s'} ago — market closed)`}</div>
+  </header>`);
+
+  h.push(`<div class="headline">${esc(a.headline)}</div>`);
+
+  h.push(`<div class="grid">
+    <div class="card hero">
+      <div class="label">${a.asOf.isLive ? 'Indicated gold rate' : 'Indicated rate today'}</div>
+      <div class="value">${npr(ind.nprPerTola)}</div>
+      <div class="note">per tola · ${npr(ind.nprPer10g)} per 10 g</div>
+    </div>
+    <div class="card">
+      <div class="label">World gold</div>
+      <div class="value">$${a.international.goldUsdPerOz.toLocaleString('en-US')}</div>
+      <div class="note">per troy oz · $${a.international.goldUsdPerGram}/g</div>
+    </div>
+    <div class="card">
+      <div class="label">Local markup</div>
+      <div class="value">${pct(m.premiumPct)}</div>
+      <div class="note">${m.percentile}th percentile of ${m.historyDays} days · median ${pct(m.medianPct)}</div>
+    </div>
+    <div class="card">
+      <div class="label">USD / NPR</div>
+      <div class="value">${a.fx.usdNpr}</div>
+      <div class="note">NRB selling, ${esc(a.fx.asOf)}</div>
+    </div>
+  </div>`);
+
+  if(!a.asOf.isLive && ind.repriceGapPct != null){
+    h.push(`<div class="card" style="margin-bottom:28px">
+      <div class="label">Pending repricing</div>
+      <div class="value ${cls(ind.repriceGapPct)}">${pct(ind.repriceGapPct,1)}</div>
+      <div class="note">Last published ${npr(ind.lastPublishedNprPerTola)} on ${esc(a.asOf.nepalMeasured)}.
+        Carrying the ${pct(ind.usingPremiumPct)} markup onto today's world price and rupee gives
+        ${npr(ind.nprPerTola)} — a gap of ${npr(ind.repriceGapNpr)} per tola.</div>
+    </div>`);
+  }
+
+  // --- the premium chart is the point of the whole project ---
+  h.push('<h2>Local markup over world parity</h2>');
+  h.push(`<figure>${lineChart(a.series.map(s=>({x:s.d,y:s.premium})), {
+    band:[m.medianPct], fmt:v=>v.toFixed(0)+'%', color:'var(--gold)'
+  })}<figcaption>Each point is a day on which both a world price and a same-day Nepali rate exist.
+  Dashed line is the median of the current regime (${pct(m.medianPct)}). Customs duty and VAT are near-fixed,
+  so within one regime movement here is the local market, not the tax code.</figcaption></figure>`);
+
+  if(m.regimeShift){
+    const r = m.regimeShift;
+    h.push(`<div class="card" style="margin-top:14px;border-color:var(--gold)">
+      <div class="label">Regime break — ${esc(r.date)}</div>
+      <div class="note" style="margin-top:0">The markup stepped ${r.stepPp>0?'up':'down'} from ${pct(r.beforePct)}
+        to ${pct(r.afterPct)} (${r.stepPp>0?'+':''}${r.stepPp}pp) and held — the signature of a Finance Act duty
+        change, not a market move. The percentile above ranks only the ${r.rankedAgainstDaysSince} observations
+        since then; ranking across the break would measure a tax change rather than today's market.</div>
+    </div>`);
+  }
+
+  h.push('<h2>Nepali rate against world parity</h2>');
+  h.push(`<figure>${dualChart(a.series)}<figcaption>Gold (solid) is the published FENEGOSIDA rate per tola.
+  Parity (faint) is the same tola valued at the world price and the NRB rupee, before any Nepali cost.
+  The space between them is the markup.</figcaption></figure>`);
+
+  h.push('<h2>What a tola should cost — the cost ladder</h2>');
+  h.push(`<div class="scroll"><table><thead><tr><th>Step</th><th>Adds</th><th>Running total / tola</th></tr></thead><tbody>`);
+  for(const s of a.buildUp.steps){
+    h.push(`<tr><td>${esc(s.label)}</td><td>${s.add==null?'—':npr(s.add)}</td><td>${npr(s.amount)}</td></tr>`);
+  }
+  h.push(`<tr><td><strong>Expected retail</strong></td><td></td><td><strong>${npr(a.buildUp.expectedRetailNprPerTola)}</strong></td></tr>`);
+  h.push('</tbody></table></div>');
+  h.push(`<p class="sub" style="margin-top:12px">Ladder total ${pct(a.buildUp.impliedMarkupPct)} vs markup
+    measured at ${pct(m.premiumPct)}. The ladder rests on editable assumptions in
+    <code>config/parameters.json</code>; the measured figure does not.</p>`);
+
+  if(a.moves?.length){
+    h.push('<h2>What moved, and why</h2>');
+    h.push('<div class="scroll"><table><thead><tr><th>Window</th><th>World gold</th><th>USD/NPR</th><th>Nepali rate</th><th>Markup</th></tr></thead><tbody>');
+    for(const mv of a.moves){
+      h.push(`<tr><td>${esc(mv.label)}</td>
+        <td class="${cls(mv.spotPct)}">${pct(mv.spotPct,1)}</td>
+        <td class="${cls(mv.fxPct)}">${pct(mv.fxPct,1)}</td>
+        <td class="${cls(mv.nepalPct)}">${pct(mv.nepalPct,1)}</td>
+        <td class="${cls(mv.premiumPointChange)}">${mv.premiumPointChange==null?'—':(mv.premiumPointChange>0?'+':'')+mv.premiumPointChange.toFixed(1)+'pp'}</td></tr>`);
+    }
+    h.push('</tbody></table></div>');
+  }
+
+  if(a.flags?.length){
+    h.push('<div class="flags">' + a.flags.map(f=>`<span class="flag">${esc(f)}</span>`).join('') + '</div>');
+  }
+
+  h.push(`<footer>Generated ${esc(a.generatedAt)} · ${m.historyDays} same-day observations ·
+    sources: ${esc(a.international.source)}, ${esc(a.fx.source)}, FENEGOSIDA.<br>
+    Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.</footer>`);
+
+  document.getElementById('app').innerHTML = h.join('');
+}
+
+/* ---- charts: hand-rolled SVG, no libraries, no network ---- */
+
+function scale(vals, pad=0.08){
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const span = (hi-lo) || Math.abs(hi) || 1;
+  return { lo: lo - span*pad, hi: hi + span*pad };
+}
+
+function lineChart(pts, {band=[], fmt=v=>v.toFixed(0), color='var(--gold)'}={}){
+  if(pts.length < 2) return '<p class="sub">Not enough data to plot.</p>';
+  const W=900, H=260, L=52, R=12, T=14, B=28;
+  const ys = pts.map(p=>p.y).concat(band);
+  const {lo,hi} = scale(ys);
+  const x = i => L + (i/(pts.length-1))*(W-L-R);
+  const y = v => T + (1-(v-lo)/(hi-lo))*(H-T-B);
+
+  const path = pts.map((p,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(p.y).toFixed(1)}`).join('');
+  const area = path + `L${x(pts.length-1).toFixed(1)},${H-B}L${x(0).toFixed(1)},${H-B}Z`;
+
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Local markup over world parity, percent">`;
+  g += `<defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="${color}" stop-opacity=".22"/>
+    <stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>`;
+
+  for(let t=0;t<=4;t++){
+    const v = lo + (hi-lo)*t/4, yy = y(v);
+    g += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="var(--line)" stroke-width="1"/>`;
+    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${fmt(v)}</text>`;
+  }
+  g += `<path d="${area}" fill="url(#fade)"/>`;
+  g += `<path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>`;
+  for(const b of band){
+    g += `<line x1="${L}" y1="${y(b)}" x2="${W-R}" y2="${y(b)}" stroke="var(--muted)"
+      stroke-width="1" stroke-dasharray="5 4" opacity=".75"/>`;
+  }
+  const last = pts[pts.length-1];
+  g += `<circle cx="${x(pts.length-1)}" cy="${y(last.y)}" r="4" fill="${color}"/>`;
+  const step = Math.max(1, Math.floor(pts.length/6));
+  for(let i=0;i<pts.length;i+=step){
+    g += `<text x="${x(i)}" y="${H-7}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${pts[i].x.slice(5)}</text>`;
+  }
+  return g + '</svg>';
+}
+
+function dualChart(series){
+  if(series.length < 2) return '<p class="sub">Not enough data to plot.</p>';
+  const W=900,H=280,L=68,R=12,T=14,B=28;
+  const all = series.flatMap(s=>[s.actual,s.parity]).filter(Number.isFinite);
+  const {lo,hi} = scale(all);
+  const x = i => L + (i/(series.length-1))*(W-L-R);
+  const y = v => T + (1-(v-lo)/(hi-lo))*(H-T-B);
+  const line = key => series.map((s,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(s[key]).toFixed(1)}`).join('');
+
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Nepali published rate against world parity, NPR per tola">`;
+  for(let t=0;t<=4;t++){
+    const v = lo+(hi-lo)*t/4, yy=y(v);
+    g += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="var(--line)"/>`;
+    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${(v/1000).toFixed(0)}k</text>`;
+  }
+  g += `<path d="${line('parity')}" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="4 3" opacity=".8"/>`;
+  g += `<path d="${line('actual')}" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  const step = Math.max(1, Math.floor(series.length/6));
+  for(let i=0;i<series.length;i+=step){
+    g += `<text x="${x(i)}" y="${H-7}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${series[i].d.slice(5)}</text>`;
+  }
+  g += `<text x="${W-R}" y="${y(series[series.length-1].actual)-9}" text-anchor="end" font-size="11" fill="var(--gold)" font-weight="600">Nepali rate</text>`;
+  g += `<text x="${W-R}" y="${y(series[series.length-1].parity)+16}" text-anchor="end" font-size="11" fill="var(--muted)">world parity</text>`;
+  return g + '</svg>';
+}
+</script>
+</body>
+</html>

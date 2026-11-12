@@ -1,0 +1,94 @@
+name: Daily fetch and analysis
+
+# FENEGOSIDA stamps its publication around 04:30 UTC (10:15 Kathmandu), so the
+# run sits at 05:15 UTC / 11:00 NPT - late enough to catch the day's print,
+# early enough to be waiting when you open your mail.
+#
+# GitHub skews scheduled runs under load, sometimes by tens of minutes. That is
+# harmless here: records are stamped in Kathmandu time by the collector, so a
+# late run still lands on the right day.
+
+on:
+  schedule:
+    - cron: '15 5 * * *'
+  workflow_dispatch:
+    inputs:
+      force_email:
+        description: 'Send the digest even if nothing is flagged'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # commit the day's record back to the repo
+  pages: write      # publish the dashboard
+  id-token: write
+
+# Never let two runs race on the same history file.
+concurrency:
+  group: bullion-daily
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Only the mailer needs anything from npm; the collector and the analysis
+      # run on the standard library alone.
+      - run: npm install --omit=dev --no-audit --no-fund
+
+      - name: Fetch today's prices
+        run: node scripts/fetch.mjs
+
+      - name: Analyse
+        run: node scripts/analyse.mjs
+
+      - name: Commit the day's record
+        run: |
+          git config user.name  "bullion-bot"
+          git config user.email "bullion-bot@users.noreply.github.com"
+          git add data/ reports/ site/analysis.json
+          if git diff --staged --quiet; then
+            echo "Nothing changed - no commit."
+          else
+            git commit -m "data: $(date -u +%Y-%m-%d) rates and analysis"
+            # Rebase in case a human pushed between checkout and now.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
+          fi
+
+      - name: Email
+        continue-on-error: true   # a mail outage must not fail the data job
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_TO:   ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          FORCE: ${{ inputs.force_email }}
+        run: |
+          if [ -z "$SMTP_HOST" ]; then
+            echo "No SMTP_HOST secret set - skipping email."
+            exit 0
+          fi
+          if [ "$FORCE" = "true" ]; then
+            node scripts/notify.mjs --weekly
+          else
+            node scripts/notify.mjs
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,55 @@
+{
+  "_README": "Every number here is an ASSUMPTION used only to DECOMPOSE the premium into named parts. The headline signal (implied premium and its percentile) is computed from observed data and does not depend on any of it. Edit freely; nothing breaks.",
+  "constants": {
+    "gramsPerTroyOunce": 31.1034768,
+    "gramsPerTola": 11.6638038,
+    "_note": "gramsPerTola is the Nepali/Indian tola. Verified against FENEGOSIDA: their 10g and 1-tola prints differ by exactly this ratio."
+  },
+  "costBuildUp": {
+    "_note": "Nepal has no gold ETF and no sovereign gold bond; all retail gold is physically imported through NRB-licensed banks. These figures are the author's working assumptions and should be re-checked against the current Finance Act. `verified: false` means exactly that.",
+    "customsDutyNprPer10g": {
+      "value": 8000,
+      "verified": false,
+      "source": "Finance Act, specific duty per 10g on gold imports - CONFIRM CURRENT VALUE"
+    },
+    "vatRate": {
+      "value": 0.13,
+      "verified": true,
+      "source": "Nepal standard VAT 13%"
+    },
+    "importHandlingRate": {
+      "value": 0.01,
+      "verified": false,
+      "source": "bank import commission, insurance, freight, assay - estimate"
+    },
+    "dealerMarginRate": {
+      "value": 0.03,
+      "verified": false,
+      "source": "FENEGOSIDA member retail margin on the published rate - estimate"
+    }
+  },
+  "signal": {
+    "_note": "Thresholds for the written read and for email alerts.",
+    "premiumPercentileHigh": 80,
+    "premiumPercentileLow": 20,
+    "dailyMovePctAlert": 2,
+    "premiumPctAlertAbsolute": 35,
+    "historyWindowDays": 365,
+    "staleNepalDataDays": 3,
+    "regimeShiftPp": 4,
+    "_regimeNote": "A step of at least this many percentage points in the 10-day mean markup is treated as a duty/policy change, and the percentile is then ranked only against observations after it."
+  },
+  "rateTypeMap": {
+    "_note": "FENEGOSIDA returns Devanagari rateType labels. Map them to stable keys. Unknown labels are still stored, under a slugified key, so a new label is never silently dropped.",
+    "छापावाल सुन (१० ग्राम)": "gold_chhapawal_10g",
+    "छापावाल सुन (१ तोला)": "gold_chhapawal_tola",
+    "तेजाबी सुन (१० ग्राम)": "gold_tejabi_10g",
+    "तेजाबी सुन (१ तोला)": "gold_tejabi_tola",
+    "हलमार्क सुन (१० ग्राम)": "gold_hallmark_10g",
+    "हलमार्क सुन (१ तोला)": "gold_hallmark_tola",
+    "असली चाँदी दर (१० ग्राम)": "silver_10g",
+    "असली चाँदी दर (१ तोला)": "silver_tola"
+  },
+  "benchmarkKey": "gold_chhapawal_tola",
+  "silverBenchmarkKey": "silver_tola"
+}

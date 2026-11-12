@@ -1,0 +1,50 @@
+name: Weekly digest
+
+# Sunday, half an hour after the daily collector, so it reads a fresh record.
+# This is the one mail that always arrives; the daily job stays silent unless
+# something actually moved.
+
+on:
+  schedule:
+    - cron: '45 5 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bullion-weekly
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: npm install --omit=dev --no-audit --no-fund
+
+      # Re-run the analysis rather than trusting the committed artefact: if the
+      # daily job failed this morning, the digest should still be current as of
+      # the newest data in the repo.
+      - name: Analyse
+        run: node scripts/analyse.mjs
+
+      - name: Send digest
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_TO:   ${{ secrets.MAIL_TO }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+        run: |
+          if [ -z "$SMTP_HOST" ]; then
+            echo "No SMTP_HOST secret set - nothing to send."
+            exit 0
+          fi
+          node scripts/notify.mjs --weekly
