@@ -1,0 +1,4 @@
+# The workflows run on Ubuntu; CRLF in a shell block breaks it in ways that are
+# tedious to diagnose from an Actions log.
+* text=auto eol=lf
+*.ndjson text eol=lf
