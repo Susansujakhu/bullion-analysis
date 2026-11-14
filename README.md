@@ -63,6 +63,55 @@ feed those sites display, sends `Access-Control-Allow-Origin: *`, and is already
 collector's primary source — so the live ticker and the committed daily record can
 never disagree about where spot was.
 
+## The one-week outlook
+
+`npm run forecast` projects the Nepali rate five sessions out. The design rests on one
+admission and one real edge.
+
+**The admission:** at a one-week horizon world gold is close to a random walk. So it is
+given **no drift** — its central case is where it is now. Any model quoting a single
+number for gold next Friday is inventing precision.
+
+**The edge:** the Nepali markup is forecastable in a way world gold is not, and both of
+its properties are measured from this repo's own history on every run.
+
+| Property | Measured | Meaning |
+|---|---|---|
+| Mean reversion | AR(1) φ ≈ 0.86, half-life ≈ 4.6 sessions, R² ≈ 0.67 | Roughly half of any markup stretch decays within a week |
+| Stickiness | corr(spot move, markup change) ≈ **−0.52** | Local dealers follow world moves only partly, so the markup absorbs ~0.64pp of every 1% spot move |
+
+Stickiness is why the Nepali rate is **less volatile than world gold**, and including that
+covariance narrows the band by ~30% against treating the two legs as independent. No
+generic gold forecast can see it, because it only exists in the gap between a world price
+and a local print.
+
+### The band is back-tested, and the result is printed whether it flatters or not
+
+The method is walked through history, refitting at each step on only the data available
+at that point:
+
+| | Claimed | Realised |
+|---|---:|---:|
+| 68% band contained the outcome | 68% | **70%** |
+| 95% band contained the outcome | 95% | **94.3%** |
+
+Median absolute error 1.84% over 140 tests. If a future run comes out miscalibrated the
+report says so in bold rather than quietly presenting the band anyway — that check is the
+point of including it.
+
+### Two traps this had to avoid
+
+**Technicals are computed on a continuous Yahoo series**, not on `history.ndjson`. That
+file splices backfilled COMEX futures onto live spot, and a moving average turns that
+small step into a signal that is not there.
+
+**Seasonality is measured on deviations, with the post-duty-change window excluded.** On
+raw markup the table showed ~10% for Jan–May and ~20% for Jun–Oct, which looks like a
+powerful summer seasonal and is entirely the 1 June duty step. Even on deviations the
+step leaks for a further 60 observations while the trailing median absorbs it. With both
+corrections the remaining monthly pattern is ±1.5pp — i.e. noise, which is the honest
+answer with one year of data.
+
 ## The one distinction that matters
 
 Two kinds of number live in this repo and they are never mixed:
@@ -126,7 +175,7 @@ figure is then marginally overstated.
 
 | Workflow | When | Does |
 |---|---|---|
-| `daily.yml` | 05:15 UTC / 11:00 NPT daily | fetch → analyse → commit → publish dashboard → email **only if flagged** |
+| `daily.yml` | 05:15 UTC / 11:00 NPT daily | fetch → analyse → outlook → commit → publish dashboard → email **only if flagged** |
 | `weekly.yml` | 05:45 UTC Sunday | the digest that always arrives |
 
 The daily job stays quiet by design. A mail that says "gold did nothing again" trains you
@@ -140,6 +189,7 @@ to ignore the one that matters, so it only writes when `premium-high`, `premium-
 ```bash
 npm run fetch          # today's three legs -> data/history.ndjson
 npm run analyse        # -> data/analysis.json, reports/<date>.md, site/analysis.json
+npm run forecast       # -> data/forecast.json, reports/forecast-latest.md
 npm run serve          # dashboard at http://localhost:4010
 npm run backfill 365   # one-time history build (slow: one request per date)
 npm run notify -- --dry-run   # render the email without sending
@@ -168,6 +218,9 @@ lib/parity.mjs           the maths: parity, cost ladder, percentile, attribution
 lib/store.mjs            NDJSON history, one line per day
 scripts/fetch.mjs        daily collector
 scripts/analyse.mjs      the read
+scripts/forecast.mjs     the one-week outlook, with its own back-test
+lib/technical.mjs        SMA, RSI, realised vol, swing levels
+lib/forecast.mjs         AR(1) reversion, stickiness, the cone, the back-test
 scripts/backfill.mjs     one-time history builder
 scripts/notify.mjs       email
 site/index.html          dashboard, dependency-free, published to Pages

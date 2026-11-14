@@ -25,6 +25,11 @@ if (!fs.existsSync(analysisPath)) {
 }
 const a = JSON.parse(fs.readFileSync(analysisPath, 'utf8'));
 
+// Optional: the outlook is produced by a separate, non-fatal step, so the mail
+// has to work whether or not it exists.
+const forecastPath = path.join(ROOT, 'data', 'forecast.json');
+const fc = fs.existsSync(forecastPath) ? JSON.parse(fs.readFileSync(forecastPath, 'utf8')) : null;
+
 /* ------------------------------------------------- is this worth sending -- */
 
 const ALERTING = new Set(['premium-high', 'premium-low', 'big-daily-move', 'reprice-pending']);
@@ -56,6 +61,15 @@ const text = [
   '',
   `Local markup    ${pct(a.measured.premiumPct)}  (${a.measured.percentile}th pctile of ${a.measured.historyDays} days, median ${pct(a.measured.medianPct)})`,
   '',
+  ...(fc ? [
+    `-- one week out (${fc.horizonSessions} sessions) --`,
+    `Central         ${npr(fc.projection.centralNprPerTola)}  (${pct(fc.projection.centralChangePct, 1)})`,
+    `68% band        ${npr(fc.projection.band68.lo)} - ${npr(fc.projection.band68.hi)}`,
+    `Markup should   ${pct(fc.drivers.markupNowPct, 1)} -> ${pct(fc.drivers.markupExpectedPct, 1)}`,
+    fc.backtest ? `Band honesty    68% band held ${fc.backtest.coverage68Pct}% of the time over ${fc.backtest.n} tests` : null,
+    'World gold is given no drift - the band is the forecast, not the mid-point.',
+    '',
+  ] : []),
   'Flags: ' + ((a.flags ?? []).join(', ') || 'none'),
 ].filter((l) => l !== null).join('\n');
 

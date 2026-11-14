@@ -4,14 +4,19 @@
   "private": true,
   "type": "module",
   "description": "Scheduled gold & silver analysis: international spot vs the Nepali retail rate, and the gap between them.",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "fetch": "node scripts/fetch.mjs",
     "backfill": "node scripts/backfill.mjs",
     "analyse": "node scripts/analyse.mjs",
     "notify": "node scripts/notify.mjs",
-    "all": "npm run fetch && npm run analyse",
-    "serve": "node scripts/serve.mjs"
+    "all": "npm run fetch && npm run analyse && npm run forecast",
+    "serve": "node scripts/serve.mjs",
+    "forecast": "node scripts/forecast.mjs"
   },
-  "dependencies": { "nodemailer": "^6.9.14" }
+  "dependencies": {
+    "nodemailer": "^6.9.14"
+  }
 }

@@ -1,0 +1,185 @@
+{
+  "generatedAt": "2026-11-14T13:35:11.373Z",
+  "basis": {
+    "date": "2026-11-13",
+    "spotUsdOz": 3891.05,
+    "usdNpr": 150.21,
+    "nprPerTola": 271700,
+    "markupPct": 23.96,
+    "markupTrailingMedianPct": 20.87,
+    "observations": 245
+  },
+  "horizonSessions": 5,
+  "projection": {
+    "centralNprPerTola": 268155,
+    "centralChangePct": -1.3,
+    "band68": {
+      "lo": 260270,
+      "hi": 276279
+    },
+    "band95": {
+      "lo": 252919,
+      "hi": 284309
+    }
+  },
+  "drivers": {
+    "markupNowPct": 23.96,
+    "markupExpectedPct": 22.34,
+    "markupMovePp": -1.63,
+    "decayFactor": 0.474,
+    "ar1Phi": 0.8611,
+    "ar1HalfLifeSessions": 4.6,
+    "ar1R2": 0.669,
+    "spotDailyVolPct": 1.425,
+    "spot5SessionSdPct": 3.19,
+    "combinedSdPct": 2.98,
+    "combinedSdIgnoringStickinessPct": 4.28,
+    "stickinessDampeningPct": 30.3,
+    "vsSpotAloneDampeningPct": 6.4,
+    "spotMarkupCorr": -0.518,
+    "stickinessPpPerPctSpot": -0.639
+  },
+  "scenarios": [
+    {
+      "spotPct": -5,
+      "spotUsdOz": 3696.5,
+      "markupPct": 25.53,
+      "nprPerTola": 261378,
+      "changePct": -3.8
+    },
+    {
+      "spotPct": -2,
+      "spotUsdOz": 3813.2,
+      "markupPct": 23.61,
+      "nprPerTola": 265514,
+      "changePct": -2.28
+    },
+    {
+      "spotPct": 0,
+      "spotUsdOz": 3891.1,
+      "markupPct": 22.34,
+      "nprPerTola": 268132,
+      "changePct": -1.31
+    },
+    {
+      "spotPct": 2,
+      "spotUsdOz": 3968.9,
+      "markupPct": 21.06,
+      "nprPerTola": 270638,
+      "changePct": -0.39
+    },
+    {
+      "spotPct": 5,
+      "spotUsdOz": 4085.6,
+      "markupPct": 19.14,
+      "nprPerTola": 274186,
+      "changePct": 0.91
+    }
+  ],
+  "technicals": {
+    "gold": {
+      "label": "Gold (COMEX GC=F)",
+      "asOf": "2026-11-13",
+      "last": 3886.300048828125,
+      "trend": "downtrend",
+      "sma20": 4035.2049926757813,
+      "sma50": 4181.511987304688,
+      "sma200": 4472.245495605469,
+      "pctFromSma50": -7.059932851390682,
+      "pctFromSma200": -13.101817584770503,
+      "recentCross": null,
+      "rsi14": 35.93075522141473,
+      "dailyVol30": 0.01425403762378393,
+      "dailyVol90": 0.01401227454186535,
+      "slope20PctPerDay": -0.2037870238415778,
+      "support": [],
+      "resistance": [
+        4151.89990234375,
+        4167.5,
+        4216.2998046875
+      ]
+    },
+    "silver": {
+      "label": "Silver (COMEX SI=F)",
+      "asOf": "2026-11-13",
+      "last": 49.03099822998047,
+      "trend": "downtrend",
+      "sma20": 52.7367504119873,
+      "sma50": 58.476100006103515,
+      "sma200": 68.38173484802246,
+      "pctFromSma50": -16.152072000590334,
+      "pctFromSma200": -28.298107178837682,
+      "recentCross": null,
+      "rsi14": 33.31123188713339,
+      "dailyVol30": 0.026027450312878904,
+      "dailyVol90": 0.023639485289639012,
+      "slope20PctPerDay": -0.7265390037356338,
+      "support": [],
+      "resistance": [
+        60.01900100708008,
+        61.167999267578125,
+        61.91999816894531
+      ]
+    }
+  },
+  "backtest": {
+    "n": 140,
+    "coverage68Pct": 70,
+    "coverage95Pct": 94.3,
+    "medianAbsErrorPct": 1.84,
+    "meanErrorPct": 0.83,
+    "worstErrorPct": 8.9
+  },
+  "seasonality": [
+    {
+      "month": 2,
+      "name": "Feb",
+      "medianDevPp": 0.06383111110483952,
+      "n": 13
+    },
+    {
+      "month": 3,
+      "name": "Mar",
+      "medianDevPp": 1.3238961939742708,
+      "n": 21
+    },
+    {
+      "month": 4,
+      "name": "Apr",
+      "medianDevPp": 0.5208618181769431,
+      "n": 21
+    },
+    {
+      "month": 5,
+      "name": "May",
+      "medianDevPp": 0.49704312670514383,
+      "n": 20
+    },
+    {
+      "month": 8,
+      "name": "Aug",
+      "medianDevPp": -0.49920073907329154,
+      "n": 4
+    },
+    {
+      "month": 9,
+      "name": "Sep",
+      "medianDevPp": -0.37803351322928336,
+      "n": 21
+    },
+    {
+      "month": 10,
+      "name": "Oct",
+      "medianDevPp": 0.8954886628714362,
+      "n": 18
+    },
+    {
+      "month": 11,
+      "name": "Nov",
+      "medianDevPp": 1.5523411819187807,
+      "n": 7
+    }
+  ],
+  "seasonalityExcluded": 60,
+  "seasonalityBreakDate": "2026-06-01"
+}

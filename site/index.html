@@ -219,6 +219,8 @@ function render(a){
     h.push('</tbody></table></div>');
   }
 
+  h.push('<div id="forecast-slot"></div>');
+
   if(a.flags?.length){
     h.push('<div class="flags">' + a.flags.map(f=>`<span class="flag">${esc(f)}</span>`).join('') + '</div>');
   }
@@ -229,6 +231,157 @@ function render(a){
 
   document.getElementById('app').innerHTML = h.join('');
   startLive(a);
+
+  // The outlook is a separate file so a failure to produce it never takes the
+  // rest of the dashboard down with it.
+  fetch('forecast.json?' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(f => { if(f) renderForecast(f, a); })
+    .catch(() => {});
+}
+
+function renderForecast(f, a){
+  const slot = document.getElementById('forecast-slot');
+  if(!slot) return;
+  const p = f.projection, d = f.drivers, b = f.backtest;
+  const h = [];
+
+  h.push('<h2>One-week outlook</h2>');
+  h.push(`<p class="sub" style="margin:-4px 0 16px">At five sessions world gold is close to a random walk, so it is given
+    <strong>no drift</strong> — the central case is where it is now. What is forecast here is the Nepali markup, which
+    mean-reverts measurably (half-life ${d.ar1HalfLifeSessions} sessions, R² ${d.ar1R2}). Read the band, not the mid-point.</p>`);
+
+  h.push(`<div class="grid">
+    <div class="card hero">
+      <div class="label">Central, 5 sessions out</div>
+      <div class="value">${npr(p.centralNprPerTola)}</div>
+      <div class="note">${pct(p.centralChangePct)} from ${npr(f.basis.nprPerTola)} on ${esc(f.basis.date)}</div>
+    </div>
+    <div class="card">
+      <div class="label">68% band</div>
+      <div class="value" style="font-size:1.1rem">${npr(p.band68.lo)}<br>— ${npr(p.band68.hi)}</div>
+      <div class="note">±${d.combinedSdPct}% combined</div>
+    </div>
+    <div class="card">
+      <div class="label">95% band</div>
+      <div class="value" style="font-size:1.1rem">${npr(p.band95.lo)}<br>— ${npr(p.band95.hi)}</div>
+      <div class="note">the realistic worst and best case</div>
+    </div>
+    <div class="card">
+      <div class="label">Markup reversion</div>
+      <div class="value">${d.markupMovePp > 0 ? '+' : ''}${d.markupMovePp}pp</div>
+      <div class="note">${pct(d.markupNowPct,1)} → ${pct(d.markupExpectedPct,1)} · ${((1-d.decayFactor)*100).toFixed(0)}% of the stretch decays</div>
+    </div>
+  </div>`);
+
+  h.push(`<figure>${coneChart(a.series, f)}<figcaption>Solid gold is the published Nepali rate.
+    The shaded cone is the projection: darker is the 68% band, lighter the 95%. It tilts
+    ${p.centralChangePct < 0 ? 'down' : 'up'} because the markup is currently ${pct(d.markupNowPct,1)} against a trailing
+    median of ${pct(f.basis.markupTrailingMedianPct,1)}, not because of any view on world gold.</figcaption></figure>`);
+
+  if(b){
+    const ok = Math.abs(b.coverage68Pct-68) <= 10 && Math.abs(b.coverage95Pct-95) <= 7;
+    h.push(`<div class="card" style="margin-top:16px;border-color:${ok ? 'var(--down)' : 'var(--up)'}">
+      <div class="label">Does this method work? — ${b.n} out-of-sample tests</div>
+      <div class="note" style="margin-top:2px">
+        The 68% band actually contained the outcome <strong>${b.coverage68Pct}%</strong> of the time;
+        the 95% band, <strong>${b.coverage95Pct}%</strong>. Median absolute error ${b.medianAbsErrorPct}%,
+        worst ${b.worstErrorPct}%. Refit at each step on only the data available then.
+        ${ok ? 'Both bands are close to honest.' : '<strong>The bands are miscalibrated — weight this projection accordingly.</strong>'}
+      </div>
+    </div>`);
+  }
+
+  h.push('<h2>If world gold does X</h2>');
+  h.push('<div class="scroll"><table><thead><tr><th>World gold</th><th>Spot</th><th>Markup then</th><th>Nepali rate</th><th>vs now</th></tr></thead><tbody>');
+  for(const s of f.scenarios){
+    h.push(`<tr><td>${s.spotPct>0?'+':''}${s.spotPct}%</td><td>$${s.spotUsdOz}</td>
+      <td>${pct(s.markupPct,1)}</td><td><strong>${npr(s.nprPerTola)}</strong></td>
+      <td class="${cls(s.changePct)}">${pct(s.changePct,1)}</td></tr>`);
+  }
+  h.push('</tbody></table></div>');
+  h.push(`<p class="sub" style="margin-top:12px">The Nepali column moves less than the world column — local prices are
+    sticky, absorbing about ${Math.abs(d.stickinessPpPerPctSpot).toFixed(2)}pp of every 1% spot move
+    (correlation ${d.spotMarkupCorr}). That narrows the band by ${d.stickinessDampeningPct}% versus treating the two
+    legs as independent, and is invisible to any generic gold forecast.</p>`);
+
+  const t = f.technicals?.gold;
+  if(t){
+    h.push('<h2>Technical state — world gold</h2>');
+    h.push(`<div class="scroll"><table><tbody>
+      <tr><td>Trend</td><td>${esc(t.trend)}${t.recentCross ? ' · <strong>'+esc(t.recentCross)+'</strong>' : ''}</td></tr>
+      <tr><td>Last / 50-day / 200-day</td><td>$${fmtUsd(t.last)} · $${fmtUsd(t.sma50)} · $${fmtUsd(t.sma200)}</td></tr>
+      <tr><td>Distance from 50 / 200-day</td><td>${pct(t.pctFromSma50,1)} · ${pct(t.pctFromSma200,1)}</td></tr>
+      <tr><td>RSI(14)</td><td>${t.rsi14?.toFixed(0) ?? '—'}</td></tr>
+      <tr><td>Resistance above</td><td>${t.resistance?.length ? t.resistance.map(v=>'$'+fmtUsd(v)).join(' · ') : 'none in lookback'}</td></tr>
+      <tr><td>Support below</td><td>${t.support?.length ? t.support.map(v=>'$'+fmtUsd(v)).join(' · ') : '<strong>none</strong> — at or below every swing low in the lookback'}</td></tr>
+    </tbody></table></div>`);
+    h.push(`<p class="sub" style="margin-top:12px">These describe the chart; they are not what drives the projection
+      above. At a one-week horizon the volatility estimate carries far more information than any level here.</p>`);
+  }
+
+  h.push(`<p class="sub" style="margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-radius:8px">
+    <strong>Information only — not investment advice.</strong> This is a statistical description of published prices.
+    Dealer buy/sell spreads alone exceed most of the moves projected here, and gold in Nepal is a hold-for-years asset
+    rather than a weekly trade.</p>`);
+
+  slot.innerHTML = h.join('');
+}
+
+function fmtUsd(n){ return n==null ? '—' : Number(n).toLocaleString('en-US',{maximumFractionDigits:0}); }
+
+/** History plus a forward cone. The cone starts exactly at the last actual. */
+function coneChart(series, f){
+  const tail = series.filter(s=>s.actual!=null).slice(-45);
+  if(tail.length < 5) return '<p class="sub">Not enough history to plot.</p>';
+  const H = f.horizonSessions, p = f.projection;
+  const last = tail[tail.length-1].actual;
+
+  const W=900, HT=300, L=68, R=58, T=14, B=28;
+  const all = tail.map(s=>s.actual).concat([p.band95.lo, p.band95.hi]);
+  const lo = Math.min(...all), hi = Math.max(...all);
+  const span = (hi-lo)||1, y0 = lo-span*0.08, y1 = hi+span*0.08;
+  const total = tail.length - 1 + H;
+  const x = i => L + (i/total)*(W-L-R);
+  const y = v => T + (1-(v-y0)/(y1-y0))*(HT-T-B);
+
+  // Bands widen with the square root of elapsed sessions, matching how the
+  // variance actually accumulates - a straight taper would overstate the
+  // near days and understate the far ones.
+  const grow = k => Math.sqrt(k/H);
+  const band = (loV,hiV) => {
+    const up=[], dn=[];
+    for(let k=0;k<=H;k++){
+      const i = tail.length-1+k, g = grow(k);
+      up.push(`${x(i).toFixed(1)},${y(last + (hiV-last)*g).toFixed(1)}`);
+      dn.push(`${x(i).toFixed(1)},${y(last + (loV-last)*g).toFixed(1)}`);
+    }
+    return 'M' + up.join('L') + 'L' + dn.reverse().join('L') + 'Z';
+  };
+
+  let g = `<svg viewBox="0 0 ${W} ${HT}" role="img" aria-label="Nepali gold rate with a five-session projection cone">`;
+  for(let t=0;t<=4;t++){
+    const v = y0+(y1-y0)*t/4, yy=y(v);
+    g += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="var(--line)"/>`;
+    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${(v/1000).toFixed(0)}k</text>`;
+  }
+  g += `<path d="${band(p.band95.lo,p.band95.hi)}" fill="var(--gold)" opacity=".13"/>`;
+  g += `<path d="${band(p.band68.lo,p.band68.hi)}" fill="var(--gold)" opacity=".26"/>`;
+
+  const hist = tail.map((s,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(s.actual).toFixed(1)}`).join('');
+  g += `<path d="${hist}" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  g += `<path d="M${x(tail.length-1).toFixed(1)},${y(last).toFixed(1)}L${x(total).toFixed(1)},${y(p.centralNprPerTola).toFixed(1)}"
+    stroke="var(--gold)" stroke-width="2" stroke-dasharray="5 4" fill="none"/>`;
+  g += `<line x1="${x(tail.length-1)}" y1="${T}" x2="${x(tail.length-1)}" y2="${HT-B}" stroke="var(--muted)" stroke-dasharray="2 4" opacity=".5"/>`;
+  g += `<circle cx="${x(total)}" cy="${y(p.centralNprPerTola)}" r="4" fill="var(--gold)"/>`;
+  g += `<text x="${x(total)+7}" y="${y(p.centralNprPerTola)+4}" font-size="11" fill="var(--gold)" font-weight="600">${Math.round(p.centralNprPerTola/1000)}k</text>`;
+  g += `<text x="${x(tail.length-1)+5}" y="${HT-9}" font-size="10.5" fill="var(--muted)">now</text>`;
+
+  const step = Math.max(1, Math.floor(tail.length/5));
+  for(let i=0;i<tail.length;i+=step){
+    g += `<text x="${x(i)}" y="${HT-9}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${tail[i].d.slice(5)}</text>`;
+  }
+  return g + '</svg>';
 }
 
 /* ---- live Nepali price ---------------------------------------------------

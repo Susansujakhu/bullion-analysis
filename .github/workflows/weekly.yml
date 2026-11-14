@@ -36,6 +36,10 @@ jobs:
       - name: Analyse
         run: node scripts/analyse.mjs
 
+      - name: One-week outlook
+        continue-on-error: true
+        run: node scripts/forecast.mjs
+
       - name: Send digest
         env:
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
