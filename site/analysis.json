@@ -1,68 +1,68 @@
 {
-  "generatedAt": "2026-11-13T13:03:25.714Z",
+  "generatedAt": "2026-11-14T12:08:04.278Z",
   "asOf": {
-    "record": "2026-11-13",
-    "spot": "2026-11-13T13:02:53Z",
-    "fx": "2026-11-12",
+    "record": "2026-11-14",
+    "spot": "2026-11-14T12:07:55Z",
+    "fx": "2026-11-13",
     "nepalMeasured": "2026-11-13",
-    "staleDays": 0,
-    "isLive": true
+    "staleDays": 1,
+    "isLive": false
   },
   "international": {
-    "goldUsdPerOz": 3891.05,
-    "silverUsdPerOz": 49.91,
-    "goldUsdPerGram": 125.1,
+    "goldUsdPerOz": 3887.6,
+    "silverUsdPerOz": 48.65,
+    "goldUsdPerGram": 124.99,
     "source": "gold-api.com (spot)"
   },
   "fx": {
-    "usdNpr": 150.21,
-    "usdNprBuy": 149.61,
+    "usdNpr": 150.78,
+    "usdNprBuy": 150.18,
     "inrNpr": 1.6015,
     "source": "Nepal Rastra Bank (official)",
-    "asOf": "2026-11-12"
+    "asOf": "2026-11-13"
   },
   "parity": {
-    "nprPerTola": 219178,
-    "nprPer10g": 187913,
-    "nprPerGram": 18791,
-    "silverNprPerTola": 2811
+    "nprPerTola": 219815,
+    "nprPer10g": 188459,
+    "nprPerGram": 18846,
+    "silverNprPerTola": 2751
   },
   "buildUp": {
     "steps": [
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 219178,
+        "amount": 219815,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 221370,
-        "add": 2192
+        "amount": 222013,
+        "add": 2198
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 230701,
+        "amount": 231344,
         "add": 9331
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 260692,
-        "add": 29991
+        "amount": 261419,
+        "add": 30075
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 268513,
-        "add": 7821
+        "amount": 269261,
+        "add": 7843
       }
     ],
-    "expectedRetailNprPerTola": 268513,
-    "expectedRetailNprPer10g": 230210,
-    "impliedMarkupPct": 22.51,
+    "expectedRetailNprPerTola": 269261,
+    "expectedRetailNprPer10g": 230852,
+    "impliedMarkupPct": 22.49,
     "assumptionsUnverified": [
       {
         "key": "customsDutyNprPer10g",
@@ -83,15 +83,15 @@
   },
   "indicated": {
     "_note": "Today's world price and rupee carried through the measured local markup. What a tola should cost now.",
-    "nprPerTola": 271700,
-    "nprPer10g": 232943,
-    "nprPerGram": 23294,
-    "atMedianPremiumNprPerTola": 264984,
+    "nprPerTola": 272489,
+    "nprPer10g": 233619,
+    "nprPerGram": 23362,
+    "atMedianPremiumNprPerTola": 265753,
     "usingPremiumPct": 23.96,
-    "silverNprPerTola": 3700,
+    "silverNprPerTola": 3620,
     "lastPublishedNprPerTola": 271700,
-    "repriceGapPct": 0,
-    "repriceGapNpr": 0
+    "repriceGapPct": 0.29,
+    "repriceGapNpr": 789
   },
   "measured": {
     "date": "2026-11-13",
@@ -107,7 +107,7 @@
     "meanPct": 20.9,
     "medianPct": 20.9,
     "sdPct": 1.63,
-    "vsExpectedRetailPct": 1.19,
+    "vsExpectedRetailPct": 0.91,
     "regimeShift": {
       "date": "2026-06-01",
       "stepPp": 9.4,
@@ -197,7 +197,8 @@
   "verdict": "local-expensive",
   "headline": "Nepali gold carried a +23.96% markup over the world price on 2026-11-13 - its 96th percentile. Dear by local standards.",
   "flags": [
-    "premium-high"
+    "premium-high",
+    "nepal-market-closed"
   ],
   "series": [
     {
