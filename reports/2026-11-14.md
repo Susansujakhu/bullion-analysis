@@ -115,6 +115,6 @@ The ratio is the standard bullion yardstick, and locally it carries extra inform
 
 ---
 
-Generated 2026-11-14T13:53:11.054Z · flags: premium-high, silver-premium-high, silver-reprice-pending, nepal-market-closed
+Generated 2026-11-14T13:54:19.776Z · flags: premium-high, silver-premium-high, silver-reprice-pending, nepal-market-closed
 
 Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.
