@@ -99,6 +99,6 @@ One year of history is one observation of each month, and these windows overlap.
 
 ---
 
-Generated 2026-11-14T13:35:11.373Z · basis 2026-11-13 · 245 same-day observations · AR(1) φ=0.8611, half-life 4.6 sessions, R²=0.669
+Generated 2026-11-14T13:35:46.277Z · basis 2026-11-13 · 245 same-day observations · AR(1) φ=0.8611, half-life 4.6 sessions, R²=0.669
 
 **Information only. Not investment advice.** This is a statistical description of published prices, not a recommendation to buy or sell anything. Dealer buy/sell spreads alone exceed most of the moves projected here, and gold in Nepal is a hold-for-years asset rather than a weekly trade.
