@@ -52,6 +52,33 @@
   figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
   figcaption{font-size:.82rem;color:var(--muted);margin-top:10px}
   svg{display:block;width:100%;height:auto;overflow:visible}
+  /* ---- live ticker ---- */
+  .live{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));margin-bottom:12px}
+  .metal{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;position:relative;overflow:hidden}
+  .metal.gold{border-color:var(--gold)}
+  .metal.gold::before,.metal.silver::before{content:"";position:absolute;inset:0 0 auto 0;height:3px}
+  .metal.gold::before{background:linear-gradient(90deg,var(--gold),transparent)}
+  .metal.silver::before{background:linear-gradient(90deg,var(--silver),transparent)}
+  .metal h3{margin:0 0 2px;font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
+  .big{font-size:2.05rem;font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums;line-height:1.15;
+    transition:color .35s ease}
+  .metal.gold .big{color:var(--gold)}
+  .metal.silver .big{color:var(--silver)}
+  .big.flash-up{color:var(--up)!important} .big.flash-down{color:var(--down)!important}
+  .units{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:.82rem;color:var(--muted);
+    font-variant-numeric:tabular-nums}
+  .units b{color:var(--ink);font-weight:600}
+  .metal .rule{border-top:1px solid var(--line);margin:14px 0 11px}
+  .kv{display:flex;justify-content:space-between;gap:12px;font-size:.82rem;padding:3px 0}
+  .kv span:first-child{color:var(--muted)}
+  .kv span:last-child{font-variant-numeric:tabular-nums}
+  .livebar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 14px;font-size:.82rem;color:var(--muted)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--down);flex:none;
+    box-shadow:0 0 0 0 rgba(47,122,85,.55);animation:pulse 2.4s infinite}
+  .dot.stale{background:var(--muted);animation:none}
+  .dot.dead{background:var(--up);animation:none}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,122,85,.5)}70%{box-shadow:0 0 0 7px rgba(47,122,85,0)}100%{box-shadow:0 0 0 0 rgba(47,122,85,0)}}
+  @media (prefers-reduced-motion:reduce){.dot{animation:none}.big{transition:none}}
   .flags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
   .flag{font:600 .7rem/1 var(--mono);text-transform:uppercase;letter-spacing:.05em;
     padding:6px 9px;border-radius:5px;background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)}
@@ -91,16 +118,36 @@ function render(a){
 
   h.push(`<div class="headline">${esc(a.headline)}</div>`);
 
+  // Live Nepali price. FENEGOSIDA prints once a day and then sits still; the
+  // world price does not. These two cards carry each tick through Nepal's
+  // duty, VAT and margin so the rupee figure moves with the market.
+  h.push(`<div class="livebar">
+    <span class="dot" id="live-dot"></span>
+    <span id="live-status">Connecting to the live feed…</span>
+    <span>·</span>
+    <span>Rupee held at the NRB daily rate (${a.fx.usdNpr}, ${esc(a.fx.asOf)}) — NRB publishes once a day</span>
+  </div>`);
+
+  h.push(`<div class="live">
+    ${metalCard('gold', 'Gold — live Nepali rate', a)}
+    ${metalCard('silver', 'Silver — live Nepali rate', a)}
+  </div>`);
+
+  h.push(`<p class="sub" style="margin:0 0 30px">
+    <strong>Market rate</strong> applies the markup actually measured against FENEGOSIDA
+    (${pct(a.live.gold.measuredMarkupPct)} gold, ${pct(a.live.silver.measuredMarkupPct)} silver) — it already contains
+    duty, VAT and margin, and assumes nothing about any of them.
+    <strong>Statutory build-up</strong> adds each cost explicitly from
+    <code>config/parameters.json</code>. For gold those are independent, and they currently agree to within
+    ${Math.abs(a.buildUp.impliedMarkupPct - a.measured.premiumPct).toFixed(1)}pp. For silver the duty was back-solved
+    from observed prices, so its ladder describes the markup rather than confirming it.
+  </p>`);
+
   h.push(`<div class="grid">
-    <div class="card hero">
-      <div class="label">${a.asOf.isLive ? 'Indicated gold rate' : 'Indicated rate today'}</div>
-      <div class="value">${npr(ind.nprPerTola)}</div>
-      <div class="note">per tola · ${npr(ind.nprPer10g)} per 10 g</div>
-    </div>
     <div class="card">
-      <div class="label">World gold</div>
+      <div class="label">World gold — daily record</div>
       <div class="value">$${a.international.goldUsdPerOz.toLocaleString('en-US')}</div>
-      <div class="note">per troy oz · $${a.international.goldUsdPerGram}/g</div>
+      <div class="note">the ${esc(a.asOf.record)} snapshot everything below is computed from · $${a.international.goldUsdPerGram}/g</div>
     </div>
     <div class="card">
       <div class="label">Local markup</div>
@@ -181,6 +228,163 @@ function render(a){
     Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.</footer>`);
 
   document.getElementById('app').innerHTML = h.join('');
+  startLive(a);
+}
+
+/* ---- live Nepali price ---------------------------------------------------
+   The world price moves all day; FENEGOSIDA prints once and stops. Poll spot,
+   run it through the same arithmetic the backend uses, and show the rupee
+   figure that implies right now.
+
+   The rupee leg is deliberately held fixed: NRB publishes once a day, so the
+   daily rate is the correct one to carry until tomorrow's run. Only the metal
+   price is live.                                                            */
+
+function metalCard(metal, title, a){
+  const m = a.live[metal];
+  const last = m.lastPublishedNprPerTola;
+  return `<div class="metal ${metal}">
+    <h3>${title}</h3>
+    <div class="big" id="${metal}-market">—</div>
+    <div class="units">
+      <span><b id="${metal}-10g">—</b> / 10 g</span>
+      <span><b id="${metal}-g">—</b> / gram</span>
+    </div>
+    <div class="rule"></div>
+    <div class="kv"><span>Spot</span><span id="${metal}-spot">—</span></div>
+    <div class="kv"><span>World parity</span><span id="${metal}-parity">—</span></div>
+    <div class="kv"><span>Statutory build-up${m.ladderIsCalibrated ? ' *' : ''}</span><span id="${metal}-statutory">—</span></div>
+    <div class="kv"><span>FENEGOSIDA ${esc(m.lastPublishedDate)}</span><span>${last == null ? '—' : npr(last)}</span></div>
+    <div class="kv"><span>vs that print</span><span id="${metal}-delta">—</span></div>
+  </div>`;
+}
+
+function nepalFrom(spotUsdOz, L, m){
+  const c = L.constants;
+  const parityTola = (spotUsdOz / c.gramsPerTroyOunce) * L.usdNpr * c.gramsPerTola;
+  const d = m.ladder;
+  // Same ladder order as lib/parity.mjs: handling -> duty -> VAT -> margin.
+  const cif = parityTola * (1 + d.importHandlingRate);
+  const landed = cif + (d.customsDutyNprPer10g / 10) * c.gramsPerTola;
+  const statutory = landed * (1 + d.vatRate) * (1 + d.dealerMarginRate);
+  return {
+    parityTola,
+    market: parityTola * (1 + m.measuredMarkupPct / 100),
+    statutory,
+  };
+}
+
+function startLive(a){
+  const L = a.live;
+  if(!L || !L.endpoints){ return; }
+
+  const dot = document.getElementById('live-dot');
+  const status = document.getElementById('live-status');
+  const prev = {};
+  let lastOk = 0, timer = null;
+
+  const setText = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = v; };
+
+  function paint(metal, spot){
+    const m = L[metal];
+    if(!(spot > 0) || m.measuredMarkupPct == null) return;
+    const p = nepalFrom(spot, L, m);
+    const c = L.constants;
+
+    const el = document.getElementById(metal + '-market');
+    if(el && prev[metal] != null && Math.abs(p.market - prev[metal]) > 0.5){
+      const cl = p.market > prev[metal] ? 'flash-up' : 'flash-down';
+      el.classList.add(cl);
+      setTimeout(() => el.classList.remove(cl), 900);
+    }
+    prev[metal] = p.market;
+
+    setText(metal + '-market', npr(Math.round(p.market)));
+    setText(metal + '-10g',  npr(Math.round(p.market / c.gramsPerTola * 10)));
+    setText(metal + '-g',    npr(Math.round(p.market / c.gramsPerTola)));
+    setText(metal + '-spot', '$' + spot.toLocaleString('en-US', {maximumFractionDigits: metal === 'gold' ? 1 : 2}) + ' / oz');
+    setText(metal + '-parity', npr(Math.round(p.parityTola)));
+    setText(metal + '-statutory', npr(Math.round(p.statutory)));
+
+    const last = m.lastPublishedNprPerTola;
+    const dEl = document.getElementById(metal + '-delta');
+    if(dEl && last){
+      const dp = (p.market / last - 1) * 100;
+      dEl.textContent = pct(dp, 1) + ' (' + npr(Math.round(p.market - last)) + ')';
+      dEl.className = cls(dp);
+    }
+  }
+
+  async function tick(){
+    try {
+      const [xau, xag] = await Promise.all([
+        fetch(L.endpoints.xau, {cache:'no-store'}).then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status))),
+        fetch(L.endpoints.xag, {cache:'no-store'}).then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status))),
+      ]);
+      paint('gold', Number(xau.price));
+      paint('silver', Number(xag.price));
+      lastOk = Date.now();
+      dot.className = 'dot';
+      status.textContent = 'Live — updated just now, every ' + L.pollSeconds + 's';
+    } catch (err) {
+      // Never blank out a good number because one poll failed; say it is old.
+      const age = lastOk ? Math.round((Date.now() - lastOk)/1000) : null;
+      if(age == null){
+        dot.className = 'dot dead';
+        status.textContent = 'Live feed unreachable — showing today\'s fixed figures below instead';
+        fallbackToDaily(a);
+      } else {
+        dot.className = 'dot stale';
+        status.textContent = 'Live feed stalled — last good tick ' + fmtAge(age) + ' ago';
+      }
+    }
+  }
+
+  function heartbeat(){
+    if(!lastOk) return;
+    const age = Math.round((Date.now() - lastOk)/1000);
+    if(age > L.staleAfterSeconds){
+      dot.className = 'dot stale';
+      status.textContent = 'Live feed stalled — last good tick ' + fmtAge(age) + ' ago';
+    } else if(age > 5){
+      status.textContent = 'Live — updated ' + fmtAge(age) + ' ago, every ' + L.pollSeconds + 's';
+    }
+  }
+
+  function schedule(){
+    clearInterval(timer);
+    timer = setInterval(tick, Math.max(15, L.pollSeconds) * 1000);
+  }
+
+  // Polling a public endpoint from a hidden tab is just rudeness; stop when
+  // the page is not being looked at, and refresh immediately on return.
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){ clearInterval(timer); }
+    else { tick(); schedule(); }
+  });
+
+  tick();
+  schedule();
+  setInterval(heartbeat, 5000);
+}
+
+function fallbackToDaily(a){
+  // No live feed: show the figures the scheduled run already computed.
+  const c = a.live.constants;
+  for(const [metal, val] of [['gold', a.indicated.nprPerTola], ['silver', a.indicated.silverNprPerTola]]){
+    if(val == null) continue;
+    const set = (id,v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
+    set(metal + '-market', npr(val));
+    set(metal + '-10g', npr(Math.round(val / c.gramsPerTola * 10)));
+    set(metal + '-g', npr(Math.round(val / c.gramsPerTola)));
+    set(metal + '-spot', '$' + a.live[metal].baselineSpotUsdOz + ' / oz (daily)');
+  }
+}
+
+function fmtAge(s){
+  if(s < 60) return s + 's';
+  if(s < 3600) return Math.round(s/60) + 'm';
+  return Math.round(s/3600) + 'h';
 }
 
 /* ---- charts: hand-rolled SVG, no libraries, no network ---- */

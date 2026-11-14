@@ -51,5 +51,36 @@
     "असली चाँदी दर (१ तोला)": "silver_tola"
   },
   "benchmarkKey": "gold_chhapawal_tola",
-  "silverBenchmarkKey": "silver_tola"
+  "silverBenchmarkKey": "silver_tola",
+  "silverCostBuildUp": {
+    "_note": "Silver carries a far smaller specific duty than gold. This duty figure was BACK-SOLVED from observed FENEGOSIDA prices, not read from the Finance Act - so for silver the ladder is a description of the observed markup, not an independent check on it. Correct it if you find the statutory rate.",
+    "customsDutyNprPer10g": {
+      "value": 270,
+      "verified": false,
+      "calibrated": true,
+      "source": "back-solved from observed silver retail vs parity on 2026-11-09 - NOT a statutory figure"
+    },
+    "vatRate": {
+      "value": 0.13,
+      "verified": true,
+      "source": "Nepal standard VAT 13%"
+    },
+    "importHandlingRate": {
+      "value": 0.01,
+      "verified": false,
+      "source": "bank import commission, insurance, freight - estimate"
+    },
+    "dealerMarginRate": {
+      "value": 0.03,
+      "verified": false,
+      "source": "member retail margin - estimate"
+    }
+  },
+  "live": {
+    "_note": "Client-side live ticker. The dashboard polls this endpoint directly from the browser; it is the same source the daily collector uses, so the ticker and the committed record never disagree.",
+    "spotEndpointXAU": "https://api.gold-api.com/price/XAU",
+    "spotEndpointXAG": "https://api.gold-api.com/price/XAG",
+    "pollSeconds": 60,
+    "staleAfterSeconds": 420
+  }
 }

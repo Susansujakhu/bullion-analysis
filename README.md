@@ -31,6 +31,38 @@ dominant one.
 
 ---
 
+## The live Nepali rate
+
+FENEGOSIDA prints once a day and then sits still. The world price does not. So the
+dashboard polls spot every 60 seconds in the browser and carries each tick through
+Nepal's costs, giving a live rupee rate for **both metals** between prints.
+
+Two figures per metal, and the difference matters:
+
+- **Market rate** (the headline) applies the markup *measured* against FENEGOSIDA.
+  That markup already contains duty, VAT and margin, so this number assumes nothing
+  about any of them.
+- **Statutory build-up** adds each cost explicitly from `config/parameters.json`.
+  For gold this is an independent calculation and the two currently agree to within
+  0.1pp. For silver the duty was back-solved from observed prices, so its ladder
+  *describes* the markup rather than confirming it — the dashboard marks it with `*`.
+
+**The rupee leg is deliberately not live.** NRB publishes once a day, so the daily
+rate is the correct one to hold until tomorrow's run. Only the metal price ticks.
+
+Polling pauses when the tab is hidden and resumes on return. If the feed fails the
+page keeps the last good number and says how old it is, rather than blanking out; if
+it never connects at all, it falls back to the figures the scheduled run computed.
+
+### Why not goldprice.org / silverprice.org
+
+Their backend (`data-asg.goldprice.org`) returns **HTTP 403 to any non-browser
+request**, with or without a Referer — it is Cloudflare-protected and cannot be read
+from a static page or a CI runner. `api.gold-api.com` carries the same XAU/XAG spot
+feed those sites display, sends `Access-Control-Allow-Origin: *`, and is already the
+collector's primary source — so the live ticker and the committed daily record can
+never disagree about where spot was.
+
 ## The one distinction that matters
 
 Two kinds of number live in this repo and they are never mixed:

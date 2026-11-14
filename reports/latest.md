@@ -84,4 +84,4 @@ Over 1 month the Nepali rate moved -6.1%: -5.3% of it from the world gold price,
 
 ---
 
-Generated 2026-11-14T12:08:04.278Z · 110 same-day observations · flags: premium-high, nepal-market-closed
+Generated 2026-11-14T13:12:55.738Z · 110 same-day observations · flags: premium-high, nepal-market-closed

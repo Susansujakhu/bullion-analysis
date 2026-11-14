@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T12:08:04.278Z",
+  "generatedAt": "2026-11-14T13:12:55.738Z",
   "asOf": {
     "record": "2026-11-14",
     "spot": "2026-11-14T12:07:55Z",
@@ -115,6 +115,82 @@
       "afterPct": 21.33,
       "rankedAgainstDaysSince": 110
     }
+  },
+  "live": {
+    "endpoints": {
+      "xau": "https://api.gold-api.com/price/XAU",
+      "xag": "https://api.gold-api.com/price/XAG"
+    },
+    "pollSeconds": 60,
+    "staleAfterSeconds": 420,
+    "usdNpr": 150.78,
+    "constants": {
+      "gramsPerTroyOunce": 31.1034768,
+      "gramsPerTola": 11.6638038
+    },
+    "gold": {
+      "measuredMarkupPct": 23.9632,
+      "ladder": {
+        "customsDutyNprPer10g": 8000,
+        "vatRate": 0.13,
+        "importHandlingRate": 0.01,
+        "dealerMarginRate": 0.03
+      },
+      "ladderIsCalibrated": false,
+      "lastPublishedNprPerTola": 271700,
+      "lastPublishedDate": "2026-11-13",
+      "baselineSpotUsdOz": 3887.6
+    },
+    "silver": {
+      "measuredMarkupPct": 31.6085,
+      "ladder": {
+        "customsDutyNprPer10g": 270,
+        "vatRate": 0.13,
+        "importHandlingRate": 0.01,
+        "dealerMarginRate": 0.03
+      },
+      "ladderIsCalibrated": true,
+      "lastPublishedNprPerTola": 3700,
+      "lastPublishedDate": "2026-11-13",
+      "baselineSpotUsdOz": 48.65
+    }
+  },
+  "silverBuildUp": {
+    "steps": [
+      {
+        "key": "parity",
+        "label": "International value of 1 tola",
+        "amount": 2751,
+        "add": null
+      },
+      {
+        "key": "handling",
+        "label": "Freight, insurance, bank commission",
+        "amount": 2778,
+        "add": 28
+      },
+      {
+        "key": "duty",
+        "label": "Customs duty",
+        "amount": 3093,
+        "add": 315
+      },
+      {
+        "key": "vat",
+        "label": "VAT @ 13%",
+        "amount": 3495,
+        "add": 402
+      },
+      {
+        "key": "margin",
+        "label": "Dealer margin",
+        "amount": 3600,
+        "add": 105
+      }
+    ],
+    "expectedRetailNprPerTola": 3600,
+    "impliedMarkupPct": 30.88,
+    "calibrated": true
   },
   "moves": [
     {

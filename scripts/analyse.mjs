@@ -108,6 +108,9 @@ const silverPremiumLast = measured.silverTola && measured.xagUsdOz
 const silverIndicated = silverParityTola != null && silverPremiumLast != null
   ? silverParityTola * (1 + silverPremiumLast / 100)
   : null;
+const silverLadder = silverParityTola != null
+  ? buildUp(silverParityTola, cfg.silverCostBuildUp, C)
+  : null;
 
 /* ---------------------------------------------------------- what moved --- */
 
@@ -221,6 +224,48 @@ const analysis = {
         }
       : null,
   },
+  // Everything the dashboard needs to recompute a Nepali price in the browser
+  // from a live spot tick. FENEGOSIDA prints once a day and then sits still,
+  // but the world price moves all day; this is what lets the page carry that
+  // movement through to a live rupee figure between prints.
+  //
+  // The rupee leg is deliberately NOT live: NRB publishes once a day, so the
+  // daily value is the correct one to hold fixed until tomorrow's run.
+  live: {
+    endpoints: { xau: cfg.live.spotEndpointXAU, xag: cfg.live.spotEndpointXAG },
+    pollSeconds: cfg.live.pollSeconds,
+    staleAfterSeconds: cfg.live.staleAfterSeconds,
+    usdNpr,
+    constants: { gramsPerTroyOunce: C.gramsPerTroyOunce, gramsPerTola: C.gramsPerTola },
+    gold: {
+      // Observed retail markup. Already contains duty, VAT and margin, so a
+      // price built with it needs no assumption about any of them.
+      measuredMarkupPct: round(measured.premiumPct, 4),
+      ladder: flatLadder(cfg.costBuildUp),
+      ladderIsCalibrated: false,
+      lastPublishedNprPerTola: lastPublished,
+      lastPublishedDate: measured.d,
+      baselineSpotUsdOz: spotUsdOz,
+    },
+    silver: {
+      measuredMarkupPct: round(silverPremiumLast, 4),
+      ladder: flatLadder(cfg.silverCostBuildUp),
+      // The silver duty was back-solved from observed prices, so its ladder
+      // describes the markup rather than checking it. The page says so.
+      ladderIsCalibrated: true,
+      lastPublishedNprPerTola: measured.silverTola ?? null,
+      lastPublishedDate: measured.d,
+      baselineSpotUsdOz: xagUsdOz,
+    },
+  },
+  silverBuildUp: silverLadder
+    ? {
+        steps: silverLadder.steps.map((s) => ({ ...s, amount: round(s.amount, 0), add: s.add == null ? null : round(s.add, 0) })),
+        expectedRetailNprPerTola: round(silverLadder.expectedRetail, 0),
+        impliedMarkupPct: round((silverLadder.expectedRetail / silverParityTola - 1) * 100, 2),
+        calibrated: true,
+      }
+    : null,
   moves,
   verdict,
   headline,
@@ -385,6 +430,16 @@ function detectRegimeShift(s, minPp) {
   // Too recent to rank against: fewer than 20 observations since the break.
   if (s.length - best.index < 20) return null;
   return best;
+}
+
+/** Strip a cost-build-up config down to the bare numbers the browser needs. */
+function flatLadder(c) {
+  return {
+    customsDutyNprPer10g: c.customsDutyNprPer10g.value,
+    vatRate: c.vatRate.value,
+    importHandlingRate: c.importHandlingRate.value,
+    dealerMarginRate: c.dealerMarginRate.value,
+  };
 }
 
 function median(xs) {
