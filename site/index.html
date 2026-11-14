@@ -171,23 +171,71 @@ function render(a){
     </div>`);
   }
 
-  // --- the premium chart is the point of the whole project ---
-  h.push('<h2>Local markup over world parity</h2>');
-  h.push(`<figure>${lineChart(a.series.map(s=>({x:s.d,y:s.premium})), {
-    band:[m.medianPct], fmt:v=>v.toFixed(0)+'%', color:'var(--gold)'
-  })}<figcaption>Each point is a day on which both a world price and a same-day Nepali rate exist.
-  Dashed line is the median of the current regime (${pct(m.medianPct)}). Customs duty and VAT are near-fixed,
-  so within one regime movement here is the local market, not the tax code.</figcaption></figure>`);
+  // --- the markup charts are the point of the whole project ---
+  // Both metals get one, because they behave differently: silver's markup is
+  // wider, noisier and reverts faster, and a single gold chart hides that.
+  for(const key of ['gold','silver']){
+    const mm = a.metals?.[key];
+    if(!mm || !mm.series?.length) continue;
+    const col = key==='gold' ? 'var(--gold)' : 'var(--silver)';
+    h.push(`<h2>${esc(mm.label)} — local markup over world parity</h2>`);
+    h.push(`<figure>${lineChart(mm.series.map(s=>({x:s.d,y:s.premium})), {
+      band:[mm.measured.medianPct], fmt:v=>v.toFixed(0)+'%', color:col
+    })}<figcaption>Each point is a day on which both a world price and a same-day Nepali
+    ${esc(mm.label.toLowerCase())} rate exist. Dashed line is the median of the current regime
+    (${pct(mm.measured.medianPct)}); today sits at ${pct(mm.measured.premiumPct)}, the
+    ${mm.measured.percentile} percentile. Duty and VAT are near-fixed, so within one regime
+    movement here is the local market, not the tax code.</figcaption></figure>`);
 
-  if(m.regimeShift){
-    const r = m.regimeShift;
-    h.push(`<div class="card" style="margin-top:14px;border-color:var(--gold)">
-      <div class="label">Regime break — ${esc(r.date)}</div>
-      <div class="note" style="margin-top:0">The markup stepped ${r.stepPp>0?'up':'down'} from ${pct(r.beforePct)}
-        to ${pct(r.afterPct)} (${r.stepPp>0?'+':''}${r.stepPp}pp) and held — the signature of a Finance Act duty
-        change, not a market move. The percentile above ranks only the ${r.rankedAgainstDaysSince} observations
-        since then; ranking across the break would measure a tax change rather than today's market.</div>
+    if(mm.measured.regimeShift){
+      const r = mm.measured.regimeShift;
+      h.push(`<div class="card" style="margin-top:14px;border-color:${col}">
+        <div class="label">Regime break — ${esc(r.date)}</div>
+        <div class="note" style="margin-top:0">The ${esc(mm.label.toLowerCase())} markup stepped
+          ${r.stepPp>0?'up':'down'} from ${pct(r.beforePct)} to ${pct(r.afterPct)}
+          (${r.stepPp>0?'+':''}${r.stepPp}pp) and held — the signature of a Finance Act duty change,
+          not a market move. The percentile above ranks only the ${r.rankedAgainstDaysSince}
+          observations since then.</div>
+      </div>`);
+    }
+  }
+
+  if(a.metals?.gold?.measured?.regimeShift && a.metals?.silver?.measured?.regimeShift){
+    const g = a.metals.gold.measured.regimeShift, s = a.metals.silver.measured.regimeShift;
+    if(g.date === s.date){
+      h.push(`<p class="sub" style="margin-top:14px">Both metals break on <strong>${esc(g.date)}</strong>
+        — gold ${g.stepPp>0?'+':''}${g.stepPp}pp, silver ${s.stepPp>0?'+':''}${s.stepPp}pp. Two independent
+        instruments stepping on the same day is what makes a Finance Act duty change the explanation rather
+        than a coincidence in one market.</p>`);
+    }
+  }
+
+  if(a.ratio?.nepalNow){
+    const r = a.ratio;
+    h.push('<h2>Gold against silver</h2>');
+    h.push(`<div class="grid">
+      <div class="card">
+        <div class="label">World ratio</div>
+        <div class="value">${r.worldNow}</div>
+        <div class="note">median ${r.worldMedian} · ${r.worldPercentile} percentile of ${r.n} days</div>
+      </div>
+      <div class="card">
+        <div class="label">Nepal ratio</div>
+        <div class="value">${r.nepalNow}</div>
+        <div class="note">median ${r.nepalMedian} · from published rates</div>
+      </div>
+      <div class="card">
+        <div class="label">Local divergence</div>
+        <div class="value ${cls(-r.localSilverRichnessPct)}">${pct(-r.localSilverRichnessPct,1)}</div>
+        <div class="note">${r.localSilverRichnessPct > 0
+          ? 'Nepal\'s ratio is below the world\'s — silver carries the heavier local markup'
+          : 'Nepal\'s ratio is above the world\'s — gold carries the heavier local markup'}</div>
+      </div>
     </div>`);
+    h.push(`<figure>${ratioChart(r.history)}<figcaption>One tola of gold buys ${r.nepalNow} tola of silver in
+      Kathmandu against ${r.worldNow} internationally. The gap between the lines is the difference in the two
+      metals' local markups — it is not an arbitrage, since both are physical and carry a dealer
+      spread.</figcaption></figure>`);
   }
 
   h.push('<h2>Nepali rate against world parity</h2>');
@@ -195,21 +243,30 @@ function render(a){
   Parity (faint) is the same tola valued at the world price and the NRB rupee, before any Nepali cost.
   The space between them is the markup.</figcaption></figure>`);
 
-  h.push('<h2>What a tola should cost — the cost ladder</h2>');
-  h.push(`<div class="scroll"><table><thead><tr><th>Step</th><th>Adds</th><th>Running total / tola</th></tr></thead><tbody>`);
-  for(const s of a.buildUp.steps){
-    h.push(`<tr><td>${esc(s.label)}</td><td>${s.add==null?'—':npr(s.add)}</td><td>${npr(s.amount)}</td></tr>`);
+  for(const key of ['gold','silver']){
+    const mm = a.metals?.[key];
+    if(!mm?.buildUp) continue;
+    h.push(`<h2>${esc(mm.label)} — what a tola should cost</h2>`);
+    h.push(`<div class="scroll"><table><thead><tr><th>Step</th><th>Adds</th><th>Running total / tola</th></tr></thead><tbody>`);
+    for(const s of mm.buildUp.steps){
+      h.push(`<tr><td>${esc(s.label)}</td><td>${s.add==null?'—':npr(s.add)}</td><td>${npr(s.amount)}</td></tr>`);
+    }
+    h.push(`<tr><td><strong>Expected retail</strong></td><td></td><td><strong>${npr(mm.buildUp.expectedRetailNprPerTola)}</strong></td></tr>`);
+    h.push('</tbody></table></div>');
+    h.push(`<p class="sub" style="margin-top:12px">Ladder total ${pct(mm.buildUp.impliedMarkupPct)} vs markup
+      measured at ${pct(mm.measured.premiumPct)}. ${mm.buildUp.calibrated
+        ? `<strong>This ladder is calibrated, not independent</strong> — ${esc(mm.label.toLowerCase())}'s duty was
+           back-solved from observed prices rather than read from the Finance Act, so it describes the markup
+           instead of confirming it.`
+        : 'The ladder rests on editable assumptions in <code>config/parameters.json</code>; the measured figure does not.'}</p>`);
   }
-  h.push(`<tr><td><strong>Expected retail</strong></td><td></td><td><strong>${npr(a.buildUp.expectedRetailNprPerTola)}</strong></td></tr>`);
-  h.push('</tbody></table></div>');
-  h.push(`<p class="sub" style="margin-top:12px">Ladder total ${pct(a.buildUp.impliedMarkupPct)} vs markup
-    measured at ${pct(m.premiumPct)}. The ladder rests on editable assumptions in
-    <code>config/parameters.json</code>; the measured figure does not.</p>`);
 
-  if(a.moves?.length){
-    h.push('<h2>What moved, and why</h2>');
-    h.push('<div class="scroll"><table><thead><tr><th>Window</th><th>World gold</th><th>USD/NPR</th><th>Nepali rate</th><th>Markup</th></tr></thead><tbody>');
-    for(const mv of a.moves){
+  for(const key of ['gold','silver']){
+    const mm = a.metals?.[key];
+    if(!mm?.moves?.length) continue;
+    h.push(`<h2>${esc(mm.label)} — what moved, and why</h2>`);
+    h.push(`<div class="scroll"><table><thead><tr><th>Window</th><th>World ${esc(mm.label.toLowerCase())}</th><th>USD/NPR</th><th>Nepali rate</th><th>Markup</th></tr></thead><tbody>`);
+    for(const mv of mm.moves){
       h.push(`<tr><td>${esc(mv.label)}</td>
         <td class="${cls(mv.spotPct)}">${pct(mv.spotPct,1)}</td>
         <td class="${cls(mv.fxPct)}">${pct(mv.fxPct,1)}</td>
@@ -217,6 +274,16 @@ function render(a){
         <td class="${cls(mv.premiumPointChange)}">${mv.premiumPointChange==null?'—':(mv.premiumPointChange>0?'+':'')+mv.premiumPointChange.toFixed(1)+'pp'}</td></tr>`);
     }
     h.push('</tbody></table></div>');
+    const best = mm.moves.find(x=>x.label==='1 month') ?? mm.moves[mm.moves.length-1];
+    if(best?.attribution){
+      const at = best.attribution;
+      const parts = [['the world price',at.shares.spot],['the rupee',at.shares.fx],['the local markup',at.shares.premium]]
+        .sort((x,y)=>y[1]-x[1]);
+      h.push(`<p class="sub" style="margin-top:12px">Over ${esc(best.label)} the Nepali
+        ${esc(mm.label.toLowerCase())} rate moved ${pct(at.totalPct,1)}: ${pct(at.fromSpotPct,1)} from the world price,
+        ${pct(at.fromFxPct,1)} from the rupee, ${pct(at.fromPremiumPct,1)} from the local markup — mostly
+        <strong>${parts[0][0]}</strong> (${parts[0][1].toFixed(0)}%).</p>`);
+    }
   }
 
   h.push('<div id="forecast-slot"></div>');
@@ -243,82 +310,116 @@ function render(a){
 function renderForecast(f, a){
   const slot = document.getElementById('forecast-slot');
   if(!slot) return;
-  const p = f.projection, d = f.drivers, b = f.backtest;
   const h = [];
+  const metals = ['gold','silver'].map(k => f.metals?.[k]).filter(Boolean);
+  if(!metals.length) return;
 
   h.push('<h2>One-week outlook</h2>');
-  h.push(`<p class="sub" style="margin:-4px 0 16px">At five sessions world gold is close to a random walk, so it is given
-    <strong>no drift</strong> — the central case is where it is now. What is forecast here is the Nepali markup, which
-    mean-reverts measurably (half-life ${d.ar1HalfLifeSessions} sessions, R² ${d.ar1R2}). Read the band, not the mid-point.</p>`);
+  h.push(`<p class="sub" style="margin:-4px 0 16px">At five sessions world metal prices are close to a random walk,
+    so they are given <strong>no drift</strong> — the central case is where they are now. What is forecast is the
+    Nepali markup, which mean-reverts measurably. Read the band, not the mid-point.</p>`);
 
-  h.push(`<div class="grid">
-    <div class="card hero">
-      <div class="label">Central, 5 sessions out</div>
-      <div class="value">${npr(p.centralNprPerTola)}</div>
-      <div class="note">${pct(p.centralChangePct)} from ${npr(f.basis.nprPerTola)} on ${esc(f.basis.date)}</div>
-    </div>
-    <div class="card">
-      <div class="label">68% band</div>
-      <div class="value" style="font-size:1.1rem">${npr(p.band68.lo)}<br>— ${npr(p.band68.hi)}</div>
-      <div class="note">±${d.combinedSdPct}% combined</div>
-    </div>
-    <div class="card">
-      <div class="label">95% band</div>
-      <div class="value" style="font-size:1.1rem">${npr(p.band95.lo)}<br>— ${npr(p.band95.hi)}</div>
-      <div class="note">the realistic worst and best case</div>
-    </div>
-    <div class="card">
-      <div class="label">Markup reversion</div>
-      <div class="value">${d.markupMovePp > 0 ? '+' : ''}${d.markupMovePp}pp</div>
-      <div class="note">${pct(d.markupNowPct,1)} → ${pct(d.markupExpectedPct,1)} · ${((1-d.decayFactor)*100).toFixed(0)}% of the stretch decays</div>
-    </div>
-  </div>`);
+  // The side-by-side comes first: the two metals behave differently and that
+  // contrast is the most useful thing here.
+  if(metals.length === 2){
+    const [g,s] = metals;
+    h.push('<div class="scroll"><table><thead><tr><th></th><th>Gold</th><th>Silver</th></tr></thead><tbody>');
+    const row = (k,gv,sv) => h.push(`<tr><td>${k}</td><td>${gv}</td><td>${sv}</td></tr>`);
+    row('Now', npr(g.basis.nprPerTola), npr(s.basis.nprPerTola));
+    row('<strong>Central, 5 sessions</strong>', '<strong>'+npr(g.projection.centralNprPerTola)+'</strong>', '<strong>'+npr(s.projection.centralNprPerTola)+'</strong>');
+    row('Change', `<span class="${cls(g.projection.centralChangePct)}">${pct(g.projection.centralChangePct)}</span>`,
+                  `<span class="${cls(s.projection.centralChangePct)}">${pct(s.projection.centralChangePct)}</span>`);
+    row('68% band', npr(g.projection.band68.lo)+' – '+npr(g.projection.band68.hi), npr(s.projection.band68.lo)+' – '+npr(s.projection.band68.hi));
+    row('Markup now', pct(g.drivers.markupNowPct,1), pct(s.drivers.markupNowPct,1));
+    row('Reversion half-life', g.drivers.ar1HalfLifeSessions+' sessions', s.drivers.ar1HalfLifeSessions+' sessions');
+    row('Stickiness (corr)', g.drivers.spotMarkupCorr, s.drivers.spotMarkupCorr);
+    row('World daily volatility', g.drivers.spotDailyVolPct+'%', s.drivers.spotDailyVolPct+'%');
+    row('Combined 5-session sd', '±'+g.drivers.combinedSdPct+'%', '±'+s.drivers.combinedSdPct+'%');
+    h.push('</tbody></table></div>');
+    h.push(`<p class="sub" style="margin-top:12px">Silver's markup reverts about
+      ${(g.drivers.ar1HalfLifeSessions/s.drivers.ar1HalfLifeSessions).toFixed(1)}× faster than gold's and silver is
+      far the more volatile metal. They are not one asset with two price tags, and they are not modelled as one.</p>`);
+  }
 
-  h.push(`<figure>${coneChart(a.series, f)}<figcaption>Solid gold is the published Nepali rate.
-    The shaded cone is the projection: darker is the 68% band, lighter the 95%. It tilts
-    ${p.centralChangePct < 0 ? 'down' : 'up'} because the markup is currently ${pct(d.markupNowPct,1)} against a trailing
-    median of ${pct(f.basis.markupTrailingMedianPct,1)}, not because of any view on world gold.</figcaption></figure>`);
-
-  if(b){
-    const ok = Math.abs(b.coverage68Pct-68) <= 10 && Math.abs(b.coverage95Pct-95) <= 7;
-    h.push(`<div class="card" style="margin-top:16px;border-color:${ok ? 'var(--down)' : 'var(--up)'}">
-      <div class="label">Does this method work? — ${b.n} out-of-sample tests</div>
-      <div class="note" style="margin-top:2px">
-        The 68% band actually contained the outcome <strong>${b.coverage68Pct}%</strong> of the time;
-        the 95% band, <strong>${b.coverage95Pct}%</strong>. Median absolute error ${b.medianAbsErrorPct}%,
-        worst ${b.worstErrorPct}%. Refit at each step on only the data available then.
-        ${ok ? 'Both bands are close to honest.' : '<strong>The bands are miscalibrated — weight this projection accordingly.</strong>'}
+  for(const m of metals){
+    const p = m.projection, d = m.drivers, b = m.backtest;
+    const col = m.metal==='gold' ? 'var(--gold)' : 'var(--silver)';
+    h.push(`<h2>${esc(m.label)} — five sessions out</h2>`);
+    h.push(`<div class="grid">
+      <div class="card hero" style="border-color:${col}">
+        <div class="label">Central</div>
+        <div class="value" style="color:${col}">${npr(p.centralNprPerTola)}</div>
+        <div class="note">${pct(p.centralChangePct)} from ${npr(m.basis.nprPerTola)} on ${esc(m.basis.date)}</div>
+      </div>
+      <div class="card">
+        <div class="label">68% band</div>
+        <div class="value" style="font-size:1.05rem">${npr(p.band68.lo)}<br>— ${npr(p.band68.hi)}</div>
+        <div class="note">±${d.combinedSdPct}% combined${m.bandsCalibrated ? ' · empirically calibrated' : ''}</div>
+      </div>
+      <div class="card">
+        <div class="label">95% band</div>
+        <div class="value" style="font-size:1.05rem">${npr(p.band95.lo)}<br>— ${npr(p.band95.hi)}</div>
+        <div class="note">the realistic worst and best case</div>
+      </div>
+      <div class="card">
+        <div class="label">Markup reversion</div>
+        <div class="value">${d.markupMovePp > 0 ? '+' : ''}${d.markupMovePp}pp</div>
+        <div class="note">${pct(d.markupNowPct,1)} → ${pct(d.markupExpectedPct,1)} · ${((1-d.decayFactor)*100).toFixed(0)}% of the stretch decays</div>
       </div>
     </div>`);
+
+    h.push(`<figure>${coneChart(m.recent, m, col)}<figcaption>Solid is the published Nepali
+      ${esc(m.label.toLowerCase())} rate. The shaded cone is the projection: darker is the 68% band, lighter the 95%.
+      It tilts ${p.centralChangePct < 0 ? 'down' : 'up'} because the markup is ${pct(d.markupNowPct,1)} against a
+      trailing median of ${pct(m.basis.markupTrailingMedianPct,1)} — not because of any view on world
+      ${esc(m.label.toLowerCase())}.</figcaption></figure>`);
+
+    if(b && b.coverage68Pct != null){
+      const ok = Math.abs(b.coverage68Pct-68) <= 10 && Math.abs(b.coverage95Pct-95) <= 7;
+      const nEff = Math.round(b.n / f.horizonSessions);
+      h.push(`<div class="card" style="margin-top:16px;border-color:${ok ? 'var(--down)' : 'var(--up)'}">
+        <div class="label">Does this work for ${esc(m.label.toLowerCase())}? — ${b.n} out-of-sample tests</div>
+        <div class="note" style="margin-top:2px">
+          The 68% band contained the outcome <strong>${b.coverage68Pct}%</strong> of the time; the 95% band,
+          <strong>${b.coverage95Pct}%</strong>. Median absolute error ${b.medianAbsErrorPct}%, worst ${b.worstErrorPct}%.
+          ${ok ? 'Both are close to honest.' : '<strong>Miscalibrated — weight this accordingly.</strong>'}
+          ${m.bandsCalibrated ? ` A plain Gaussian band would have covered ${b.gaussianCoverage68Pct}% and ${b.gaussianCoverage95Pct}%, so the quantiles come from this model's own past errors instead.` : ''}
+          <br><br>Consecutive tests overlap by ${f.horizonSessions-1} of ${f.horizonSessions} sessions, so these
+          ${b.n} tests carry roughly ${nEff} independent observations — about
+          ±${(Math.sqrt(0.68*0.32/Math.max(nEff,1))*100).toFixed(0)}pp of standard error. Smaller differences are noise.
+        </div>
+      </div>`);
+    }
+
+    h.push(`<h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:26px 0 10px">If world ${esc(m.label.toLowerCase())} does X</h3>`);
+    h.push(`<div class="scroll"><table><thead><tr><th>World ${esc(m.label.toLowerCase())}</th><th>Spot</th><th>Markup then</th><th>Nepali rate</th><th>vs now</th></tr></thead><tbody>`);
+    for(const s of m.scenarios){
+      h.push(`<tr><td>${s.spotPct>0?'+':''}${s.spotPct}%</td><td>$${s.spotUsdOz}</td>
+        <td>${pct(s.markupPct,1)}</td><td><strong>${npr(s.nprPerTola)}</strong></td>
+        <td class="${cls(s.changePct)}">${pct(s.changePct,1)}</td></tr>`);
+    }
+    h.push('</tbody></table></div>');
+    h.push(`<p class="sub" style="margin-top:12px">The Nepali column moves less than the world column — local prices
+      are sticky, absorbing about ${Math.abs(d.stickinessPpPerPctSpot).toFixed(2)}pp of every 1% spot move
+      (correlation ${d.spotMarkupCorr}). That narrows the band by ${d.stickinessDampeningPct}% versus treating the
+      legs as independent.</p>`);
+
+    const t = m.technicals;
+    if(t){
+      h.push(`<h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:26px 0 10px">Technical state — world ${esc(m.label.toLowerCase())}</h3>`);
+      h.push(`<div class="scroll"><table><tbody>
+        <tr><td>Trend</td><td>${esc(t.trend)}${t.recentCross ? ' · <strong>'+esc(t.recentCross)+'</strong>' : ''}</td></tr>
+        <tr><td>Last / 50-day / 200-day</td><td>$${fmtUsd(t.last)} · $${fmtUsd(t.sma50)} · $${fmtUsd(t.sma200)}</td></tr>
+        <tr><td>Distance from 50 / 200-day</td><td>${pct(t.pctFromSma50,1)} · ${pct(t.pctFromSma200,1)}</td></tr>
+        <tr><td>RSI(14)</td><td>${t.rsi14?.toFixed(0) ?? '—'}</td></tr>
+        <tr><td>Resistance above</td><td>${t.resistance?.length ? t.resistance.map(v=>'$'+fmtUsd(v)).join(' · ') : '<strong>none</strong> — at or above every swing high in the lookback'}</td></tr>
+        <tr><td>Support below</td><td>${t.support?.length ? t.support.map(v=>'$'+fmtUsd(v)).join(' · ') : '<strong>none</strong> — at or below every swing low in the lookback'}</td></tr>
+      </tbody></table></div>`);
+    }
   }
 
-  h.push('<h2>If world gold does X</h2>');
-  h.push('<div class="scroll"><table><thead><tr><th>World gold</th><th>Spot</th><th>Markup then</th><th>Nepali rate</th><th>vs now</th></tr></thead><tbody>');
-  for(const s of f.scenarios){
-    h.push(`<tr><td>${s.spotPct>0?'+':''}${s.spotPct}%</td><td>$${s.spotUsdOz}</td>
-      <td>${pct(s.markupPct,1)}</td><td><strong>${npr(s.nprPerTola)}</strong></td>
-      <td class="${cls(s.changePct)}">${pct(s.changePct,1)}</td></tr>`);
-  }
-  h.push('</tbody></table></div>');
-  h.push(`<p class="sub" style="margin-top:12px">The Nepali column moves less than the world column — local prices are
-    sticky, absorbing about ${Math.abs(d.stickinessPpPerPctSpot).toFixed(2)}pp of every 1% spot move
-    (correlation ${d.spotMarkupCorr}). That narrows the band by ${d.stickinessDampeningPct}% versus treating the two
-    legs as independent, and is invisible to any generic gold forecast.</p>`);
-
-  const t = f.technicals?.gold;
-  if(t){
-    h.push('<h2>Technical state — world gold</h2>');
-    h.push(`<div class="scroll"><table><tbody>
-      <tr><td>Trend</td><td>${esc(t.trend)}${t.recentCross ? ' · <strong>'+esc(t.recentCross)+'</strong>' : ''}</td></tr>
-      <tr><td>Last / 50-day / 200-day</td><td>$${fmtUsd(t.last)} · $${fmtUsd(t.sma50)} · $${fmtUsd(t.sma200)}</td></tr>
-      <tr><td>Distance from 50 / 200-day</td><td>${pct(t.pctFromSma50,1)} · ${pct(t.pctFromSma200,1)}</td></tr>
-      <tr><td>RSI(14)</td><td>${t.rsi14?.toFixed(0) ?? '—'}</td></tr>
-      <tr><td>Resistance above</td><td>${t.resistance?.length ? t.resistance.map(v=>'$'+fmtUsd(v)).join(' · ') : 'none in lookback'}</td></tr>
-      <tr><td>Support below</td><td>${t.support?.length ? t.support.map(v=>'$'+fmtUsd(v)).join(' · ') : '<strong>none</strong> — at or below every swing low in the lookback'}</td></tr>
-    </tbody></table></div>`);
-    h.push(`<p class="sub" style="margin-top:12px">These describe the chart; they are not what drives the projection
-      above. At a one-week horizon the volatility estimate carries far more information than any level here.</p>`);
-  }
+  h.push(`<p class="sub" style="margin-top:16px">Technical levels describe the chart; they are not what drives the
+    projections. At a one-week horizon the volatility estimate carries far more information than any level.</p>`);
 
   h.push(`<p class="sub" style="margin-top:22px;padding:14px 16px;border:1px solid var(--line);border-radius:8px">
     <strong>Information only — not investment advice.</strong> This is a statistical description of published prices.
@@ -328,14 +429,44 @@ function renderForecast(f, a){
   slot.innerHTML = h.join('');
 }
 
-function fmtUsd(n){ return n==null ? '—' : Number(n).toLocaleString('en-US',{maximumFractionDigits:0}); }
+function fmtUsd(n){ return n==null ? '—' : Number(n).toLocaleString('en-US',{maximumFractionDigits: n<100 ? 2 : 0}); }
+
+/** World and Nepal gold:silver ratio on one pair of axes. */
+function ratioChart(hist){
+  if(!hist || hist.length < 5) return '<p class="sub">Not enough paired history to plot.</p>';
+  const W=900,H=250,L=48,R=70,T=14,B=28;
+  const all = hist.flatMap(x=>[x.world,x.nepal]).filter(Number.isFinite);
+  const lo=Math.min(...all), hi=Math.max(...all), span=(hi-lo)||1;
+  const y0=lo-span*0.08, y1=hi+span*0.08;
+  const x = i => L + (i/(hist.length-1))*(W-L-R);
+  const y = v => T + (1-(v-y0)/(y1-y0))*(H-T-B);
+  const line = k => hist.map((s,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(s[k]).toFixed(1)}`).join('');
+
+  let g = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gold to silver ratio, world against Nepal">`;
+  for(let t=0;t<=4;t++){
+    const v=y0+(y1-y0)*t/4, yy=y(v);
+    g += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="var(--line)"/>`;
+    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${v.toFixed(0)}</text>`;
+  }
+  g += `<path d="${line('world')}" fill="none" stroke="var(--muted)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
+  g += `<path d="${line('nepal')}" fill="none" stroke="var(--gold)" stroke-width="2.2"/>`;
+  const last = hist[hist.length-1];
+  g += `<text x="${W-R+6}" y="${y(last.world)+4}" font-size="11" fill="var(--muted)">world</text>`;
+  g += `<text x="${W-R+6}" y="${y(last.nepal)+4}" font-size="11" fill="var(--gold)" font-weight="600">Nepal</text>`;
+  const step=Math.max(1,Math.floor(hist.length/6));
+  for(let i=0;i<hist.length;i+=step){
+    g += `<text x="${x(i)}" y="${H-7}" text-anchor="middle" font-size="10.5" fill="var(--muted)">${hist[i].d.slice(5)}</text>`;
+  }
+  return g+'</svg>';
+}
 
 /** History plus a forward cone. The cone starts exactly at the last actual. */
-function coneChart(series, f){
-  const tail = series.filter(s=>s.actual!=null).slice(-45);
+function coneChart(recent, m, col){
+  const tail = (recent ?? []).filter(s=>s.actual!=null).slice(-45);
   if(tail.length < 5) return '<p class="sub">Not enough history to plot.</p>';
-  const H = f.horizonSessions, p = f.projection;
+  const H = 5, p = m.projection;
   const last = tail[tail.length-1].actual;
+  col = col || 'var(--gold)';
 
   const W=900, HT=300, L=68, R=58, T=14, B=28;
   const all = tail.map(s=>s.actual).concat([p.band95.lo, p.band95.hi]);
@@ -363,18 +494,21 @@ function coneChart(series, f){
   for(let t=0;t<=4;t++){
     const v = y0+(y1-y0)*t/4, yy=y(v);
     g += `<line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" stroke="var(--line)"/>`;
-    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${(v/1000).toFixed(0)}k</text>`;
+    // Silver prints in the thousands, gold in the hundreds of thousands - a
+    // fixed "k" axis would render silver as a flat row of 4k.
+    const axis = y1 > 20000 ? (v/1000).toFixed(0)+'k' : Math.round(v);
+    g += `<text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="var(--muted)">${axis}</text>`;
   }
-  g += `<path d="${band(p.band95.lo,p.band95.hi)}" fill="var(--gold)" opacity=".13"/>`;
-  g += `<path d="${band(p.band68.lo,p.band68.hi)}" fill="var(--gold)" opacity=".26"/>`;
+  g += `<path d="${band(p.band95.lo,p.band95.hi)}" fill="${col}" opacity=".13"/>`;
+  g += `<path d="${band(p.band68.lo,p.band68.hi)}" fill="${col}" opacity=".26"/>`;
 
   const hist = tail.map((s,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(s.actual).toFixed(1)}`).join('');
-  g += `<path d="${hist}" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  g += `<path d="${hist}" fill="none" stroke="${col}" stroke-width="2.2" stroke-linejoin="round"/>`;
   g += `<path d="M${x(tail.length-1).toFixed(1)},${y(last).toFixed(1)}L${x(total).toFixed(1)},${y(p.centralNprPerTola).toFixed(1)}"
-    stroke="var(--gold)" stroke-width="2" stroke-dasharray="5 4" fill="none"/>`;
+    stroke="${col}" stroke-width="2" stroke-dasharray="5 4" fill="none"/>`;
   g += `<line x1="${x(tail.length-1)}" y1="${T}" x2="${x(tail.length-1)}" y2="${HT-B}" stroke="var(--muted)" stroke-dasharray="2 4" opacity=".5"/>`;
-  g += `<circle cx="${x(total)}" cy="${y(p.centralNprPerTola)}" r="4" fill="var(--gold)"/>`;
-  g += `<text x="${x(total)+7}" y="${y(p.centralNprPerTola)+4}" font-size="11" fill="var(--gold)" font-weight="600">${Math.round(p.centralNprPerTola/1000)}k</text>`;
+  g += `<circle cx="${x(total)}" cy="${y(p.centralNprPerTola)}" r="4" fill="${col}"/>`;
+  g += `<text x="${x(total)+7}" y="${y(p.centralNprPerTola)+4}" font-size="11" fill="${col}" font-weight="600">${y1 > 20000 ? Math.round(p.centralNprPerTola/1000)+'k' : Math.round(p.centralNprPerTola)}</text>`;
   g += `<text x="${x(tail.length-1)+5}" y="${HT-9}" font-size="10.5" fill="var(--muted)">now</text>`;
 
   const step = Math.max(1, Math.floor(tail.length/5));

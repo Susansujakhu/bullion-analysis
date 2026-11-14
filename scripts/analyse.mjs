@@ -1,21 +1,20 @@
-// Turns the collected history into a read, in two distinct registers:
+// Turns the collected history into a read, for gold and silver equally.
+//
+// Two registers are kept strictly apart throughout:
 //
 //   MEASURED   - the last date on which a Nepali rate and a world price exist
-//                for the SAME day. Only this pairing yields a real premium.
-//   INDICATED  - today's world price and rupee, carried through that measured
-//                premium, to say what a tola should cost in Kathmandu right
-//                now even if the local market has not reprinted yet.
+//                for the SAME day. Only this pairing yields a real markup.
+//   INDICATED  - today's world price and rupee carried through that measured
+//                markup, to say what a tola should cost right now even if the
+//                local market has not reprinted.
 //
-// Keeping these apart is the whole correctness story. Comparing today's spot
-// against a rate FENEGOSIDA last published three days ago does not measure a
-// premium, it measures how far gold moved over those three days - and during
-// a festival close that error runs to tens of percent.
+// Comparing today's spot against a rate FENEGOSIDA last published three days
+// ago does not measure a markup; it measures how far the metal moved over
+// those three days. During a festival close that error runs to tens of
+// percent, which is why `staleDays === 0` gates the series.
 
-import {
-  parityNprPerTola, parityNprPer10g, buildUp, impliedPremiumPct,
-  percentileOf, pctChange, mean, stdev, attributeMove, perGram,
-} from '../lib/parity.mjs';
-import { loadConfig, readHistory, writeJson, writeText, ROOT, recordAgo } from '../lib/store.mjs';
+import { loadConfig, readHistory, writeJson, writeText, ROOT } from '../lib/store.mjs';
+import { METALS, analyseMetal, goldSilverRatio, median } from '../lib/metal.mjs';
 import path from 'node:path';
 
 const cfg = loadConfig();
@@ -33,248 +32,89 @@ if (!today.spot || !today.fx) {
   process.exit(1);
 }
 
-/* ------------------------------------------------- the clean series ------ */
-// A record only enters the premium series when its Nepali rate was published
-// on that same date. `staleDays > 0` means the rate was carried over from an
-// earlier day and the pairing would be false.
+const gold = analyseMetal({ spec: METALS.gold, rows, today, cfg, C });
+const silver = analyseMetal({ spec: METALS.silver, rows, today, cfg, C });
 
-const series = [];
-for (const r of rows) {
-  if (!r.spot || !r.fx || !r.nepal?.rates?.[cfg.benchmarkKey]) continue;
-  if ((r.nepal.staleDays ?? 0) > 0) continue;
-  const p = parityNprPerTola(r.spot.xauUsdOz, r.fx.usdNpr, C);
-  const a = r.nepal.rates[cfg.benchmarkKey];
-  series.push({
-    d: r.d,
-    spotUsdOz: r.spot.xauUsdOz,
-    xagUsdOz: r.spot.xagUsdOz ?? null,
-    usdNpr: r.fx.usdNpr,
-    parityTola: p,
-    actualNprPerTola: a,
-    premiumPct: impliedPremiumPct(a, p),
-    silverTola: r.nepal.rates[cfg.silverBenchmarkKey] ?? null,
-  });
-}
-
-if (!series.length) {
-  console.error('No date has both a world price and a same-day Nepali rate. Run backfill.');
+if (!gold) {
+  console.error('No date has both a world gold price and a same-day Nepali rate. Run backfill.');
   process.exit(1);
 }
 
-const measured = series[series.length - 1];
-const window = series.slice(-cfg.signal.historyWindowDays);
+const ratio = goldSilverRatio(gold, silver, C);
 
-// Nepal changes gold duty by Finance Act, and when it does the markup steps to
-// a new level and stays there. Ranking today against a window that straddles
-// such a step answers the wrong question - it says "high versus a tax regime
-// that no longer exists". Find the break and rank only within the current one.
-const shift = detectRegimeShift(window, cfg.signal.regimeShiftPp ?? 4);
-const base = shift ? window.slice(shift.index) : window;
-
-const premiums = base.map((s) => s.premiumPct).filter(Number.isFinite);
-const premiumPctile = percentileOf(measured.premiumPct, premiums);
-const premiumMean = mean(premiums);
-const premiumSd = stdev(premiums);
-const premiumMedian = median(premiums);
-
-/* ------------------------------------------------ today, as indicated ---- */
-
-const spotUsdOz = today.spot.xauUsdOz;
-const xagUsdOz = today.spot.xagUsdOz ?? null;
-const usdNpr = today.fx.usdNpr;
-const parityTola = parityNprPerTola(spotUsdOz, usdNpr, C);
-const parity10g = parityNprPer10g(spotUsdOz, usdNpr, C);
-const ladder = buildUp(parityTola, cfg.costBuildUp, C);
-
-const staleDays = daysApart(measured.d, today.d);
-const isLive = staleDays === 0;
-
-// Carry the measured markup onto today's parity. The last measured premium is
-// the market's current markup; the median is its settled level. Showing both
-// brackets the answer honestly rather than implying false precision.
-const indicatedAtLast = parityTola * (1 + measured.premiumPct / 100);
-const indicatedAtMedian = premiumMedian != null ? parityTola * (1 + premiumMedian / 100) : null;
-const lastPublished = measured.actualNprPerTola;
-const repriceGapPct = pctChange(indicatedAtLast, lastPublished);
-
-// Silver, same treatment.
-const silverParityTola = xagUsdOz ? parityNprPerTola(xagUsdOz, usdNpr, C) : null;
-const silverPremiums = window
-  .map((s) => (s.silverTola && s.xagUsdOz ? impliedPremiumPct(s.silverTola, parityNprPerTola(s.xagUsdOz, s.usdNpr, C)) : null))
-  .filter(Number.isFinite);
-const silverPremiumLast = measured.silverTola && measured.xagUsdOz
-  ? impliedPremiumPct(measured.silverTola, parityNprPerTola(measured.xagUsdOz, measured.usdNpr, C))
-  : null;
-const silverIndicated = silverParityTola != null && silverPremiumLast != null
-  ? silverParityTola * (1 + silverPremiumLast / 100)
-  : null;
-const silverLadder = silverParityTola != null
-  ? buildUp(silverParityTola, cfg.silverCostBuildUp, C)
-  : null;
-
-/* ---------------------------------------------------------- what moved --- */
-
-const moves = [];
-for (const w of [
-  { label: '1 day', days: 1 }, { label: '1 week', days: 7 }, { label: '1 month', days: 30 },
-  { label: '3 months', days: 90 }, { label: '1 year', days: 365 },
-]) {
-  const target = Date.parse(measured.d) - w.days * 864e5;
-  const past = nearestInSeries(series, target, w.days);
-  if (!past || past.d === measured.d) continue;
-  moves.push({
-    label: w.label,
-    from: past.d,
-    spotPct: pctChange(measured.spotUsdOz, past.spotUsdOz),
-    fxPct: pctChange(measured.usdNpr, past.usdNpr),
-    nepalPct: pctChange(measured.actualNprPerTola, past.actualNprPerTola),
-    premiumPointChange: measured.premiumPct - past.premiumPct,
-    attribution: attributeMove(measured, past),
-  });
-}
-
-/* ---------------------------------------------------------- the verdict -- */
+/* ----------------------------------------------------------- headline --- */
 
 const flags = [];
-let verdict = 'neutral';
-let headline;
+const headline = headlineFor(gold, silver);
 
-if (premiums.length < 20) {
-  verdict = 'insufficient-history';
-  headline = `Premium is ${fmtPct(measured.premiumPct)}, but ${premiums.length} usable days is too thin to call it high or low.`;
-  flags.push('thin-history');
-} else if (premiumPctile >= cfg.signal.premiumPercentileHigh) {
-  verdict = 'local-expensive';
-  headline = `Nepali gold carried a ${fmtPct(measured.premiumPct)} markup over the world price on ${measured.d} - its ${ord(Math.round(premiumPctile))} percentile. Dear by local standards.`;
-  flags.push('premium-high');
-} else if (premiumPctile <= cfg.signal.premiumPercentileLow) {
-  verdict = 'local-cheap';
-  headline = `Nepali gold carried a ${fmtPct(measured.premiumPct)} markup over the world price on ${measured.d} - its ${ord(Math.round(premiumPctile))} percentile. An unusually narrow gap.`;
-  flags.push('premium-low');
-} else {
-  headline = `Nepali gold carried a ${fmtPct(measured.premiumPct)} markup over the world price on ${measured.d}, close to its own normal (${ord(Math.round(premiumPctile))} percentile).`;
+for (const [m, a] of [['', gold], ['silver-', silver]]) {
+  if (!a) continue;
+  if (a.verdict === 'local-expensive') flags.push(`${m}premium-high`);
+  if (a.verdict === 'local-cheap') flags.push(`${m}premium-low`);
+  if (a.verdict === 'insufficient-history') flags.push(`${m}thin-history`);
+  const day = a.moves.find((x) => x.label === '1 day');
+  if (day && Math.abs(day.nepalPct ?? 0) >= cfg.signal.dailyMovePctAlert) flags.push(`${m}big-daily-move`);
+  if (Math.abs(a.indicated.repriceGapPct ?? 0) >= cfg.signal.dailyMovePctAlert) flags.push(`${m}reprice-pending`);
 }
-
-const dayMove = moves.find((m) => m.label === '1 day');
-if (dayMove && Math.abs(dayMove.nepalPct ?? 0) >= cfg.signal.dailyMovePctAlert) flags.push('big-daily-move');
-if (!isLive) flags.push('nepal-market-closed');
-if (staleDays >= cfg.signal.staleNepalDataDays) flags.push('nepal-data-stale');
-if (Math.abs(repriceGapPct ?? 0) >= cfg.signal.dailyMovePctAlert) flags.push('reprice-pending');
+if (!gold.measured.isLive) flags.push('nepal-market-closed');
+if (gold.measured.staleDays >= cfg.signal.staleNepalDataDays) flags.push('nepal-data-stale');
 if (today.spot.isFutures) flags.push('spot-degraded-to-futures');
 
-/* ----------------------------------------------------------------- out --- */
+/* ---------------------------------------------------------------- out --- */
 
 const analysis = {
   generatedAt: new Date().toISOString(),
-  asOf: { record: today.d, spot: today.spot.asOf, fx: today.fx.asOf, nepalMeasured: measured.d, staleDays, isLive },
+  asOf: {
+    record: today.d,
+    spot: today.spot.asOf,
+    fx: today.fx.asOf,
+    nepalMeasured: gold.measured.date,
+    staleDays: gold.measured.staleDays,
+    isLive: gold.measured.isLive,
+  },
   international: {
-    goldUsdPerOz: spotUsdOz,
-    silverUsdPerOz: xagUsdOz,
-    goldUsdPerGram: round(spotUsdOz / C.gramsPerTroyOunce, 2),
+    goldUsdPerOz: gold.spotUsdPerOz,
+    silverUsdPerOz: silver?.spotUsdPerOz ?? today.spot.xagUsdOz ?? null,
+    goldUsdPerGram: round(gold.spotUsdPerOz / C.gramsPerTroyOunce, 2),
+    silverUsdPerGram: silver?.spotUsdPerOz ? round(silver.spotUsdPerOz / C.gramsPerTroyOunce, 3) : null,
     source: today.spot.src,
   },
-  fx: { usdNpr, usdNprBuy: today.fx.usdNprBuy ?? null, inrNpr: today.fx.inrNpr ?? null, source: today.fx.src, asOf: today.fx.asOf },
-  parity: {
-    nprPerTola: round(parityTola, 0),
-    nprPer10g: round(parity10g, 0),
-    nprPerGram: round(parityTola / C.gramsPerTola, 0),
-    silverNprPerTola: round(silverParityTola, 0),
+  fx: {
+    usdNpr: today.fx.usdNpr,
+    usdNprBuy: today.fx.usdNprBuy ?? null,
+    inrNpr: today.fx.inrNpr ?? null,
+    source: today.fx.src,
+    asOf: today.fx.asOf,
   },
-  buildUp: {
-    steps: ladder.steps.map((s) => ({ ...s, amount: round(s.amount, 0), add: s.add == null ? null : round(s.add, 0) })),
-    expectedRetailNprPerTola: round(ladder.expectedRetail, 0),
-    expectedRetailNprPer10g: round((ladder.expectedRetail / C.gramsPerTola) * 10, 0),
-    impliedMarkupPct: round((ladder.expectedRetail / parityTola - 1) * 100, 2),
-    assumptionsUnverified: ladder.assumptionsUnverified,
-  },
-  indicated: {
-    _note: 'Today\'s world price and rupee carried through the measured local markup. What a tola should cost now.',
-    nprPerTola: round(indicatedAtLast, 0),
-    nprPer10g: round((indicatedAtLast / C.gramsPerTola) * 10, 0),
-    nprPerGram: round(indicatedAtLast / C.gramsPerTola, 0),
-    atMedianPremiumNprPerTola: round(indicatedAtMedian, 0),
-    usingPremiumPct: round(measured.premiumPct, 2),
-    silverNprPerTola: round(silverIndicated, 0),
-    lastPublishedNprPerTola: lastPublished,
-    repriceGapPct: round(repriceGapPct, 2),
-    repriceGapNpr: round(indicatedAtLast - lastPublished, 0),
-  },
-  measured: {
-    date: measured.d,
-    actualNprPerTola: lastPublished,
-    actualNprPerGram: round(perGram(lastPublished, C), 0),
-    silverNprPerTola: measured.silverTola,
-    parityNprPerTola: round(measured.parityTola, 0),
-    premiumPct: round(measured.premiumPct, 2),
-    premiumNpr: round(lastPublished - measured.parityTola, 0),
-    silverPremiumPct: round(silverPremiumLast, 2),
-    percentile: round(premiumPctile, 1),
-    historyDays: premiums.length,
-    meanPct: round(premiumMean, 2),
-    medianPct: round(premiumMedian, 2),
-    sdPct: round(premiumSd, 2),
-    vsExpectedRetailPct: round((lastPublished / ladder.expectedRetail - 1) * 100, 2),
-    regimeShift: shift
-      ? {
-          date: shift.date,
-          stepPp: round(shift.step, 1),
-          beforePct: round(shift.before, 2),
-          afterPct: round(shift.after, 2),
-          rankedAgainstDaysSince: premiums.length,
-        }
-      : null,
-  },
-  // Everything the dashboard needs to recompute a Nepali price in the browser
-  // from a live spot tick. FENEGOSIDA prints once a day and then sits still,
-  // but the world price moves all day; this is what lets the page carry that
-  // movement through to a live rupee figure between prints.
-  //
-  // The rupee leg is deliberately NOT live: NRB publishes once a day, so the
-  // daily value is the correct one to hold fixed until tomorrow's run.
+
+  metals: { gold, silver },
+  ratio,
+
+  // Live ticker inputs. The rupee leg is deliberately NOT live: NRB publishes
+  // once a day, so the daily value is the right one to hold until tomorrow.
   live: {
     endpoints: { xau: cfg.live.spotEndpointXAU, xag: cfg.live.spotEndpointXAG },
     pollSeconds: cfg.live.pollSeconds,
     staleAfterSeconds: cfg.live.staleAfterSeconds,
-    usdNpr,
+    usdNpr: today.fx.usdNpr,
     constants: { gramsPerTroyOunce: C.gramsPerTroyOunce, gramsPerTola: C.gramsPerTola },
-    gold: {
-      // Observed retail markup. Already contains duty, VAT and margin, so a
-      // price built with it needs no assumption about any of them.
-      measuredMarkupPct: round(measured.premiumPct, 4),
-      ladder: flatLadder(cfg.costBuildUp),
-      ladderIsCalibrated: false,
-      lastPublishedNprPerTola: lastPublished,
-      lastPublishedDate: measured.d,
-      baselineSpotUsdOz: spotUsdOz,
-    },
-    silver: {
-      measuredMarkupPct: round(silverPremiumLast, 4),
-      ladder: flatLadder(cfg.silverCostBuildUp),
-      // The silver duty was back-solved from observed prices, so its ladder
-      // describes the markup rather than checking it. The page says so.
-      ladderIsCalibrated: true,
-      lastPublishedNprPerTola: measured.silverTola ?? null,
-      lastPublishedDate: measured.d,
-      baselineSpotUsdOz: xagUsdOz,
-    },
+    gold: liveBlock(gold, cfg.costBuildUp, false),
+    silver: liveBlock(silver, cfg.silverCostBuildUp, true),
   },
-  silverBuildUp: silverLadder
-    ? {
-        steps: silverLadder.steps.map((s) => ({ ...s, amount: round(s.amount, 0), add: s.add == null ? null : round(s.add, 0) })),
-        expectedRetailNprPerTola: round(silverLadder.expectedRetail, 0),
-        impliedMarkupPct: round((silverLadder.expectedRetail / silverParityTola - 1) * 100, 2),
-        calibrated: true,
-      }
-    : null,
-  moves,
-  verdict,
+
+  // Legacy top-level gold fields, kept so anything reading the old shape still
+  // works. `metals.gold` is the same data and is what new code should use.
+  parity: { ...gold.parity, silverNprPerTola: silver?.parity.nprPerTola ?? null },
+  buildUp: gold.buildUp,
+  silverBuildUp: silver?.buildUp ?? null,
+  indicated: { ...gold.indicated, silverNprPerTola: silver?.indicated.nprPerTola ?? null },
+  measured: { ...gold.measured, silverNprPerTola: silver?.measured.actualNprPerTola ?? null, silverPremiumPct: silver?.measured.premiumPct ?? null },
+  moves: gold.moves,
+  series: gold.series.map((s) => ({ ...s, silver: silver?.series.find((x) => x.d === s.d)?.actual ?? null })),
+
+  verdict: gold.verdict,
   headline,
   flags,
-  series: window.map((s) => ({
-    d: s.d, spot: round(s.spotUsdOz, 2), fx: round(s.usdNpr, 3),
-    parity: round(s.parityTola, 0), actual: s.actualNprPerTola,
-    premium: round(s.premiumPct, 2), silver: s.silverTola,
-  })),
 };
 
 writeJson(path.join(ROOT, 'data', 'analysis.json'), analysis);
@@ -286,12 +126,60 @@ writeText(path.join(ROOT, 'reports', `${today.d}.md`), md);
 writeText(path.join(ROOT, 'reports', 'latest.md'), md);
 console.log(md);
 
-/* -------------------------------------------------------------- render --- */
+/* ------------------------------------------------------------ helpers --- */
+
+function liveBlock(a, costCfg, calibrated) {
+  if (!a) return null;
+  return {
+    measuredMarkupPct: a.measured.premiumPct,
+    ladder: {
+      customsDutyNprPer10g: costCfg.customsDutyNprPer10g.value,
+      vatRate: costCfg.vatRate.value,
+      importHandlingRate: costCfg.importHandlingRate.value,
+      dealerMarginRate: costCfg.dealerMarginRate.value,
+    },
+    ladderIsCalibrated: calibrated,
+    lastPublishedNprPerTola: a.measured.actualNprPerTola,
+    lastPublishedDate: a.measured.date,
+    baselineSpotUsdOz: a.spotUsdPerOz,
+  };
+}
+
+function headlineFor(g, s) {
+  const ord = (n) => {
+    const t = ['th', 'st', 'nd', 'rd'], v = n % 100;
+    return n + (t[(v - 20) % 10] || t[v] || t[0]);
+  };
+  const part = (a) => {
+    if (!a) return null;
+    if (a.verdict === 'insufficient-history') return `${a.label.toLowerCase()} at ${fmtPct(a.measured.premiumPct)} (too little history to rank)`;
+    return `${a.label.toLowerCase()} ${fmtPct(a.measured.premiumPct)} (${ord(Math.round(a.measured.percentile))} pctile)`;
+  };
+  const bits = [part(g), part(s)].filter(Boolean);
+  const dear = [g, s].filter((a) => a?.verdict === 'local-expensive').map((a) => a.label.toLowerCase());
+  const cheap = [g, s].filter((a) => a?.verdict === 'local-cheap').map((a) => a.label.toLowerCase());
+
+  let tail = 'Both near their own normal.';
+  if (dear.length === 2) tail = 'Both dear by local standards.';
+  else if (cheap.length === 2) tail = 'An unusually narrow gap in both.';
+  else if (dear.length === 1) tail = `${cap(dear[0])} is dear by local standards.`;
+  else if (cheap.length === 1) tail = `${cap(cheap[0])} is unusually close to the world price.`;
+
+  return `Nepali markups on ${g.measured.date} — ${bits.join(', ')}. ${tail}`;
+}
+
+// Function declarations, not const arrows: headlineFor runs during module
+// evaluation, before any const further down the file is initialised.
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function fmtPct(n) { return n == null ? 'n/a' : `${n > 0 ? '+' : ''}${Number(n).toFixed(2)}%`; }
+function round(n, dp) { return Number.isFinite(n) ? Number(Number(n).toFixed(dp)) : null; }
+
+/* ------------------------------------------------------------- render --- */
 
 function renderReport(a) {
   const L = [];
   const npr = (n) => (n == null ? 'n/a' : 'NPR ' + Number(n).toLocaleString('en-IN'));
-  const pct = (n, dp = 2) => (n == null ? 'n/a' : `${n > 0 ? '+' : ''}${Number(n).toFixed(dp)}%`);
+  const pct = (n, d = 2) => (n == null ? 'n/a' : `${n > 0 ? '+' : ''}${Number(n).toFixed(d)}%`);
 
   L.push(`# Bullion read - ${a.asOf.record}`);
   L.push('');
@@ -303,8 +191,8 @@ function renderReport(a) {
   L.push('| | |');
   L.push('|---|---|');
   L.push(`| Gold | **$${a.international.goldUsdPerOz.toLocaleString('en-US')} / troy oz** |`);
-  L.push(`| Silver | $${a.international.silverUsdPerOz?.toLocaleString('en-US') ?? 'n/a'} / troy oz |`);
-  L.push(`| Gold per gram | $${a.international.goldUsdPerGram} |`);
+  L.push(`| Silver | **$${a.international.silverUsdPerOz?.toLocaleString('en-US') ?? 'n/a'} / troy oz** |`);
+  L.push(`| Gold:silver ratio | ${a.ratio?.worldNow ?? 'n/a'} |`);
   L.push(`| USD/NPR (NRB selling, ${a.fx.asOf}) | ${a.fx.usdNpr} |`);
   L.push(`| INR/NPR | ${a.fx.inrNpr ?? 'n/a'} |`);
   L.push('');
@@ -315,151 +203,99 @@ function renderReport(a) {
   }
   L.push('');
 
-  L.push('## 2. What that makes a tola worth, before Nepal touches it');
-  L.push('');
-  L.push(`\`${a.international.goldUsdPerOz} ÷ ${C.gramsPerTroyOunce} × ${a.fx.usdNpr} × ${C.gramsPerTola}\``);
-  L.push('');
-  L.push(`= **${npr(a.parity.nprPerTola)} per tola** · ${npr(a.parity.nprPer10g)} per 10 g · ${npr(a.parity.nprPerGram)} per gram`);
-  L.push('');
-  L.push(`Silver parity: ${npr(a.parity.silverNprPerTola)} per tola.`);
-  L.push('');
+  for (const m of [a.metals.gold, a.metals.silver]) {
+    if (!m) continue;
+    L.push(`## ${m.label}`);
+    L.push('');
 
-  L.push('## 3. What a tola should cost in Kathmandu today');
-  L.push('');
-  if (a.asOf.isLive) {
-    L.push(`The local market published today, so this is a check rather than a forecast.`);
-  } else {
-    L.push(`FENEGOSIDA last published on **${a.asOf.nepalMeasured}**, ${a.asOf.staleDays} day${a.asOf.staleDays === 1 ? '' : 's'} ago — the local market is closed or has not reprinted. The figure below is what today's world price and rupee imply once the measured local markup of ${pct(a.indicated.usingPremiumPct)} is applied.`);
-  }
-  L.push('');
-  L.push('| | Per tola | Per 10 g |');
-  L.push('|---|---:|---:|');
-  L.push(`| **Indicated gold rate** | **${npr(a.indicated.nprPerTola)}** | ${npr(a.indicated.nprPer10g)} |`);
-  L.push(`| At the 1-year median markup instead | ${npr(a.indicated.atMedianPremiumNprPerTola)} | — |`);
-  L.push(`| Last actually published (${a.asOf.nepalMeasured}) | ${npr(a.indicated.lastPublishedNprPerTola)} | — |`);
-  L.push(`| Indicated silver | ${npr(a.indicated.silverNprPerTola)} | — |`);
-  L.push('');
-  if (!a.asOf.isLive && a.indicated.repriceGapPct != null) {
-    const dir = a.indicated.repriceGapPct >= 0 ? 'higher' : 'lower';
-    L.push(`**Expect the next print around ${pct(a.indicated.repriceGapPct, 1)} ${dir}** than the last one (${npr(a.indicated.repriceGapNpr)} per tola), if the markup holds.`);
-    L.push('');
-  }
-
-  L.push('### Where that markup goes');
-  L.push('');
-  L.push('| Step | Adds | Running total / tola |');
-  L.push('|---|---:|---:|');
-  for (const s of a.buildUp.steps) L.push(`| ${s.label} | ${s.add == null ? '—' : npr(s.add)} | ${npr(s.amount)} |`);
-  L.push('');
-  L.push(`This ladder totals ${pct(a.buildUp.impliedMarkupPct)} against a markup actually observed at ${pct(a.measured.premiumPct)}. The two are built differently on purpose: the ladder is an explanation assembled from tax assumptions, the observed figure is measured from published prices.`);
-  L.push('');
-  if (a.buildUp.assumptionsUnverified.length) {
-    L.push('<details><summary>Unverified assumptions in that ladder</summary>');
-    L.push('');
-    for (const x of a.buildUp.assumptionsUnverified) L.push(`- \`${x.key}\` = ${x.value} — ${x.source}`);
-    L.push('');
-    L.push('Edit `config/parameters.json` to correct them. Nothing above section 3 depends on them.');
-    L.push('</details>');
-    L.push('');
-  }
-
-  L.push(`## 4. The measured gap, on ${a.measured.date}`);
-  L.push('');
-  L.push('| | |');
-  L.push('|---|---|');
-  L.push(`| Published rate | **${npr(a.measured.actualNprPerTola)} / tola** (${npr(a.measured.actualNprPerGram)}/g) |`);
-  L.push(`| World parity that same day | ${npr(a.measured.parityNprPerTola)} |`);
-  L.push(`| Markup over parity | **${pct(a.measured.premiumPct)}** (${npr(a.measured.premiumNpr)}) |`);
-  L.push(`| Silver markup | ${pct(a.measured.silverPremiumPct)} |`);
-  L.push(`| Percentile over ${a.measured.historyDays} same-day observations | **${a.measured.percentile}th** |`);
-  L.push(`| Mean / median / sd markup | ${pct(a.measured.meanPct)} / ${pct(a.measured.medianPct)} / ${a.measured.sdPct}pp |`);
-  L.push('');
-  if (a.measured.regimeShift) {
-    const r = a.measured.regimeShift;
-    L.push(`> **Regime break detected around ${r.date}**: the markup stepped ${r.stepPp > 0 ? 'up' : 'down'} from ${pct(r.beforePct)} to ${pct(r.afterPct)} (${r.stepPp > 0 ? '+' : ''}${r.stepPp}pp) and stayed there — the signature of a Finance Act duty change rather than a market move. Everything ranked above compares only the ${r.rankedAgainstDaysSince} observations since that break, because ranking against the older regime would measure a tax change rather than today's market.`);
-    L.push('');
-  }
-  L.push('Duty and VAT barely move. So within one regime, a widening markup is the local market doing it — importer scarcity, dealer pricing, or rates that fall more slowly than the world price does.');
-  L.push('');
-
-  if (a.moves.length) {
-    L.push('## 5. What moved, and why');
-    L.push('');
-    L.push('| Window | World gold | USD/NPR | Nepali rate | Markup |');
-    L.push('|---|---:|---:|---:|---:|');
-    for (const m of a.moves) {
-      L.push(`| ${m.label} | ${pct(m.spotPct, 1)} | ${pct(m.fxPct, 1)} | ${pct(m.nepalPct, 1)} | ${m.premiumPointChange == null ? 'n/a' : `${m.premiumPointChange > 0 ? '+' : ''}${m.premiumPointChange.toFixed(1)}pp`} |`);
-    }
-    L.push('');
-    const best = a.moves.find((m) => m.label === '1 month') ?? a.moves[a.moves.length - 1];
-    if (best?.attribution) {
-      const at = best.attribution;
-      const parts = [['the world gold price', at.shares.spot], ['the rupee', at.shares.fx], ['the local markup', at.shares.premium]]
-        .sort((x, y) => y[1] - x[1]);
-      L.push(`Over ${best.label} the Nepali rate moved ${pct(at.totalPct, 1)}: ${pct(at.fromSpotPct, 1)} of it from the world gold price, ${pct(at.fromFxPct, 1)} from the rupee, ${pct(at.fromPremiumPct, 1)} from the local markup. Mostly **${parts[0][0]}** (${parts[0][1].toFixed(0)}% of the movement).`);
+    if (!m.measured.isLive) {
+      L.push(`FENEGOSIDA last published on **${m.measured.date}**, ${m.measured.staleDays} day${m.measured.staleDays === 1 ? '' : 's'} ago. The indicated figure carries today's world price and rupee through the measured markup of ${pct(m.indicated.usingPremiumPct)}.`);
       L.push('');
     }
+
+    L.push('| | Per tola | Per 10 g |');
+    L.push('|---|---:|---:|');
+    L.push(`| **Indicated now** | **${npr(m.indicated.nprPerTola)}** | ${npr(m.indicated.nprPer10g)} |`);
+    L.push(`| Last published (${m.measured.date}) | ${npr(m.measured.actualNprPerTola)} | ${npr(m.measured.actualNprPer10g)} |`);
+    L.push(`| World parity, same day | ${npr(m.measured.parityNprPerTola)} | — |`);
+    L.push(`| At the median markup instead | ${npr(m.indicated.atMedianPremiumNprPerTola)} | — |`);
+    L.push('');
+    if (!m.measured.isLive && m.indicated.repriceGapPct != null) {
+      L.push(`**Expect the next print around ${pct(m.indicated.repriceGapPct, 1)}** against the last one (${npr(m.indicated.repriceGapNpr)} per tola), if the markup holds.`);
+      L.push('');
+    }
+
+    L.push('| Markup | |');
+    L.push('|---|---|');
+    L.push(`| Over world parity | **${pct(m.measured.premiumPct)}** (${npr(m.measured.premiumNpr)}) |`);
+    L.push(`| Percentile over ${m.measured.historyDays} same-day observations | **${m.measured.percentile}** |`);
+    L.push(`| Mean / median / sd | ${pct(m.measured.meanPct)} / ${pct(m.measured.medianPct)} / ${m.measured.sdPct}pp |`);
+    L.push('');
+
+    if (m.measured.regimeShift) {
+      const r = m.measured.regimeShift;
+      L.push(`> **Regime break around ${r.date}**: the markup stepped ${r.stepPp > 0 ? 'up' : 'down'} from ${pct(r.beforePct)} to ${pct(r.afterPct)} (${r.stepPp > 0 ? '+' : ''}${r.stepPp}pp) and held. Everything above ranks only the ${r.rankedAgainstDaysSince} observations since it.`);
+      L.push('');
+    }
+
+    if (m.buildUp) {
+      L.push('<details><summary>Cost ladder — where that markup goes</summary>');
+      L.push('');
+      L.push('| Step | Adds | Running total / tola |');
+      L.push('|---|---:|---:|');
+      for (const s of m.buildUp.steps) L.push(`| ${s.label} | ${s.add == null ? '—' : npr(s.add)} | ${npr(s.amount)} |`);
+      L.push('');
+      L.push(`Ladder total ${pct(m.buildUp.impliedMarkupPct)} against a markup measured at ${pct(m.measured.premiumPct)}.`);
+      if (m.buildUp.calibrated) {
+        L.push('');
+        L.push(`**This ladder is calibrated, not independent.** ${m.label}'s duty was back-solved from observed prices rather than read from the Finance Act, so it describes the markup instead of confirming it.`);
+      }
+      L.push('</details>');
+      L.push('');
+    }
+
+    if (m.moves.length) {
+      L.push('| Window | World price | USD/NPR | Nepali rate | Markup |');
+      L.push('|---|---:|---:|---:|---:|');
+      for (const mv of m.moves) {
+        L.push(`| ${mv.label} | ${pct(mv.spotPct, 1)} | ${pct(mv.fxPct, 1)} | ${pct(mv.nepalPct, 1)} | ${mv.premiumPointChange == null ? 'n/a' : `${mv.premiumPointChange > 0 ? '+' : ''}${mv.premiumPointChange.toFixed(1)}pp`} |`);
+      }
+      L.push('');
+      const best = m.moves.find((x) => x.label === '1 month') ?? m.moves[m.moves.length - 1];
+      if (best?.attribution) {
+        const at = best.attribution;
+        const parts = [['the world price', at.shares.spot], ['the rupee', at.shares.fx], ['the local markup', at.shares.premium]]
+          .sort((x, y) => y[1] - x[1]);
+        L.push(`Over ${best.label} the Nepali ${m.label.toLowerCase()} rate moved ${pct(at.totalPct, 1)}: ${pct(at.fromSpotPct, 1)} from the world price, ${pct(at.fromFxPct, 1)} from the rupee, ${pct(at.fromPremiumPct, 1)} from the local markup. Mostly **${parts[0][0]}** (${parts[0][1].toFixed(0)}%).`);
+        L.push('');
+      }
+    }
+  }
+
+  if (a.ratio?.nepalNow) {
+    const r = a.ratio;
+    L.push('## Gold against silver');
+    L.push('');
+    L.push('| | Now | Median | |');
+    L.push('|---|---:|---:|---|');
+    L.push(`| World ratio | **${r.worldNow}** | ${r.worldMedian} | ${r.worldPercentile}th percentile of ${r.n} days |`);
+    L.push(`| Nepal ratio | **${r.nepalNow}** | ${r.nepalMedian} | published rates |`);
+    L.push('');
+    const rich = r.localSilverRichnessPct;
+    if (rich != null) {
+      L.push(rich > 0
+        ? `Nepal's ratio sits **${Math.abs(rich).toFixed(1)}% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys ${r.nepalNow} tola of silver in Kathmandu against ${r.worldNow} internationally.`
+        : `Nepal's ratio sits **${Math.abs(rich).toFixed(1)}% above** the world ratio, meaning gold carries the heavier local markup of the two. One tola of gold buys ${r.nepalNow} tola of silver in Kathmandu against ${r.worldNow} internationally.`);
+      L.push('');
+    }
+    L.push('The ratio is the standard bullion yardstick, and locally it carries extra information: the two metals do not attract the same markup, so the Nepali ratio drifts from the world one whenever one metal becomes relatively costlier to import than the other.');
+    L.push('');
   }
 
   L.push('---');
   L.push('');
-  L.push(`Generated ${a.generatedAt} · ${a.measured.historyDays} same-day observations · flags: ${a.flags.length ? a.flags.join(', ') : 'none'}`);
+  L.push(`Generated ${a.generatedAt} · flags: ${a.flags.length ? a.flags.join(', ') : 'none'}`);
+  L.push('');
+  L.push('Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.');
   return L.join('\n') + '\n';
-}
-
-/* -------------------------------------------------------------- helpers -- */
-
-/**
- * Find the largest sustained step in the markup: the point where the mean of
- * the next 10 same-day observations most exceeds the mean of the previous 10.
- * Reported only when the step clears `minPp`, which keeps ordinary volatility
- * from being dressed up as a policy change.
- */
-function detectRegimeShift(s, minPp) {
-  const N = 10;
-  if (s.length < N * 3) return null;
-  let best = null;
-  for (let i = N; i < s.length - N; i++) {
-    const before = mean(s.slice(i - N, i).map((x) => x.premiumPct));
-    const after = mean(s.slice(i, i + N).map((x) => x.premiumPct));
-    if (before == null || after == null) continue;
-    const step = after - before;
-    if (!best || Math.abs(step) > Math.abs(best.step)) best = { step, index: i, date: s[i].d, before, after };
-  }
-  if (!best || Math.abs(best.step) < minPp) return null;
-  // Too recent to rank against: fewer than 20 observations since the break.
-  if (s.length - best.index < 20) return null;
-  return best;
-}
-
-/** Strip a cost-build-up config down to the bare numbers the browser needs. */
-function flatLadder(c) {
-  return {
-    customsDutyNprPer10g: c.customsDutyNprPer10g.value,
-    vatRate: c.vatRate.value,
-    importHandlingRate: c.importHandlingRate.value,
-    dealerMarginRate: c.dealerMarginRate.value,
-  };
-}
-
-function median(xs) {
-  const v = xs.filter(Number.isFinite).sort((a, b) => a - b);
-  if (!v.length) return null;
-  const m = Math.floor(v.length / 2);
-  return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
-}
-function nearestInSeries(s, targetMs, targetDays) {
-  let best = null, gap = Infinity;
-  for (const x of s) {
-    const g = Math.abs(Date.parse(x.d) - targetMs);
-    if (g < gap) { gap = g; best = x; }
-  }
-  return best && gap <= Math.max(10, targetDays * 0.4) * 864e5 ? best : null;
-}
-function daysApart(a, b) { return Math.round((Date.parse(b) - Date.parse(a)) / 864e5); }
-function round(n, dp) { return Number.isFinite(n) ? Number(Number(n).toFixed(dp)) : null; }
-function fmtPct(n) { return n == null ? 'n/a' : `${n > 0 ? '+' : ''}${n.toFixed(2)}%`; }
-function ord(n) {
-  const s = ['th', 'st', 'nd', 'rd'], v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }

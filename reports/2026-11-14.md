@@ -1,41 +1,41 @@
 # Bullion read - 2026-11-14
 
-**Nepali gold carried a +23.96% markup over the world price on 2026-11-13 - its 96th percentile. Dear by local standards.**
+**Nepali markups on 2026-11-13 — gold +23.96% (96th pctile), silver +31.61% (89th pctile). Both dear by local standards.**
 
 ## 1. Where the world price is right now
 
 | | |
 |---|---|
 | Gold | **$3,887.6 / troy oz** |
-| Silver | $48.65 / troy oz |
-| Gold per gram | $124.99 |
+| Silver | **$48.65 / troy oz** |
+| Gold:silver ratio | 79.91 |
 | USD/NPR (NRB selling, 2026-11-13) | 150.78 |
 | INR/NPR | 1.6015 |
 
 Sources: gold-api.com (spot); Nepal Rastra Bank (official).
 
-## 2. What that makes a tola worth, before Nepal touches it
+## Gold
 
-`3887.6 ÷ 31.1034768 × 150.78 × 11.6638038`
-
-= **NPR 2,19,815 per tola** · NPR 1,88,459 per 10 g · NPR 18,846 per gram
-
-Silver parity: NPR 2,751 per tola.
-
-## 3. What a tola should cost in Kathmandu today
-
-FENEGOSIDA last published on **2026-11-13**, 1 day ago — the local market is closed or has not reprinted. The figure below is what today's world price and rupee imply once the measured local markup of +23.96% is applied.
+FENEGOSIDA last published on **2026-11-13**, 1 day ago. The indicated figure carries today's world price and rupee through the measured markup of +23.96%.
 
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated gold rate** | **NPR 2,72,489** | NPR 2,33,619 |
-| At the 1-year median markup instead | NPR 2,65,753 | — |
-| Last actually published (2026-11-13) | NPR 2,71,700 | — |
-| Indicated silver | NPR 3,620 | — |
+| **Indicated now** | **NPR 2,72,489** | NPR 2,33,619 |
+| Last published (2026-11-13) | NPR 2,71,700 | NPR 2,32,940 |
+| World parity, same day | NPR 2,19,178 | — |
+| At the median markup instead | NPR 2,65,753 | — |
 
-**Expect the next print around +0.3% higher** than the last one (NPR 789 per tola), if the markup holds.
+**Expect the next print around +0.3%** against the last one (NPR 789 per tola), if the markup holds.
 
-### Where that markup goes
+| Markup | |
+|---|---|
+| Over world parity | **+23.96%** (NPR 52,522) |
+| Percentile over 110 same-day observations | **96.4** |
+| Mean / median / sd | +20.90% / +20.90% / 1.63pp |
+
+> **Regime break around 2026-06-01**: the markup stepped up from +11.98% to +21.33% (+9.4pp) and held. Everything above ranks only the 110 observations since it.
+
+<details><summary>Cost ladder — where that markup goes</summary>
 
 | Step | Adds | Running total / tola |
 |---|---:|---:|
@@ -45,43 +45,76 @@ FENEGOSIDA last published on **2026-11-13**, 1 day ago — the local market is c
 | VAT @ 13% | NPR 30,075 | NPR 2,61,419 |
 | Dealer margin | NPR 7,843 | NPR 2,69,261 |
 
-This ladder totals +22.49% against a markup actually observed at +23.96%. The two are built differently on purpose: the ladder is an explanation assembled from tax assumptions, the observed figure is measured from published prices.
-
-<details><summary>Unverified assumptions in that ladder</summary>
-
-- `customsDutyNprPer10g` = 8000 — Finance Act, specific duty per 10g on gold imports - CONFIRM CURRENT VALUE
-- `importHandlingRate` = 0.01 — bank import commission, insurance, freight, assay - estimate
-- `dealerMarginRate` = 0.03 — FENEGOSIDA member retail margin on the published rate - estimate
-
-Edit `config/parameters.json` to correct them. Nothing above section 3 depends on them.
+Ladder total +22.49% against a markup measured at +23.96%.
 </details>
 
-## 4. The measured gap, on 2026-11-13
-
-| | |
-|---|---|
-| Published rate | **NPR 2,71,700 / tola** (NPR 23,294/g) |
-| World parity that same day | NPR 2,19,178 |
-| Markup over parity | **+23.96%** (NPR 52,522) |
-| Silver markup | +31.61% |
-| Percentile over 110 same-day observations | **96.4th** |
-| Mean / median / sd markup | +20.90% / +20.90% / 1.63pp |
-
-> **Regime break detected around 2026-06-01**: the markup stepped up from +11.98% to +21.33% (+9.4pp) and stayed there — the signature of a Finance Act duty change rather than a market move. Everything ranked above compares only the 110 observations since that break, because ranking against the older regime would measure a tax change rather than today's market.
-
-Duty and VAT barely move. So within one regime, a widening markup is the local market doing it — importer scarcity, dealer pricing, or rates that fall more slowly than the world price does.
-
-## 5. What moved, and why
-
-| Window | World gold | USD/NPR | Nepali rate | Markup |
+| Window | World price | USD/NPR | Nepali rate | Markup |
 |---|---:|---:|---:|---:|
 | 1 week | -4.5% | -0.8% | -4.0% | +1.7pp |
 | 1 month | -5.3% | -1.7% | -6.1% | +0.9pp |
 | 3 months | -12.3% | -1.8% | -9.9% | +5.5pp |
 | 1 year | -7.2% | +5.7% | +8.6% | +12.0pp |
 
-Over 1 month the Nepali rate moved -6.1%: -5.3% of it from the world gold price, -1.7% from the rupee, +0.8% from the local markup. Mostly **the world gold price** (69% of the movement).
+Over 1 month the Nepali gold rate moved -6.1%: -5.3% from the world price, -1.7% from the rupee, +0.8% from the local markup. Mostly **the world price** (69%).
+
+## Silver
+
+FENEGOSIDA last published on **2026-11-13**, 1 day ago. The indicated figure carries today's world price and rupee through the measured markup of +31.61%.
+
+| | Per tola | Per 10 g |
+|---|---:|---:|
+| **Indicated now** | **NPR 3,620** | NPR 3,104 |
+| Last published (2026-11-13) | NPR 3,700 | NPR 3,172 |
+| World parity, same day | NPR 2,811 | — |
+| At the median markup instead | NPR 3,508 | — |
+
+**Expect the next print around -2.1%** against the last one (NPR -80 per tola), if the markup holds.
+
+| Markup | |
+|---|---|
+| Over world parity | **+31.61%** (NPR 889) |
+| Percentile over 110 same-day observations | **89.1** |
+| Mean / median / sd | +27.84% / +27.54% / 3.07pp |
+
+> **Regime break around 2026-06-01**: the markup stepped up from +15.66% to +27.05% (+11.4pp) and held. Everything above ranks only the 110 observations since it.
+
+<details><summary>Cost ladder — where that markup goes</summary>
+
+| Step | Adds | Running total / tola |
+|---|---:|---:|
+| International value of 1 tola | — | NPR 2,751 |
+| Freight, insurance, bank commission | NPR 28 | NPR 2,778 |
+| Customs duty | NPR 315 | NPR 3,093 |
+| VAT @ 13% | NPR 402 | NPR 3,495 |
+| Dealer margin | NPR 105 | NPR 3,600 |
+
+Ladder total +30.88% against a markup measured at +31.61%.
+
+**This ladder is calibrated, not independent.** Silver's duty was back-solved from observed prices rather than read from the Finance Act, so it describes the markup instead of confirming it.
+</details>
+
+| Window | World price | USD/NPR | Nepali rate | Markup |
+|---|---:|---:|---:|---:|
+| 1 week | -3.7% | -0.8% | -2.9% | +2.1pp |
+| 1 month | -10.2% | -1.7% | -13.0% | -2.1pp |
+| 3 months | -23.2% | -1.8% | -20.6% | +6.6pp |
+| 1 year | -6.0% | +5.7% | +10.6% | +13.4pp |
+
+Over 1 month the Nepali silver rate moved -13.0%: -10.2% from the world price, -1.7% from the rupee, -1.6% from the local markup. Mostly **the world price** (77%).
+
+## Gold against silver
+
+| | Now | Median | |
+|---|---:|---:|---|
+| World ratio | **79.91** | 65.85 | 96.7th percentile of 245 days |
+| Nepal ratio | **73.43** | 62.55 | published rates |
+
+Nepal's ratio sits **8.8% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys 73.43 tola of silver in Kathmandu against 79.91 internationally.
+
+The ratio is the standard bullion yardstick, and locally it carries extra information: the two metals do not attract the same markup, so the Nepali ratio drifts from the world one whenever one metal becomes relatively costlier to import than the other.
 
 ---
 
-Generated 2026-11-14T13:35:45.871Z · 110 same-day observations · flags: premium-high, nepal-market-closed
+Generated 2026-11-14T13:53:11.054Z · flags: premium-high, silver-premium-high, silver-reprice-pending, nepal-market-closed
+
+Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.

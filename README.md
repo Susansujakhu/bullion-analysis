@@ -112,6 +112,48 @@ step leaks for a further 60 observations while the trailing median absorbs it. W
 corrections the remaining monthly pattern is ±1.5pp — i.e. noise, which is the honest
 answer with one year of data.
 
+## Silver is analysed, not annotated
+
+Both metals get the same treatment end to end — markup, percentile, regime detection,
+move attribution, cost ladder, projection, back-test and technicals. That matters because
+they do not behave alike, and a gold-shaped report would hide it:
+
+| | Gold | Silver |
+|---|---:|---:|
+| Markup now | +24.0% | +31.6% |
+| Markup range over a year | tight | **6% → 63%** |
+| Reversion half-life | 4.6 sessions | **1.8 sessions** |
+| Stickiness (corr) | −0.52 | **−0.66** |
+| World daily volatility | 1.4% | **2.6%** |
+
+**The 2026-06-01 duty break appears in both metals independently** — gold +9.4pp, silver
++11.4pp, same day. Two separate instruments stepping together is what makes a Finance Act
+change the explanation rather than a quirk of one market.
+
+### Silver forced a real fix to the model
+
+Silver's back-test failed on first run: the 68% band held only 55% and the 95% band 87%.
+Its markup residuals are fat-tailed, and a Gaussian band is simply wrong for them. The
+band multipliers are now taken from the **empirical quantiles of each model's own past
+errors**, fitted per metal, which moved silver's 95% band from 87.1% to 94.5%.
+
+Coverage is scored out-of-sample: at each step the multipliers come only from errors
+observed *before* that step, so the reported figure is not the circular result of grading
+the calibration on itself.
+
+One caveat the report states itself: consecutive tests share 4 of their 5 sessions, so 110
+tests carry roughly 22 independent observations — about ±10pp of standard error on a
+coverage figure. Differences smaller than that are noise, including gold's apparent
+70%→60% move when calibration was introduced.
+
+### The gold:silver ratio
+
+The standard bullion yardstick, and locally it carries extra information. The world ratio
+is currently ~80 against a one-year median of ~66 — silver is historically cheap against
+gold. Nepal's ratio sits ~9% below the world's, because silver carries the heavier local
+markup of the two. That gap is not an arbitrage: both metals are physical here and both
+carry a dealer spread.
+
 ## The one distinction that matters
 
 Two kinds of number live in this repo and they are never mixed:

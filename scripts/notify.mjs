@@ -46,7 +46,7 @@ const npr = (n) => (n == null ? '—' : 'NPR ' + Number(n).toLocaleString('en-IN
 const pct = (n, d = 2) => (n == null ? '—' : `${n > 0 ? '+' : ''}${Number(n).toFixed(d)}%`);
 
 const subject = weekly
-  ? `Bullion weekly — ${npr(a.indicated.nprPerTola)}/tola indicated, markup ${pct(a.measured.premiumPct, 1)}`
+  ? `Bullion weekly — gold ${npr(a.indicated.nprPerTola)} (${pct(a.measured.premiumPct, 1)}), silver ${npr(a.metals?.silver?.indicated?.nprPerTola)} (${pct(a.metals?.silver?.measured?.premiumPct, 1)})`
   : `Bullion alert — ${triggered.join(', ')} — ${npr(a.indicated.nprPerTola)}/tola`;
 
 const text = [
@@ -59,15 +59,32 @@ const text = [
   `Last published  ${npr(a.indicated.lastPublishedNprPerTola)} on ${a.asOf.nepalMeasured}`,
   a.asOf.isLive ? null : `Pending reprice ${pct(a.indicated.repriceGapPct, 1)} (${npr(a.indicated.repriceGapNpr)})`,
   '',
-  `Local markup    ${pct(a.measured.premiumPct)}  (${a.measured.percentile}th pctile of ${a.measured.historyDays} days, median ${pct(a.measured.medianPct)})`,
+  `Local markup    ${pct(a.measured.premiumPct)}  (${a.measured.percentile} pctile of ${a.measured.historyDays} days, median ${pct(a.measured.medianPct)})`,
   '',
+  ...(a.metals?.silver ? [
+    '-- silver --',
+    `World silver    $${a.international.silverUsdPerOz}/oz`,
+    `Indicated now   ${npr(a.metals.silver.indicated.nprPerTola)} / tola`,
+    `Last published  ${npr(a.metals.silver.measured.actualNprPerTola)} on ${a.metals.silver.measured.date}`,
+    `Local markup    ${pct(a.metals.silver.measured.premiumPct)}  (${a.metals.silver.measured.percentile} pctile, median ${pct(a.metals.silver.measured.medianPct)})`,
+    a.ratio?.nepalNow ? `Gold:silver     ${a.ratio.nepalNow} in Nepal vs ${a.ratio.worldNow} world` : null,
+    '',
+  ] : []),
   ...(fc ? [
     `-- one week out (${fc.horizonSessions} sessions) --`,
-    `Central         ${npr(fc.projection.centralNprPerTola)}  (${pct(fc.projection.centralChangePct, 1)})`,
-    `68% band        ${npr(fc.projection.band68.lo)} - ${npr(fc.projection.band68.hi)}`,
-    `Markup should   ${pct(fc.drivers.markupNowPct, 1)} -> ${pct(fc.drivers.markupExpectedPct, 1)}`,
-    fc.backtest ? `Band honesty    68% band held ${fc.backtest.coverage68Pct}% of the time over ${fc.backtest.n} tests` : null,
-    'World gold is given no drift - the band is the forecast, not the mid-point.',
+    ...['gold', 'silver'].flatMap((k) => {
+      const m = fc.metals?.[k];
+      if (!m) return [];
+      return [
+        `${k === 'gold' ? 'Gold  ' : 'Silver'}  central ${npr(m.projection.centralNprPerTola)} (${pct(m.projection.centralChangePct, 1)})`,
+        `        68% band ${npr(m.projection.band68.lo)} - ${npr(m.projection.band68.hi)}`,
+        `        markup ${pct(m.drivers.markupNowPct, 1)} -> ${pct(m.drivers.markupExpectedPct, 1)}, half-life ${m.drivers.ar1HalfLifeSessions} sessions`,
+        m.backtest?.coverage68Pct != null
+          ? `        band honesty: 68% band held ${m.backtest.coverage68Pct}% over ${m.backtest.n} tests`
+          : null,
+      ];
+    }),
+    'World prices are given no drift - the band is the forecast, not the mid-point.',
     '',
   ] : []),
   'Flags: ' + ((a.flags ?? []).join(', ') || 'none'),
