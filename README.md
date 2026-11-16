@@ -186,8 +186,8 @@ the markup then steps to a new level permanently. A step of +9.4pp was detected 
 straddles it would report "92nd percentile" when the honest answer within the current
 regime is 83rd. The analysis finds the break and ranks only after it.
 
-**Stamp records in Kathmandu time.** The job fires at 05:15 UTC; naive UTC dating puts
-records on the wrong day near midnight.
+**Stamp records in Kathmandu time.** The job fires in the UTC morning; naive UTC dating
+puts records on the wrong day near midnight.
 
 **`ratehistory` is broken upstream.** FENEGOSIDA's bulk history endpoint returns HTTP 500
 for every parameter value. Backfill therefore walks `datewisehistory` one date at a time,
@@ -217,8 +217,14 @@ figure is then marginally overstated.
 
 | Workflow | When | Does |
 |---|---|---|
-| `daily.yml` | 05:15 UTC / 11:00 NPT daily | fetch → analyse → outlook → commit → publish dashboard → email **only if flagged** |
+| `daily.yml` | four attempts, 04:52–08:47 UTC / 10:37–14:32 NPT | fetch → analyse → outlook → email **only if flagged** → commit → publish dashboard |
 | `weekly.yml` | 05:45 UTC Sunday | the digest that always arrives |
+
+Four attempts, not one, because GitHub honours a scheduled run whenever it has capacity —
+a single 05:15 alarm was landing seven to eight hours late every day, which meant the site
+showed yesterday's FENEGOSIDA print all morning. The attempts are at unpopular minutes,
+the collector upserts by date, and the mail is rationed to one per Kathmandu day, so the
+only cost of the extra attempts is Actions minutes.
 
 The daily job stays quiet by design. A mail that says "gold did nothing again" trains you
 to ignore the one that matters, so it only writes when `premium-high`, `premium-low`,

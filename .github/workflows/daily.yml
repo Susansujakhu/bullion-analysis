@@ -1,16 +1,26 @@
 name: Daily fetch and analysis
 
-# FENEGOSIDA stamps its publication around 04:30 UTC (10:15 Kathmandu), so the
-# run sits at 05:15 UTC / 11:00 NPT - late enough to catch the day's print,
-# early enough to be waiting when you open your mail.
+# FENEGOSIDA stamps its publication around 04:45 UTC (10:30 Kathmandu), so
+# there is nothing new to collect before then.
 #
-# GitHub skews scheduled runs under load, sometimes by tens of minutes. That is
-# harmless here: records are stamped in Kathmandu time by the collector, so a
-# late run still lands on the right day.
+# One alarm is not enough. A lone '15 5 * * *' was honoured seven to eight
+# hours late on every consecutive day it ran - 13:03, 12:07 and 12:41 UTC -
+# which put the morning's print on the site at about 18:00 NPT, long after
+# anyone had looked. GitHub promises no latency for scheduled runs and queues
+# the popular minutes (:00, :15, :30) hardest, so the fix is several attempts
+# at unpopular minutes rather than one hopeful alarm.
+#
+# The extra attempts are nearly free. The collector upserts by date, so a run
+# that fires before the print writes a record without a Nepali rate and a
+# later one replaces it wholesale; whichever attempt GitHub honours first
+# after the print is the one that publishes, and the rest find the work done.
 
 on:
   schedule:
-    - cron: '15 5 * * *'
+    - cron: '52 4 * * *'   # 10:37 NPT - minutes after the print
+    - cron: '37 5 * * *'   # 11:22 NPT
+    - cron: '43 6 * * *'   # 12:28 NPT
+    - cron: '47 8 * * *'   # 14:32 NPT - last chance before the evening
   workflow_dispatch:
     inputs:
       force_email:
@@ -59,20 +69,6 @@ jobs:
         continue-on-error: true
         run: node scripts/forecast.mjs
 
-      - name: Commit the day's record
-        run: |
-          git config user.name  "bullion-bot"
-          git config user.email "bullion-bot@users.noreply.github.com"
-          git add data/ reports/ site/analysis.json site/forecast.json
-          if git diff --staged --quiet; then
-            echo "Nothing changed - no commit."
-          else
-            git commit -m "data: $(date -u +%Y-%m-%d) rates and analysis"
-            # Rebase in case a human pushed between checkout and now.
-            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
-            git push
-          fi
-
       - name: Email
         continue-on-error: true   # a mail outage must not fail the data job
         env:
@@ -92,6 +88,24 @@ jobs:
             node scripts/notify.mjs --weekly
           else
             node scripts/notify.mjs
+          fi
+
+      # Mail before committing, not after: notify.mjs leaves a marker naming the
+      # day it last sent, and the commit below is what carries that marker to
+      # the next attempt. A failed send writes no marker, so the next attempt
+      # tries again.
+      - name: Commit the day's record
+        run: |
+          git config user.name  "bullion-bot"
+          git config user.email "bullion-bot@users.noreply.github.com"
+          git add data/ reports/ site/analysis.json site/forecast.json
+          if git diff --staged --quiet; then
+            echo "Nothing changed - no commit."
+          else
+            git commit -m "data: $(date -u +%Y-%m-%d) rates and analysis"
+            # Rebase in case a human pushed between checkout and now.
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            git push
           fi
 
       - uses: actions/configure-pages@v5

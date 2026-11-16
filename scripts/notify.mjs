@@ -13,6 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT, loadConfig } from '../lib/store.mjs';
+import { kathmanduDate } from '../lib/sources.mjs';
 
 const weekly = process.argv.includes('--weekly');
 const dryRun = process.argv.includes('--dry-run');
@@ -37,6 +38,20 @@ const triggered = (a.flags ?? []).filter((f) => ALERTING.has(f));
 
 if (!weekly && !triggered.length) {
   console.log(`Nothing worth mailing (flags: ${(a.flags ?? []).join(', ') || 'none'}). Staying quiet.`);
+  process.exit(0);
+}
+
+// The collector now attempts the morning several times, because GitHub honours
+// a scheduled run whenever it feels like it. The same flag would therefore mail
+// the same alert two or three times before lunch. One alert per Kathmandu day:
+// the marker is committed with the day's data, so every later attempt sees it.
+const mailedPath = path.join(ROOT, 'data', 'last-mailed.txt');
+const today = kathmanduDate();
+const alreadyMailed =
+  fs.existsSync(mailedPath) && fs.readFileSync(mailedPath, 'utf8').trim() === today;
+
+if (!weekly && !dryRun && alreadyMailed) {
+  console.log(`Already mailed today (${today}). Staying quiet.`);
   process.exit(0);
 }
 
@@ -128,6 +143,8 @@ try {
     html,
   });
   console.log(`Sent "${subject}" to ${MAIL_TO} (${info.messageId})`);
+  // Only the daily alert is rationed; the Sunday digest is meant to arrive.
+  if (!weekly) fs.writeFileSync(mailedPath, today);
 } catch (err) {
   console.error(`Send failed: ${err.message}`);
   process.exit(1);
