@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-18T15:58:58.763Z",
+  "generatedAt": "2026-11-18T17:34:29.962Z",
   "record": {
     "d": "2026-11-18",
-    "fetchedAt": "2026-11-18T15:58:58.756Z",
+    "fetchedAt": "2026-11-18T17:34:29.952Z",
     "spot": {
-      "xauUsdOz": 3754.15,
-      "xagUsdOz": 44.95,
-      "asOf": "2026-11-18T15:58:30Z",
+      "xauUsdOz": 3750.12,
+      "xagUsdOz": 45.115,
+      "asOf": "2026-11-18T17:34:01Z",
       "src": "gold-api.com (spot)"
     },
     "fx": {
