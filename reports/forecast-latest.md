@@ -7,13 +7,13 @@
 | | Gold | Silver |
 |---|---:|---:|
 | Now | NPR 2,57,600 | NPR 3,335 |
-| **Central, 5 sessions** | **NPR 2,55,045** | **NPR 3,245** |
-| Change | -0.99% | -2.71% |
-| 68% band | NPR 2,49,230 – NPR 2,65,025 | NPR 3,043 – NPR 3,438 |
-| Markup now | +23.4% | +31.6% |
+| **Central, 5 sessions** | **NPR 2,54,911** | **NPR 3,261** |
+| Change | -1.04% | -2.20% |
+| 68% band | NPR 2,49,100 – NPR 2,64,885 | NPR 3,058 – NPR 3,456 |
+| Markup now | +23.5% | +30.8% |
 | Reversion half-life | 4.6 sessions | 1.9 sessions |
 | Stickiness (corr) | -0.517 | -0.654 |
-| World daily vol | 1.509% | 2.783% |
+| World daily vol | 1.509% | 2.786% |
 | Combined 5-session sd | ±3.09% | ±4.71% |
 
 Silver's markup reverts roughly 2.4× faster than gold's, and silver is the more volatile metal by a wide margin. The two are not one asset with different price tags.
@@ -23,16 +23,16 @@ Silver's markup reverts roughly 2.4× faster than gold's, and silver is the more
 | | NPR / tola | vs now |
 |---|---:|---:|
 | Now (2026-11-19) | NPR 2,57,600 | — |
-| **Central, 5 sessions out** | **NPR 2,55,045** | -0.99% |
-| 68% band | NPR 2,49,230 — NPR 2,65,025 | |
-| 95% band | NPR 2,40,905 — NPR 2,76,390 | |
+| **Central, 5 sessions out** | **NPR 2,54,911** | -1.04% |
+| 68% band | NPR 2,49,100 — NPR 2,64,885 | |
+| 95% band | NPR 2,40,780 — NPR 2,76,242 | |
 
-The markup is +23.39% against a trailing median of +21.05%; history says about 53% of that gap decays within 5 sessions (AR(1) φ=0.8608, half-life 4.6 sessions, R²=0.668). That decay is why the central case is not simply today's price.
+The markup is +23.51% against a trailing median of +21.05%; history says about 53% of that gap decays within 5 sessions (AR(1) φ=0.8609, half-life 4.6 sessions, R²=0.668). That decay is why the central case is not simply today's price.
 
 | Band composition | |
 |---|---|
 | World price, 5-session sd | ±3.37% |
-| Markup reversion | -1.23pp |
+| Markup reversion | -1.3pp |
 | Spot/markup correlation | -0.517 |
 | **Combined sd** | **±3.09%** |
 | Same, legs assumed independent | ±4.41% |
@@ -47,20 +47,20 @@ The band uses empirical quantiles of this model's own past errors rather than a 
 
 | If world gold does | Spot | Markup then | Nepali rate | vs now |
 |---|---:|---:|---:|---:|
-| -5% | $3529.3 | +25.3% | **NPR 2,48,581** | -3.5% |
-| -2% | $3640.7 | +23.4% | **NPR 2,52,531** | -2.0% |
-| 0% | $3715 | +22.2% | **NPR 2,55,032** | -1.0% |
-| +2% | $3789.3 | +20.9% | **NPR 2,57,426** | -0.1% |
-| +5% | $3900.8 | +19.0% | **NPR 2,60,819** | +1.3% |
+| -5% | $3525.7 | +25.4% | **NPR 2,48,447** | -3.5% |
+| -2% | $3637 | +23.5% | **NPR 2,52,396** | -2.0% |
+| 0% | $3711.2 | +22.2% | **NPR 2,54,897** | -1.1% |
+| +2% | $3785.4 | +20.9% | **NPR 2,57,292** | -0.1% |
+| +5% | $3896.8 | +19.0% | **NPR 2,60,684** | +1.2% |
 
 <details><summary>Technical state</summary>
 
 | | |
 |---|---|
-| Last (2026-11-19) | $3,715 |
+| Last (2026-11-19) | $3,713 |
 | Trend | downtrend |
 | 20 / 50 / 200-day average | $3,968 / $4,129 / $4,452 |
-| Distance from 50 / 200-day | -10.0% / -16.5% |
+| Distance from 50 / 200-day | -10.1% / -16.6% |
 | RSI(14) | 28 (stretched low) |
 | Realised vol, 30d / 90d | 1.51% / 1.41% |
 | Resistance above | $4,115, $4,152, $4,168 |
@@ -92,21 +92,21 @@ Deviation from each observation's own trailing median, in percentage points.
 | | NPR / tola | vs now |
 |---|---:|---:|
 | Now (2026-11-19) | NPR 3,335 | — |
-| **Central, 5 sessions out** | **NPR 3,245** | -2.71% |
-| 68% band | NPR 3,043 — NPR 3,438 | |
-| 95% band | NPR 2,901 — NPR 3,611 | |
+| **Central, 5 sessions out** | **NPR 3,261** | -2.20% |
+| 68% band | NPR 3,058 — NPR 3,456 | |
+| 95% band | NPR 2,916 — NPR 3,630 | |
 
-The markup is +31.64% against a trailing median of +27.36%; history says about 84% of that gap decays within 5 sessions (AR(1) φ=0.6906, half-life 1.9 sessions, R²=0.375). That decay is why the central case is not simply today's price.
+The markup is +30.82% against a trailing median of +27.36%; history says about 84% of that gap decays within 5 sessions (AR(1) φ=0.6898, half-life 1.9 sessions, R²=0.374). That decay is why the central case is not simply today's price.
 
 | Band composition | |
 |---|---|
-| World price, 5-session sd | ±6.22% |
-| Markup reversion | -3.61pp |
+| World price, 5-session sd | ±6.23% |
+| Markup reversion | -2.92pp |
 | Spot/markup correlation | -0.654 |
 | **Combined sd** | **±4.71%** |
-| Same, legs assumed independent | ±7.48% |
+| Same, legs assumed independent | ±7.5% |
 
-Local prices are sticky: the markup absorbs about 0.91pp of every 1% world move in the opposite direction, narrowing the band by 37.1% and leaving the Nepali rate 24.4% less volatile than the world price itself.
+Local prices are sticky: the markup absorbs about 0.91pp of every 1% world move in the opposite direction, narrowing the band by 37.2% and leaving the Nepali rate 24.4% less volatile than the world price itself.
 
 **Back-test** (115 tests, refit at each step on data available then): the 68% band held **59.1%**, the 95% band **93.9%**. Median absolute error 4.69%, worst 15.01%. Both bands are close to honest.
 
@@ -116,22 +116,22 @@ The band uses empirical quantiles of this model's own past errors rather than a 
 
 | If world silver does | Spot | Markup then | Nepali rate | vs now |
 |---|---:|---:|---:|---:|
-| -5% | $42.83 | +32.6% | **NPR 3,190** | -4.3% |
-| -2% | $44.18 | +29.8% | **NPR 3,224** | -3.3% |
-| 0% | $45.08 | +28.0% | **NPR 3,244** | -2.7% |
-| +2% | $45.98 | +26.2% | **NPR 3,262** | -2.2% |
-| +5% | $47.33 | +23.5% | **NPR 3,285** | -1.5% |
+| -5% | $43.1 | +32.4% | **NPR 3,207** | -3.8% |
+| -2% | $44.46 | +29.7% | **NPR 3,241** | -2.8% |
+| 0% | $45.37 | +27.9% | **NPR 3,261** | -2.2% |
+| +2% | $46.27 | +26.1% | **NPR 3,279** | -1.7% |
+| +5% | $47.63 | +23.4% | **NPR 3,302** | -1.0% |
 
 <details><summary>Technical state</summary>
 
 | | |
 |---|---|
-| Last (2026-11-19) | $45.06 |
+| Last (2026-11-19) | $45.16 |
 | Trend | downtrend |
-| 20 / 50 / 200-day average | $50.6 / $56.87 / $67.69 |
-| Distance from 50 / 200-day | -20.8% / -33.4% |
-| RSI(14) | 27 (stretched low) |
-| Realised vol, 30d / 90d | 2.78% / 2.41% |
+| 20 / 50 / 200-day average | $50.61 / $56.87 / $67.69 |
+| Distance from 50 / 200-day | -20.6% / -33.3% |
+| RSI(14) | 28 (stretched low) |
+| Realised vol, 30d / 90d | 2.79% / 2.41% |
 | Resistance above | $52.56, $60.02, $61.17 |
 | Support below | **none** — at or below every swing low in the lookback |
 
@@ -165,6 +165,6 @@ Deviation from each observation's own trailing median, in percentage points.
 
 ---
 
-Generated 2026-11-19T13:58:25.887Z · horizon 5 sessions
+Generated 2026-11-19T14:40:07.448Z · horizon 5 sessions
 
 **Information only. Not investment advice.** This is a statistical description of published prices, not a recommendation to buy or sell anything. Dealer buy/sell spreads alone exceed most of the moves projected here, and bullion in Nepal is a hold-for-years asset rather than a weekly trade.
