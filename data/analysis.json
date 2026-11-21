@@ -1,72 +1,72 @@
 {
-  "generatedAt": "2026-11-20T17:17:41.532Z",
+  "generatedAt": "2026-11-21T13:06:05.058Z",
   "asOf": {
-    "record": "2026-11-20",
-    "spot": "2026-11-20T17:17:36Z",
-    "fx": "2026-11-19",
+    "record": "2026-11-21",
+    "spot": "2026-11-21T13:05:37Z",
+    "fx": "2026-11-20",
     "nepalMeasured": "2026-11-20",
-    "staleDays": 0,
-    "isLive": true
+    "staleDays": 1,
+    "isLive": false
   },
   "international": {
-    "goldUsdPerOz": 3539.25,
-    "silverUsdPerOz": 41.14,
-    "goldUsdPerGram": 113.79,
-    "silverUsdPerGram": 1.323,
+    "goldUsdPerOz": 3539,
+    "silverUsdPerOz": 41.08,
+    "goldUsdPerGram": 113.78,
+    "silverUsdPerGram": 1.321,
     "source": "gold-api.com (spot)"
   },
   "fx": {
-    "usdNpr": 149.81,
-    "usdNprBuy": 149.21,
+    "usdNpr": 149.57,
+    "usdNprBuy": 148.97,
     "inrNpr": 1.6015,
     "source": "Nepal Rastra Bank (official)",
-    "asOf": "2026-11-19"
+    "asOf": "2026-11-20"
   },
   "metals": {
     "gold": {
       "metal": "gold",
       "label": "Gold",
-      "spotUsdPerOz": 3539.25,
+      "spotUsdPerOz": 3539,
       "parity": {
-        "nprPerTola": 198831,
-        "nprPer10g": 170468,
-        "nprPerGram": 17047
+        "nprPerTola": 198498,
+        "nprPer10g": 170183,
+        "nprPerGram": 17018
       },
       "buildUp": {
         "steps": [
           {
             "key": "parity",
             "label": "International value of 1 tola",
-            "amount": 198831,
+            "amount": 198498,
             "add": null
           },
           {
             "key": "handling",
             "label": "Freight, insurance, bank commission",
-            "amount": 200819,
-            "add": 1988
+            "amount": 200483,
+            "add": 1985
           },
           {
             "key": "duty",
             "label": "Customs duty",
-            "amount": 210150,
+            "amount": 209814,
             "add": 9331
           },
           {
             "key": "vat",
             "label": "VAT @ 13%",
-            "amount": 237469,
-            "add": 27319
+            "amount": 237090,
+            "add": 27276
           },
           {
             "key": "margin",
             "label": "Dealer margin",
-            "amount": 244594,
-            "add": 7124
+            "amount": 244203,
+            "add": 7113
           }
         ],
-        "expectedRetailNprPerTola": 244594,
-        "impliedMarkupPct": 23.02,
+        "expectedRetailNprPerTola": 244203,
+        "impliedMarkupPct": 23.03,
         "calibrated": false,
         "assumptionsUnverified": [
           {
@@ -87,19 +87,19 @@
         ]
       },
       "indicated": {
-        "nprPerTola": 245400,
-        "nprPer10g": 210394,
-        "nprPerGram": 21039,
-        "atMedianPremiumNprPerTola": 240692,
+        "nprPerTola": 244990,
+        "nprPer10g": 210043,
+        "nprPerGram": 21004,
+        "atMedianPremiumNprPerTola": 240289,
         "usingPremiumPct": 23.42,
         "lastPublishedNprPerTola": 245400,
-        "repriceGapPct": 0,
-        "repriceGapNpr": 0
+        "repriceGapPct": -0.17,
+        "repriceGapNpr": -410
       },
       "measured": {
         "date": "2026-11-20",
-        "staleDays": 0,
-        "isLive": true,
+        "staleDays": 1,
+        "isLive": false,
         "actualNprPerTola": 245400,
         "actualNprPer10g": 210390,
         "actualNprPerGram": 21039,
@@ -111,7 +111,7 @@
         "meanPct": 21.01,
         "medianPct": 21.05,
         "sdPct": 1.66,
-        "vsExpectedRetailPct": 0.33,
+        "vsExpectedRetailPct": 0.49,
         "regimeShift": {
           "date": "2026-06-01",
           "stepPp": 9.4,
@@ -2232,10 +2232,10 @@
     "silver": {
       "metal": "silver",
       "label": "Silver",
-      "spotUsdPerOz": 41.14,
+      "spotUsdPerOz": 41.08,
       "parity": {
-        "nprPerTola": 2311,
-        "nprPer10g": 1982,
+        "nprPerTola": 2304,
+        "nprPer10g": 1975,
         "nprPerGram": 198
       },
       "buildUp": {
@@ -2243,36 +2243,36 @@
           {
             "key": "parity",
             "label": "International value of 1 tola",
-            "amount": 2311,
+            "amount": 2304,
             "add": null
           },
           {
             "key": "handling",
             "label": "Freight, insurance, bank commission",
-            "amount": 2334,
+            "amount": 2327,
             "add": 23
           },
           {
             "key": "duty",
             "label": "Customs duty",
-            "amount": 2649,
+            "amount": 2642,
             "add": 315
           },
           {
             "key": "vat",
             "label": "VAT @ 13%",
-            "amount": 2994,
-            "add": 344
+            "amount": 2986,
+            "add": 343
           },
           {
             "key": "margin",
             "label": "Dealer margin",
-            "amount": 3083,
+            "amount": 3075,
             "add": 90
           }
         ],
-        "expectedRetailNprPerTola": 3083,
-        "impliedMarkupPct": 33.41,
+        "expectedRetailNprPerTola": 3075,
+        "impliedMarkupPct": 33.46,
         "calibrated": true,
         "assumptionsUnverified": [
           {
@@ -2293,19 +2293,19 @@
         ]
       },
       "indicated": {
-        "nprPerTola": 3110,
-        "nprPer10g": 2666,
-        "nprPerGram": 267,
-        "atMedianPremiumNprPerTola": 2951,
+        "nprPerTola": 3100,
+        "nprPer10g": 2658,
+        "nprPerGram": 266,
+        "atMedianPremiumNprPerTola": 2942,
         "usingPremiumPct": 34.56,
         "lastPublishedNprPerTola": 3110,
-        "repriceGapPct": 0,
-        "repriceGapNpr": 0
+        "repriceGapPct": -0.31,
+        "repriceGapNpr": -10
       },
       "measured": {
         "date": "2026-11-20",
-        "staleDays": 0,
-        "isLive": true,
+        "staleDays": 1,
+        "isLive": false,
         "actualNprPerTola": 3110,
         "actualNprPer10g": 2666.5,
         "actualNprPerGram": 267,
@@ -2317,7 +2317,7 @@
         "meanPct": 28.04,
         "medianPct": 27.67,
         "sdPct": 3.15,
-        "vsExpectedRetailPct": 0.86,
+        "vsExpectedRetailPct": 1.13,
         "regimeShift": {
           "date": "2026-06-01",
           "stepPp": 11.4,
@@ -4437,13 +4437,13 @@
     }
   },
   "ratio": {
-    "worldNow": 86.03,
+    "worldNow": 86.15,
     "nepalNow": 78.91,
     "worldMedian": 66.38,
     "nepalMedian": 62.99,
-    "worldPercentile": 99.6,
+    "worldPercentile": 100,
     "n": 251,
-    "localSilverRichnessPct": 9.03,
+    "localSilverRichnessPct": 9.18,
     "history": [
       {
         "d": "2025-11-12",
@@ -5709,7 +5709,7 @@
     },
     "pollSeconds": 60,
     "staleAfterSeconds": 420,
-    "usdNpr": 149.81,
+    "usdNpr": 149.57,
     "constants": {
       "gramsPerTroyOunce": 31.1034768,
       "gramsPerTola": 11.6638038
@@ -5725,7 +5725,7 @@
       "ladderIsCalibrated": false,
       "lastPublishedNprPerTola": 245400,
       "lastPublishedDate": "2026-11-20",
-      "baselineSpotUsdOz": 3539.25
+      "baselineSpotUsdOz": 3539
     },
     "silver": {
       "measuredMarkupPct": 34.56,
@@ -5738,50 +5738,50 @@
       "ladderIsCalibrated": true,
       "lastPublishedNprPerTola": 3110,
       "lastPublishedDate": "2026-11-20",
-      "baselineSpotUsdOz": 41.14
+      "baselineSpotUsdOz": 41.08
     }
   },
   "parity": {
-    "nprPerTola": 198831,
-    "nprPer10g": 170468,
-    "nprPerGram": 17047,
-    "silverNprPerTola": 2311
+    "nprPerTola": 198498,
+    "nprPer10g": 170183,
+    "nprPerGram": 17018,
+    "silverNprPerTola": 2304
   },
   "buildUp": {
     "steps": [
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 198831,
+        "amount": 198498,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 200819,
-        "add": 1988
+        "amount": 200483,
+        "add": 1985
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 210150,
+        "amount": 209814,
         "add": 9331
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 237469,
-        "add": 27319
+        "amount": 237090,
+        "add": 27276
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 244594,
-        "add": 7124
+        "amount": 244203,
+        "add": 7113
       }
     ],
-    "expectedRetailNprPerTola": 244594,
-    "impliedMarkupPct": 23.02,
+    "expectedRetailNprPerTola": 244203,
+    "impliedMarkupPct": 23.03,
     "calibrated": false,
     "assumptionsUnverified": [
       {
@@ -5806,36 +5806,36 @@
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 2311,
+        "amount": 2304,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 2334,
+        "amount": 2327,
         "add": 23
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 2649,
+        "amount": 2642,
         "add": 315
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 2994,
-        "add": 344
+        "amount": 2986,
+        "add": 343
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 3083,
+        "amount": 3075,
         "add": 90
       }
     ],
-    "expectedRetailNprPerTola": 3083,
-    "impliedMarkupPct": 33.41,
+    "expectedRetailNprPerTola": 3075,
+    "impliedMarkupPct": 33.46,
     "calibrated": true,
     "assumptionsUnverified": [
       {
@@ -5856,20 +5856,20 @@
     ]
   },
   "indicated": {
-    "nprPerTola": 245400,
-    "nprPer10g": 210394,
-    "nprPerGram": 21039,
-    "atMedianPremiumNprPerTola": 240692,
+    "nprPerTola": 244990,
+    "nprPer10g": 210043,
+    "nprPerGram": 21004,
+    "atMedianPremiumNprPerTola": 240289,
     "usingPremiumPct": 23.42,
     "lastPublishedNprPerTola": 245400,
-    "repriceGapPct": 0,
-    "repriceGapNpr": 0,
-    "silverNprPerTola": 3110
+    "repriceGapPct": -0.17,
+    "repriceGapNpr": -410,
+    "silverNprPerTola": 3100
   },
   "measured": {
     "date": "2026-11-20",
-    "staleDays": 0,
-    "isLive": true,
+    "staleDays": 1,
+    "isLive": false,
     "actualNprPerTola": 245400,
     "actualNprPer10g": 210390,
     "actualNprPerGram": 21039,
@@ -5881,7 +5881,7 @@
     "meanPct": 21.01,
     "medianPct": 21.05,
     "sdPct": 1.66,
-    "vsExpectedRetailPct": 0.33,
+    "vsExpectedRetailPct": 0.49,
     "regimeShift": {
       "date": "2026-06-01",
       "stepPp": 9.4,
@@ -8256,6 +8256,7 @@
     "premium-high",
     "big-daily-move",
     "silver-premium-high",
-    "silver-big-daily-move"
+    "silver-big-daily-move",
+    "nepal-market-closed"
   ]
 }
