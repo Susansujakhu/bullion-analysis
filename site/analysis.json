@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-21T16:23:57.989Z",
+  "generatedAt": "2026-11-22T12:54:17.510Z",
   "asOf": {
-    "record": "2026-11-21",
-    "spot": "2026-11-21T16:23:38Z",
-    "fx": "2026-11-20",
-    "nepalMeasured": "2026-11-20",
-    "staleDays": 1,
-    "isLive": false
+    "record": "2026-11-22",
+    "spot": "2026-11-22T12:54:09Z",
+    "fx": "2026-11-21",
+    "nepalMeasured": "2026-11-22",
+    "staleDays": 0,
+    "isLive": true
   },
   "international": {
     "goldUsdPerOz": 3539,
@@ -16,11 +16,11 @@
     "source": "gold-api.com (spot)"
   },
   "fx": {
-    "usdNpr": 149.57,
-    "usdNprBuy": 148.97,
+    "usdNpr": 148.58,
+    "usdNprBuy": 147.98,
     "inrNpr": 1.6015,
     "source": "Nepal Rastra Bank (official)",
-    "asOf": "2026-11-20"
+    "asOf": "2026-11-21"
   },
   "metals": {
     "gold": {
@@ -28,45 +28,45 @@
       "label": "Gold",
       "spotUsdPerOz": 3539,
       "parity": {
-        "nprPerTola": 198498,
-        "nprPer10g": 170183,
-        "nprPerGram": 17018
+        "nprPerTola": 197184,
+        "nprPer10g": 169057,
+        "nprPerGram": 16906
       },
       "buildUp": {
         "steps": [
           {
             "key": "parity",
             "label": "International value of 1 tola",
-            "amount": 198498,
+            "amount": 197184,
             "add": null
           },
           {
             "key": "handling",
             "label": "Freight, insurance, bank commission",
-            "amount": 200483,
-            "add": 1985
+            "amount": 199156,
+            "add": 1972
           },
           {
             "key": "duty",
             "label": "Customs duty",
-            "amount": 209814,
+            "amount": 208487,
             "add": 9331
           },
           {
             "key": "vat",
             "label": "VAT @ 13%",
-            "amount": 237090,
-            "add": 27276
+            "amount": 235590,
+            "add": 27103
           },
           {
             "key": "margin",
             "label": "Dealer margin",
-            "amount": 244203,
-            "add": 7113
+            "amount": 242658,
+            "add": 7068
           }
         ],
-        "expectedRetailNprPerTola": 244203,
-        "impliedMarkupPct": 23.03,
+        "expectedRetailNprPerTola": 242658,
+        "impliedMarkupPct": 23.06,
         "calibrated": false,
         "assumptionsUnverified": [
           {
@@ -87,132 +87,132 @@
         ]
       },
       "indicated": {
-        "nprPerTola": 244990,
-        "nprPer10g": 210043,
-        "nprPerGram": 21004,
-        "atMedianPremiumNprPerTola": 240289,
-        "usingPremiumPct": 23.42,
-        "lastPublishedNprPerTola": 245400,
-        "repriceGapPct": -0.17,
-        "repriceGapNpr": -410
+        "nprPerTola": 242600,
+        "nprPer10g": 207994,
+        "nprPerGram": 20799,
+        "atMedianPremiumNprPerTola": 238715,
+        "usingPremiumPct": 23.03,
+        "lastPublishedNprPerTola": 242600,
+        "repriceGapPct": 0,
+        "repriceGapNpr": 0
       },
       "measured": {
-        "date": "2026-11-20",
-        "staleDays": 1,
-        "isLive": false,
-        "actualNprPerTola": 245400,
-        "actualNprPer10g": 210390,
-        "actualNprPerGram": 21039,
-        "parityNprPerTola": 198831,
-        "premiumPct": 23.42,
-        "premiumNpr": 46569,
-        "percentile": 92.2,
-        "historyDays": 116,
-        "meanPct": 21.01,
-        "medianPct": 21.05,
+        "date": "2026-11-22",
+        "staleDays": 0,
+        "isLive": true,
+        "actualNprPerTola": 242600,
+        "actualNprPer10g": 207990,
+        "actualNprPerGram": 20799,
+        "parityNprPerTola": 197184,
+        "premiumPct": 23.03,
+        "premiumNpr": 45416,
+        "percentile": 87.2,
+        "historyDays": 117,
+        "meanPct": 21.02,
+        "medianPct": 21.06,
         "sdPct": 1.66,
-        "vsExpectedRetailPct": 0.49,
+        "vsExpectedRetailPct": -0.02,
         "regimeShift": {
           "date": "2026-06-01",
           "stepPp": 9.4,
           "beforePct": 11.98,
           "afterPct": 21.33,
-          "rankedAgainstDaysSince": 116
+          "rankedAgainstDaysSince": 117
         }
       },
       "moves": [
         {
           "label": "1 day",
-          "from": "2026-11-19",
-          "spotPct": -4.123041081417867,
-          "fxPct": -0.03336447350861249,
-          "nepalPct": -4.7360248447204985,
-          "premiumPointChange": -0.7527224721391761,
+          "from": "2026-11-20",
+          "spotPct": -0.007063643427285271,
+          "fxPct": -0.8210399839796989,
+          "nepalPct": -1.1409942950285301,
+          "premiumPointChange": -0.38947131277342706,
           "attribution": {
-            "totalPct": -4.7360248447204985,
-            "fromSpotPct": -4.123041081417867,
-            "fromFxPct": -0.03336447350861249,
-            "fromPremiumPct": -0.6061819626867693,
+            "totalPct": -1.1409942950285301,
+            "fromSpotPct": -0.007063643427285271,
+            "fromFxPct": -0.8210399839796989,
+            "fromPremiumPct": -0.31556165747965714,
             "shares": {
-              "spot": 86.7803570191083,
-              "fx": 0.6877802663958147,
-              "premium": 12.531862714495887
+              "spot": 0.615561055957415,
+              "fx": 71.84231719653434,
+              "premium": 27.542121747508247
             }
           }
         },
         {
           "label": "1 week",
-          "from": "2026-11-13",
-          "spotPct": -9.041261356189212,
-          "fxPct": -0.26629385526929505,
-          "nepalPct": -9.679793890320209,
-          "premiumPointChange": -0.5415603229715664,
+          "from": "2026-11-15",
+          "spotPct": -8.966971910690402,
+          "fxPct": -1.6612614997683406,
+          "nepalPct": -10.214655810510731,
+          "premiumPointChange": 0.36259676332262103,
           "attribution": {
-            "totalPct": -9.679793890320209,
-            "fromSpotPct": -9.041261356189212,
-            "fromFxPct": -0.26629385526929505,
-            "fromPremiumPct": -0.43687191421604155,
+            "totalPct": -10.214655810510731,
+            "fromSpotPct": -8.966971910690402,
+            "fromFxPct": -1.6612614997683406,
+            "fromPremiumPct": 0.2955882326244552,
             "shares": {
-              "spot": 93.0803942112858,
-              "fx": 2.619111174510997,
-              "premium": 4.300494614203188
+              "spot": 82.66307184727853,
+              "fx": 14.739933848908123,
+              "premium": 2.596994303813343
             }
           }
         },
         {
           "label": "1 month",
-          "from": "2026-10-19",
-          "spotPct": -14.923920098074571,
-          "fxPct": -1.5961639516552828,
-          "nepalPct": -15.437629221226745,
-          "premiumPointChange": 1.2322033491611677,
+          "from": "2026-10-26",
+          "spotPct": -12.366283676703649,
+          "fxPct": -2.3848630181985353,
+          "nepalPct": -13.818827708703374,
+          "premiumPointChange": 0.9099516459005983,
           "attribution": {
-            "totalPct": -15.437629221226745,
-            "fromSpotPct": -14.923920098074571,
-            "fromFxPct": -1.5961639516552828,
-            "fromPremiumPct": 1.0084370425084144,
+            "totalPct": -13.818827708703374,
+            "fromSpotPct": -12.366283676703649,
+            "fromFxPct": -2.3848630181985353,
+            "fromPremiumPct": 0.7451156798938596,
             "shares": {
-              "spot": 86.0855046520043,
-              "fx": 8.570185980771008,
-              "premium": 5.344309367224697
+              "spot": 80.70427876000976,
+              "fx": 14.757152172185888,
+              "premium": 4.538569067804358
             }
           }
         },
         {
           "label": "3 months",
-          "from": "2026-08-21",
-          "spotPct": -24.38469426996539,
-          "fxPct": -2.365745568300315,
-          "nepalPct": -22.513419640037892,
-          "premiumPointChange": 5.829918623413512,
+          "from": "2026-08-24",
+          "spotPct": -24.666865341223556,
+          "fxPct": -3.1547386259939914,
+          "nepalPct": -24.821815928106606,
+          "premiumPointChange": 3.63575970089909,
           "attribution": {
-            "totalPct": -22.513419640037892,
-            "fromSpotPct": -24.38469426996539,
-            "fromFxPct": -2.365745568300315,
-            "fromPremiumPct": 4.957763607317434,
+            "totalPct": -24.821815928106606,
+            "fromSpotPct": -24.666865341223556,
+            "fromFxPct": -3.1547386259939914,
+            "fromPremiumPct": 3.0451169442308856,
             "shares": {
-              "spot": 79.44253199323667,
-              "fx": 6.804715999315909,
-              "premium": 13.75275200744742
+              "spot": 82.02954026718356,
+              "fx": 9.283372720291116,
+              "premium": 8.687087012525318
             }
           }
         },
         {
           "label": "1 year",
-          "from": "2025-11-20",
-          "spotPct": -12.826354679802954,
-          "fxPct": 5.462865188313959,
-          "nepalPct": 0.9876543209876631,
-          "premiumPointChange": 11.062654865420221,
+          "from": "2025-11-21",
+          "spotPct": -13.249172692731948,
+          "fxPct": 4.457255343082123,
+          "nepalPct": 0.37236243276790315,
+          "premiumPointChange": 11.95705253639483,
           "attribution": {
-            "totalPct": 0.9876543209876631,
-            "fromSpotPct": -12.826354679802954,
-            "fromFxPct": 5.462865188313959,
-            "fromPremiumPct": 9.84581404621876,
+            "totalPct": 0.37236243276790315,
+            "fromSpotPct": -13.249172692731948,
+            "fromFxPct": 4.457255343082123,
+            "fromPremiumPct": 10.764836446658489,
             "shares": {
-              "spot": 48.27191967919728,
-              "fx": 18.704424512301664,
-              "premium": 33.023655808501054
+              "spot": 49.35468690061726,
+              "fx": 15.142784402384923,
+              "premium": 35.50252869699781
             }
           }
         }
@@ -2226,6 +2226,14 @@
           "parity": 198831,
           "actual": 245400,
           "premium": 23.42
+        },
+        {
+          "d": "2026-11-22",
+          "spot": 3539,
+          "fx": 148.58,
+          "parity": 197184,
+          "actual": 242600,
+          "premium": 23.03
         }
       ]
     },
@@ -2234,45 +2242,45 @@
       "label": "Silver",
       "spotUsdPerOz": 41.08,
       "parity": {
-        "nprPerTola": 2304,
-        "nprPer10g": 1975,
-        "nprPerGram": 198
+        "nprPerTola": 2289,
+        "nprPer10g": 1962,
+        "nprPerGram": 196
       },
       "buildUp": {
         "steps": [
           {
             "key": "parity",
             "label": "International value of 1 tola",
-            "amount": 2304,
+            "amount": 2289,
             "add": null
           },
           {
             "key": "handling",
             "label": "Freight, insurance, bank commission",
-            "amount": 2327,
+            "amount": 2312,
             "add": 23
           },
           {
             "key": "duty",
             "label": "Customs duty",
-            "amount": 2642,
+            "amount": 2627,
             "add": 315
           },
           {
             "key": "vat",
             "label": "VAT @ 13%",
-            "amount": 2986,
-            "add": 343
+            "amount": 2968,
+            "add": 341
           },
           {
             "key": "margin",
             "label": "Dealer margin",
-            "amount": 3075,
-            "add": 90
+            "amount": 3057,
+            "add": 89
           }
         ],
-        "expectedRetailNprPerTola": 3075,
-        "impliedMarkupPct": 33.46,
+        "expectedRetailNprPerTola": 3057,
+        "impliedMarkupPct": 33.57,
         "calibrated": true,
         "assumptionsUnverified": [
           {
@@ -2293,132 +2301,132 @@
         ]
       },
       "indicated": {
-        "nprPerTola": 3100,
-        "nprPer10g": 2658,
-        "nprPerGram": 266,
-        "atMedianPremiumNprPerTola": 2942,
-        "usingPremiumPct": 34.56,
-        "lastPublishedNprPerTola": 3110,
-        "repriceGapPct": -0.31,
-        "repriceGapNpr": -10
+        "nprPerTola": 3065,
+        "nprPer10g": 2628,
+        "nprPerGram": 263,
+        "atMedianPremiumNprPerTola": 2924,
+        "usingPremiumPct": 33.91,
+        "lastPublishedNprPerTola": 3065,
+        "repriceGapPct": 0,
+        "repriceGapNpr": 0
       },
       "measured": {
-        "date": "2026-11-20",
-        "staleDays": 1,
-        "isLive": false,
-        "actualNprPerTola": 3110,
-        "actualNprPer10g": 2666.5,
-        "actualNprPerGram": 267,
-        "parityNprPerTola": 2311,
-        "premiumPct": 34.56,
-        "premiumNpr": 799,
-        "percentile": 96.6,
-        "historyDays": 116,
-        "meanPct": 28.04,
-        "medianPct": 27.67,
-        "sdPct": 3.15,
-        "vsExpectedRetailPct": 1.13,
+        "date": "2026-11-22",
+        "staleDays": 0,
+        "isLive": true,
+        "actualNprPerTola": 3065,
+        "actualNprPer10g": 2628,
+        "actualNprPerGram": 263,
+        "parityNprPerTola": 2289,
+        "premiumPct": 33.91,
+        "premiumNpr": 776,
+        "percentile": 94.9,
+        "historyDays": 117,
+        "meanPct": 28.09,
+        "medianPct": 27.74,
+        "sdPct": 3.18,
+        "vsExpectedRetailPct": 0.26,
         "regimeShift": {
           "date": "2026-06-01",
           "stepPp": 11.4,
           "beforePct": 15.66,
           "afterPct": 27.05,
-          "rankedAgainstDaysSince": 116
+          "rankedAgainstDaysSince": 117
         }
       },
       "moves": [
         {
           "label": "1 day",
-          "from": "2026-11-19",
-          "spotPct": -7.7164647824136345,
-          "fxPct": -0.03336447350861249,
-          "nepalPct": -6.7466266866566755,
-          "premiumPointChange": 1.443883439880402,
+          "from": "2026-11-20",
+          "spotPct": -0.1458434613514914,
+          "fxPct": -0.8210399839796989,
+          "nepalPct": -1.4469453376205754,
+          "premiumPointChange": -0.653909264355029,
           "attribution": {
-            "totalPct": -6.7466266866566755,
-            "fromSpotPct": -7.7164647824136345,
-            "fromFxPct": -0.03336447350861249,
-            "fromPremiumPct": 1.0846593325137155,
+            "totalPct": -1.4469453376205754,
+            "fromSpotPct": -0.1458434613514914,
+            "fromFxPct": -0.8210399839796989,
+            "fromPremiumPct": -0.48595209684633156,
             "shares": {
-              "spot": 87.83513376351534,
-              "fx": 0.36499374769616694,
-              "premium": 11.799872488788484
+              "spot": 10.0136086642753,
+              "fx": 56.5639939046931,
+              "premium": 33.42239743103159
             }
           }
         },
         {
           "label": "1 week",
-          "from": "2026-11-13",
-          "spotPct": -17.571628932077733,
-          "fxPct": -0.26629385526929505,
-          "nepalPct": -15.94594594594595,
-          "premiumPointChange": 2.953964035815961,
+          "from": "2026-11-15",
+          "spotPct": -15.560123329907505,
+          "fxPct": -1.6612614997683406,
+          "nepalPct": -14.861111111111114,
+          "premiumPointChange": 3.3057314619189455,
           "attribution": {
-            "totalPct": -15.94594594594595,
-            "fromSpotPct": -17.571628932077733,
-            "fromFxPct": -0.26629385526929505,
-            "fromPremiumPct": 2.244508028370795,
+            "totalPct": -14.861111111111114,
+            "fromSpotPct": -15.560123329907505,
+            "fromFxPct": -1.6612614997683406,
+            "fromPremiumPct": 2.531132637935629,
             "shares": {
-              "spot": 88.60020918782551,
-              "fx": 1.2225781618950045,
-              "premium": 10.177212650279467
+              "spot": 80.20263929752107,
+              "fx": 7.943968791616282,
+              "premium": 11.853391910862651
             }
           }
         },
         {
           "label": "1 month",
-          "from": "2026-10-19",
-          "spotPct": -27.79162424965773,
-          "fxPct": -1.5961639516552828,
-          "nepalPct": -25.68697729988052,
-          "premiumPointChange": 5.898003118250976,
+          "from": "2026-10-26",
+          "spotPct": -24.077770385155617,
+          "fxPct": -2.3848630181985353,
+          "nepalPct": -23.279098873591984,
+          "premiumPointChange": 4.554291800533992,
           "attribution": {
-            "totalPct": -25.68697729988052,
-            "fromSpotPct": -27.79162424965773,
-            "fromFxPct": -1.5961639516552828,
-            "fromPremiumPct": 4.584017740799373,
+            "totalPct": -23.279098873591984,
+            "fromSpotPct": -24.077770385155617,
+            "fromFxPct": -2.3848630181985353,
+            "fromPremiumPct": 3.520789046934003,
             "shares": {
-              "spot": 84.24139629042234,
-              "fx": 4.162834072169733,
-              "premium": 11.595769637407919
+              "spot": 82.4237630397703,
+              "fx": 7.222493507967549,
+              "premium": 10.353743452262144
             }
           }
         },
         {
           "label": "3 months",
-          "from": "2026-08-21",
-          "spotPct": -40.776782886592,
-          "fxPct": -2.365745568300315,
-          "nepalPct": -37.61283851554664,
-          "premiumPointChange": 9.846253502250704,
+          "from": "2026-08-24",
+          "spotPct": -40.06507054171955,
+          "fxPct": -3.1547386259939914,
+          "nepalPct": -38.26787512588117,
+          "premiumPointChange": 7.999934564836984,
           "attribution": {
-            "totalPct": -37.61283851554664,
-            "fromSpotPct": -40.776782886592,
-            "fromFxPct": -2.365745568300315,
-            "fromPremiumPct": 7.894924839840312,
+            "totalPct": -38.26787512588117,
+            "fromSpotPct": -40.06507054171955,
+            "fromFxPct": -3.1547386259939914,
+            "fromPremiumPct": 6.353760851405044,
             "shares": {
-              "spot": 83.9801727125673,
-              "fx": 3.8381412097336054,
-              "premium": 12.1816860776991
+              "spot": 84.5340949183814,
+              "fx": 5.293504454588868,
+              "premium": 10.172400627029731
             }
           }
         },
         {
           "label": "1 year",
-          "from": "2025-11-20",
-          "spotPct": -18.124465142197543,
-          "fxPct": 5.462865188313959,
-          "nepalPct": -2.3547880690737877,
-          "premiumPointChange": 15.5680206591482,
+          "from": "2025-11-21",
+          "spotPct": -17.630782186754356,
+          "fxPct": 4.457255343082123,
+          "nepalPct": -1.1290322580645107,
+          "premiumPointChange": 17.377124916974427,
           "attribution": {
-            "totalPct": -2.3547880690737877,
-            "fromSpotPct": -18.124465142197543,
-            "fromFxPct": 5.462865188313959,
-            "fromPremiumPct": 13.082977835940458,
+            "totalPct": -1.1290322580645107,
+            "fromSpotPct": -17.630782186754356,
+            "fromFxPct": 4.457255343082123,
+            "fromPremiumPct": 14.911960123064771,
             "shares": {
-              "spot": 53.16789506721955,
-              "fx": 14.141784551805516,
-              "premium": 32.69032038097493
+              "spot": 51.50765809935064,
+              "fx": 11.580492619546842,
+              "premium": 36.91184928110251
             }
           }
         }
@@ -4432,18 +4440,26 @@
           "parity": 2311,
           "actual": 3110,
           "premium": 34.56
+        },
+        {
+          "d": "2026-11-22",
+          "spot": 41.08,
+          "fx": 148.58,
+          "parity": 2289,
+          "actual": 3065,
+          "premium": 33.91
         }
       ]
     }
   },
   "ratio": {
     "worldNow": 86.15,
-    "nepalNow": 78.91,
-    "worldMedian": 66.38,
-    "nepalMedian": 62.99,
-    "worldPercentile": 100,
-    "n": 251,
-    "localSilverRichnessPct": 9.18,
+    "nepalNow": 79.15,
+    "worldMedian": 66.43,
+    "nepalMedian": 63.05,
+    "worldPercentile": 99.6,
+    "n": 252,
+    "localSilverRichnessPct": 8.84,
     "history": [
       {
         "d": "2025-11-12",
@@ -5699,6 +5715,11 @@
         "d": "2026-11-20",
         "world": 86.03,
         "nepal": 78.91
+      },
+      {
+        "d": "2026-11-22",
+        "world": 86.15,
+        "nepal": 79.15
       }
     ]
   },
@@ -5709,13 +5730,13 @@
     },
     "pollSeconds": 60,
     "staleAfterSeconds": 420,
-    "usdNpr": 149.57,
+    "usdNpr": 148.58,
     "constants": {
       "gramsPerTroyOunce": 31.1034768,
       "gramsPerTola": 11.6638038
     },
     "gold": {
-      "measuredMarkupPct": 23.42,
+      "measuredMarkupPct": 23.03,
       "ladder": {
         "customsDutyNprPer10g": 8000,
         "vatRate": 0.13,
@@ -5723,12 +5744,12 @@
         "dealerMarginRate": 0.03
       },
       "ladderIsCalibrated": false,
-      "lastPublishedNprPerTola": 245400,
-      "lastPublishedDate": "2026-11-20",
+      "lastPublishedNprPerTola": 242600,
+      "lastPublishedDate": "2026-11-22",
       "baselineSpotUsdOz": 3539
     },
     "silver": {
-      "measuredMarkupPct": 34.56,
+      "measuredMarkupPct": 33.91,
       "ladder": {
         "customsDutyNprPer10g": 270,
         "vatRate": 0.13,
@@ -5736,52 +5757,52 @@
         "dealerMarginRate": 0.03
       },
       "ladderIsCalibrated": true,
-      "lastPublishedNprPerTola": 3110,
-      "lastPublishedDate": "2026-11-20",
+      "lastPublishedNprPerTola": 3065,
+      "lastPublishedDate": "2026-11-22",
       "baselineSpotUsdOz": 41.08
     }
   },
   "parity": {
-    "nprPerTola": 198498,
-    "nprPer10g": 170183,
-    "nprPerGram": 17018,
-    "silverNprPerTola": 2304
+    "nprPerTola": 197184,
+    "nprPer10g": 169057,
+    "nprPerGram": 16906,
+    "silverNprPerTola": 2289
   },
   "buildUp": {
     "steps": [
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 198498,
+        "amount": 197184,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 200483,
-        "add": 1985
+        "amount": 199156,
+        "add": 1972
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 209814,
+        "amount": 208487,
         "add": 9331
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 237090,
-        "add": 27276
+        "amount": 235590,
+        "add": 27103
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 244203,
-        "add": 7113
+        "amount": 242658,
+        "add": 7068
       }
     ],
-    "expectedRetailNprPerTola": 244203,
-    "impliedMarkupPct": 23.03,
+    "expectedRetailNprPerTola": 242658,
+    "impliedMarkupPct": 23.06,
     "calibrated": false,
     "assumptionsUnverified": [
       {
@@ -5806,36 +5827,36 @@
       {
         "key": "parity",
         "label": "International value of 1 tola",
-        "amount": 2304,
+        "amount": 2289,
         "add": null
       },
       {
         "key": "handling",
         "label": "Freight, insurance, bank commission",
-        "amount": 2327,
+        "amount": 2312,
         "add": 23
       },
       {
         "key": "duty",
         "label": "Customs duty",
-        "amount": 2642,
+        "amount": 2627,
         "add": 315
       },
       {
         "key": "vat",
         "label": "VAT @ 13%",
-        "amount": 2986,
-        "add": 343
+        "amount": 2968,
+        "add": 341
       },
       {
         "key": "margin",
         "label": "Dealer margin",
-        "amount": 3075,
-        "add": 90
+        "amount": 3057,
+        "add": 89
       }
     ],
-    "expectedRetailNprPerTola": 3075,
-    "impliedMarkupPct": 33.46,
+    "expectedRetailNprPerTola": 3057,
+    "impliedMarkupPct": 33.57,
     "calibrated": true,
     "assumptionsUnverified": [
       {
@@ -5856,135 +5877,135 @@
     ]
   },
   "indicated": {
-    "nprPerTola": 244990,
-    "nprPer10g": 210043,
-    "nprPerGram": 21004,
-    "atMedianPremiumNprPerTola": 240289,
-    "usingPremiumPct": 23.42,
-    "lastPublishedNprPerTola": 245400,
-    "repriceGapPct": -0.17,
-    "repriceGapNpr": -410,
-    "silverNprPerTola": 3100
+    "nprPerTola": 242600,
+    "nprPer10g": 207994,
+    "nprPerGram": 20799,
+    "atMedianPremiumNprPerTola": 238715,
+    "usingPremiumPct": 23.03,
+    "lastPublishedNprPerTola": 242600,
+    "repriceGapPct": 0,
+    "repriceGapNpr": 0,
+    "silverNprPerTola": 3065
   },
   "measured": {
-    "date": "2026-11-20",
-    "staleDays": 1,
-    "isLive": false,
-    "actualNprPerTola": 245400,
-    "actualNprPer10g": 210390,
-    "actualNprPerGram": 21039,
-    "parityNprPerTola": 198831,
-    "premiumPct": 23.42,
-    "premiumNpr": 46569,
-    "percentile": 92.2,
-    "historyDays": 116,
-    "meanPct": 21.01,
-    "medianPct": 21.05,
+    "date": "2026-11-22",
+    "staleDays": 0,
+    "isLive": true,
+    "actualNprPerTola": 242600,
+    "actualNprPer10g": 207990,
+    "actualNprPerGram": 20799,
+    "parityNprPerTola": 197184,
+    "premiumPct": 23.03,
+    "premiumNpr": 45416,
+    "percentile": 87.2,
+    "historyDays": 117,
+    "meanPct": 21.02,
+    "medianPct": 21.06,
     "sdPct": 1.66,
-    "vsExpectedRetailPct": 0.49,
+    "vsExpectedRetailPct": -0.02,
     "regimeShift": {
       "date": "2026-06-01",
       "stepPp": 9.4,
       "beforePct": 11.98,
       "afterPct": 21.33,
-      "rankedAgainstDaysSince": 116
+      "rankedAgainstDaysSince": 117
     },
-    "silverNprPerTola": 3110,
-    "silverPremiumPct": 34.56
+    "silverNprPerTola": 3065,
+    "silverPremiumPct": 33.91
   },
   "moves": [
     {
       "label": "1 day",
-      "from": "2026-11-19",
-      "spotPct": -4.123041081417867,
-      "fxPct": -0.03336447350861249,
-      "nepalPct": -4.7360248447204985,
-      "premiumPointChange": -0.7527224721391761,
+      "from": "2026-11-20",
+      "spotPct": -0.007063643427285271,
+      "fxPct": -0.8210399839796989,
+      "nepalPct": -1.1409942950285301,
+      "premiumPointChange": -0.38947131277342706,
       "attribution": {
-        "totalPct": -4.7360248447204985,
-        "fromSpotPct": -4.123041081417867,
-        "fromFxPct": -0.03336447350861249,
-        "fromPremiumPct": -0.6061819626867693,
+        "totalPct": -1.1409942950285301,
+        "fromSpotPct": -0.007063643427285271,
+        "fromFxPct": -0.8210399839796989,
+        "fromPremiumPct": -0.31556165747965714,
         "shares": {
-          "spot": 86.7803570191083,
-          "fx": 0.6877802663958147,
-          "premium": 12.531862714495887
+          "spot": 0.615561055957415,
+          "fx": 71.84231719653434,
+          "premium": 27.542121747508247
         }
       }
     },
     {
       "label": "1 week",
-      "from": "2026-11-13",
-      "spotPct": -9.041261356189212,
-      "fxPct": -0.26629385526929505,
-      "nepalPct": -9.679793890320209,
-      "premiumPointChange": -0.5415603229715664,
+      "from": "2026-11-15",
+      "spotPct": -8.966971910690402,
+      "fxPct": -1.6612614997683406,
+      "nepalPct": -10.214655810510731,
+      "premiumPointChange": 0.36259676332262103,
       "attribution": {
-        "totalPct": -9.679793890320209,
-        "fromSpotPct": -9.041261356189212,
-        "fromFxPct": -0.26629385526929505,
-        "fromPremiumPct": -0.43687191421604155,
+        "totalPct": -10.214655810510731,
+        "fromSpotPct": -8.966971910690402,
+        "fromFxPct": -1.6612614997683406,
+        "fromPremiumPct": 0.2955882326244552,
         "shares": {
-          "spot": 93.0803942112858,
-          "fx": 2.619111174510997,
-          "premium": 4.300494614203188
+          "spot": 82.66307184727853,
+          "fx": 14.739933848908123,
+          "premium": 2.596994303813343
         }
       }
     },
     {
       "label": "1 month",
-      "from": "2026-10-19",
-      "spotPct": -14.923920098074571,
-      "fxPct": -1.5961639516552828,
-      "nepalPct": -15.437629221226745,
-      "premiumPointChange": 1.2322033491611677,
+      "from": "2026-10-26",
+      "spotPct": -12.366283676703649,
+      "fxPct": -2.3848630181985353,
+      "nepalPct": -13.818827708703374,
+      "premiumPointChange": 0.9099516459005983,
       "attribution": {
-        "totalPct": -15.437629221226745,
-        "fromSpotPct": -14.923920098074571,
-        "fromFxPct": -1.5961639516552828,
-        "fromPremiumPct": 1.0084370425084144,
+        "totalPct": -13.818827708703374,
+        "fromSpotPct": -12.366283676703649,
+        "fromFxPct": -2.3848630181985353,
+        "fromPremiumPct": 0.7451156798938596,
         "shares": {
-          "spot": 86.0855046520043,
-          "fx": 8.570185980771008,
-          "premium": 5.344309367224697
+          "spot": 80.70427876000976,
+          "fx": 14.757152172185888,
+          "premium": 4.538569067804358
         }
       }
     },
     {
       "label": "3 months",
-      "from": "2026-08-21",
-      "spotPct": -24.38469426996539,
-      "fxPct": -2.365745568300315,
-      "nepalPct": -22.513419640037892,
-      "premiumPointChange": 5.829918623413512,
+      "from": "2026-08-24",
+      "spotPct": -24.666865341223556,
+      "fxPct": -3.1547386259939914,
+      "nepalPct": -24.821815928106606,
+      "premiumPointChange": 3.63575970089909,
       "attribution": {
-        "totalPct": -22.513419640037892,
-        "fromSpotPct": -24.38469426996539,
-        "fromFxPct": -2.365745568300315,
-        "fromPremiumPct": 4.957763607317434,
+        "totalPct": -24.821815928106606,
+        "fromSpotPct": -24.666865341223556,
+        "fromFxPct": -3.1547386259939914,
+        "fromPremiumPct": 3.0451169442308856,
         "shares": {
-          "spot": 79.44253199323667,
-          "fx": 6.804715999315909,
-          "premium": 13.75275200744742
+          "spot": 82.02954026718356,
+          "fx": 9.283372720291116,
+          "premium": 8.687087012525318
         }
       }
     },
     {
       "label": "1 year",
-      "from": "2025-11-20",
-      "spotPct": -12.826354679802954,
-      "fxPct": 5.462865188313959,
-      "nepalPct": 0.9876543209876631,
-      "premiumPointChange": 11.062654865420221,
+      "from": "2025-11-21",
+      "spotPct": -13.249172692731948,
+      "fxPct": 4.457255343082123,
+      "nepalPct": 0.37236243276790315,
+      "premiumPointChange": 11.95705253639483,
       "attribution": {
-        "totalPct": 0.9876543209876631,
-        "fromSpotPct": -12.826354679802954,
-        "fromFxPct": 5.462865188313959,
-        "fromPremiumPct": 9.84581404621876,
+        "totalPct": 0.37236243276790315,
+        "fromSpotPct": -13.249172692731948,
+        "fromFxPct": 4.457255343082123,
+        "fromPremiumPct": 10.764836446658489,
         "shares": {
-          "spot": 48.27191967919728,
-          "fx": 18.704424512301664,
-          "premium": 33.023655808501054
+          "spot": 49.35468690061726,
+          "fx": 15.142784402384923,
+          "premium": 35.50252869699781
         }
       }
     }
@@ -8248,15 +8269,21 @@
       "actual": 245400,
       "premium": 23.42,
       "silver": 3110
+    },
+    {
+      "d": "2026-11-22",
+      "spot": 3539,
+      "fx": 148.58,
+      "parity": 197184,
+      "actual": 242600,
+      "premium": 23.03,
+      "silver": 3065
     }
   ],
   "verdict": "local-expensive",
-  "headline": "Nepali markups on 2026-11-20 — gold +23.42% (92nd pctile), silver +34.56% (97th pctile). Both dear by local standards.",
+  "headline": "Nepali markups on 2026-11-22 — gold +23.03% (87th pctile), silver +33.91% (95th pctile). Both dear by local standards.",
   "flags": [
     "premium-high",
-    "big-daily-move",
-    "silver-premium-high",
-    "silver-big-daily-move",
-    "nepal-market-closed"
+    "silver-premium-high"
   ]
 }

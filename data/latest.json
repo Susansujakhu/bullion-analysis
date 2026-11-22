@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-11-21T16:23:57.940Z",
+  "generatedAt": "2026-11-22T12:54:17.438Z",
   "record": {
-    "d": "2026-11-21",
-    "fetchedAt": "2026-11-21T16:23:57.933Z",
+    "d": "2026-11-22",
+    "fetchedAt": "2026-11-22T12:54:17.427Z",
     "spot": {
       "xauUsdOz": 3539,
       "xagUsdOz": 41.08,
-      "asOf": "2026-11-21T16:23:38Z",
+      "asOf": "2026-11-22T12:54:09Z",
       "src": "gold-api.com (spot)"
     },
     "fx": {
-      "usdNpr": 149.57,
-      "usdNprBuy": 148.97,
+      "usdNpr": 148.58,
+      "usdNprBuy": 147.98,
       "inrNpr": 1.6015,
-      "asOf": "2026-11-20",
+      "asOf": "2026-11-21",
       "src": "Nepal Rastra Bank (official)"
     },
     "nepal": {
       "rates": {
-        "gold_chhapawal_10g": 210390,
-        "gold_chhapawal_tola": 245400,
-        "silver_10g": 2666.5,
-        "silver_tola": 3110
+        "gold_chhapawal_10g": 207990,
+        "gold_chhapawal_tola": 242600,
+        "silver_10g": 2628,
+        "silver_tola": 3065
       },
-      "asOf": "2026-11-20",
-      "staleDays": 1,
+      "asOf": "2026-11-22",
+      "staleDays": 0,
       "src": "FENEGOSIDA (fenegosida.org)"
     }
   }
