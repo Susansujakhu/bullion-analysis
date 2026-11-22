@@ -165,6 +165,6 @@ Deviation from each observation's own trailing median, in percentage points.
 
 ---
 
-Generated 2026-11-22T12:54:18.003Z · horizon 5 sessions
+Generated 2026-11-22T13:34:48.619Z · horizon 5 sessions
 
 **Information only. Not investment advice.** This is a statistical description of published prices, not a recommendation to buy or sell anything. Dealer buy/sell spreads alone exceed most of the moves projected here, and bullion in Nepal is a hold-for-years asset rather than a weekly trade.
