@@ -109,6 +109,6 @@ The ratio is the standard bullion yardstick, and locally it carries extra inform
 
 ---
 
-Generated 2026-11-22T14:55:34.455Z · flags: premium-high, silver-premium-high
+Generated 2026-11-22T16:38:15.369Z · flags: premium-high, silver-premium-high
 
 Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.
