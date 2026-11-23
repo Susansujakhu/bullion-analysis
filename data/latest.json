@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-23T16:26:18.149Z",
+  "generatedAt": "2026-11-23T18:46:38.741Z",
   "record": {
-    "d": "2026-11-23",
-    "fetchedAt": "2026-11-23T16:26:18.138Z",
+    "d": "2026-11-24",
+    "fetchedAt": "2026-11-23T18:46:38.730Z",
     "spot": {
-      "xauUsdOz": 3670.7,
-      "xagUsdOz": 43.565,
-      "asOf": "2026-11-23T16:26:12Z",
+      "xauUsdOz": 3651.6,
+      "xagUsdOz": 43.025,
+      "asOf": "2026-11-23T18:46:12Z",
       "src": "gold-api.com (spot)"
     },
     "fx": {
@@ -24,7 +24,7 @@
         "silver_tola": 3110
       },
       "asOf": "2026-11-23",
-      "staleDays": 0,
+      "staleDays": 1,
       "src": "FENEGOSIDA (fenegosida.org)"
     }
   }
