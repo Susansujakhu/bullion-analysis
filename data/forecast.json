@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T18:46:39.146Z",
+  "generatedAt": "2026-11-23T20:34:24.753Z",
   "horizonSessions": 5,
   "metals": {
     "gold": {
@@ -18,12 +18,12 @@
         "centralNprPerTola": 247559,
         "centralChangePct": 0.06,
         "band68": {
-          "lo": 240390,
-          "hi": 258977
+          "lo": 240447,
+          "hi": 258883
         },
         "band95": {
-          "lo": 227649,
-          "hi": 272156
+          "lo": 227803,
+          "hi": 271948
         }
       },
       "drivers": {
@@ -34,12 +34,12 @@
         "ar1Phi": 0.8599,
         "ar1HalfLifeSessions": 4.6,
         "ar1R2": 0.667,
-        "spotDailyVolPct": 1.853,
-        "spot5SessionSdPct": 4.14,
-        "combinedSdPct": 3.64,
-        "combinedSdIgnoringStickinessPct": 5.05,
-        "stickinessDampeningPct": 27.9,
-        "vsSpotAloneDampeningPct": 12.1,
+        "spotDailyVolPct": 1.835,
+        "spot5SessionSdPct": 4.1,
+        "combinedSdPct": 3.61,
+        "combinedSdIgnoringStickinessPct": 5.01,
+        "stickinessDampeningPct": 28,
+        "vsSpotAloneDampeningPct": 12,
         "spotMarkupCorr": -0.512,
         "stickinessPpPerPctSpot": -0.618
       },
@@ -83,18 +83,18 @@
       "technicals": {
         "label": "Gold (COMEX GC=F)",
         "asOf": "2026-11-23",
-        "last": 3649.39990234375,
+        "last": 3640.800048828125,
         "trend": "downtrend",
-        "sma20": 3922.70498046875,
-        "sma50": 4096.811982421875,
-        "sma200": 4438.028494873047,
-        "pctFromSma50": -10.920981533881191,
-        "pctFromSma200": -17.769795607223926,
+        "sma20": 3922.2749877929687,
+        "sma50": 4096.639985351562,
+        "sma200": 4437.985495605469,
+        "pctFromSma50": -11.127166120366772,
+        "pctFromSma200": -17.96277720075299,
         "recentCross": null,
-        "rsi14": 33.04083202005381,
-        "dailyVol30": 0.018531738598599173,
-        "dailyVol90": 0.015400793511151915,
-        "slope20PctPerDay": -0.6000596297037668,
+        "rsi14": 32.40647608037385,
+        "dailyVol30": 0.018351403240373414,
+        "dailyVol90": 0.015336431155167472,
+        "slope20PctPerDay": -0.6048514143951644,
         "support": [],
         "resistance": [
           4114.5,
@@ -368,7 +368,7 @@
           "hi": 3307
         },
         "band95": {
-          "lo": 2715,
+          "lo": 2714,
           "hi": 3497
         }
       },
@@ -380,10 +380,10 @@
         "ar1Phi": 0.6927,
         "ar1HalfLifeSessions": 1.9,
         "ar1R2": 0.375,
-        "spotDailyVolPct": 3.157,
+        "spotDailyVolPct": 3.158,
         "spot5SessionSdPct": 7.06,
         "combinedSdPct": 5.36,
-        "combinedSdIgnoringStickinessPct": 8.24,
+        "combinedSdIgnoringStickinessPct": 8.25,
         "stickinessDampeningPct": 35,
         "vsSpotAloneDampeningPct": 24.1,
         "spotMarkupCorr": -0.653,
@@ -429,18 +429,18 @@
       "technicals": {
         "label": "Silver (COMEX SI=F)",
         "asOf": "2026-11-23",
-        "last": 43.07500076293945,
+        "last": 43.084999084472656,
         "trend": "downtrend",
-        "sma20": 49.37750034332275,
-        "sma50": 55.97336013793945,
-        "sma200": 67.34153984069825,
-        "pctFromSma50": -23.043746780992926,
-        "pctFromSma200": -36.03502256580888,
+        "sma20": 49.378000259399414,
+        "sma50": 55.973560104370115,
+        "sma200": 67.34158983230591,
+        "pctFromSma50": -23.026159129176406,
+        "pctFromSma200": -36.020222878962386,
         "recentCross": null,
-        "rsi14": 29.62120003478961,
-        "dailyVol30": 0.03156604355850733,
-        "dailyVol90": 0.02587771924682768,
-        "slope20PctPerDay": -1.2093123971370219,
+        "rsi14": 29.65683667929298,
+        "dailyVol30": 0.031581189640692786,
+        "dailyVol90": 0.025882914011472146,
+        "slope20PctPerDay": -1.2087002487972958,
         "support": [],
         "resistance": [
           52.56399917602539,
@@ -708,12 +708,12 @@
     "centralNprPerTola": 247559,
     "centralChangePct": 0.06,
     "band68": {
-      "lo": 240390,
-      "hi": 258977
+      "lo": 240447,
+      "hi": 258883
     },
     "band95": {
-      "lo": 227649,
-      "hi": 272156
+      "lo": 227803,
+      "hi": 271948
     }
   },
   "drivers": {
@@ -724,12 +724,12 @@
     "ar1Phi": 0.8599,
     "ar1HalfLifeSessions": 4.6,
     "ar1R2": 0.667,
-    "spotDailyVolPct": 1.853,
-    "spot5SessionSdPct": 4.14,
-    "combinedSdPct": 3.64,
-    "combinedSdIgnoringStickinessPct": 5.05,
-    "stickinessDampeningPct": 27.9,
-    "vsSpotAloneDampeningPct": 12.1,
+    "spotDailyVolPct": 1.835,
+    "spot5SessionSdPct": 4.1,
+    "combinedSdPct": 3.61,
+    "combinedSdIgnoringStickinessPct": 5.01,
+    "stickinessDampeningPct": 28,
+    "vsSpotAloneDampeningPct": 12,
     "spotMarkupCorr": -0.512,
     "stickinessPpPerPctSpot": -0.618
   },
@@ -774,18 +774,18 @@
     "gold": {
       "label": "Gold (COMEX GC=F)",
       "asOf": "2026-11-23",
-      "last": 3649.39990234375,
+      "last": 3640.800048828125,
       "trend": "downtrend",
-      "sma20": 3922.70498046875,
-      "sma50": 4096.811982421875,
-      "sma200": 4438.028494873047,
-      "pctFromSma50": -10.920981533881191,
-      "pctFromSma200": -17.769795607223926,
+      "sma20": 3922.2749877929687,
+      "sma50": 4096.639985351562,
+      "sma200": 4437.985495605469,
+      "pctFromSma50": -11.127166120366772,
+      "pctFromSma200": -17.96277720075299,
       "recentCross": null,
-      "rsi14": 33.04083202005381,
-      "dailyVol30": 0.018531738598599173,
-      "dailyVol90": 0.015400793511151915,
-      "slope20PctPerDay": -0.6000596297037668,
+      "rsi14": 32.40647608037385,
+      "dailyVol30": 0.018351403240373414,
+      "dailyVol90": 0.015336431155167472,
+      "slope20PctPerDay": -0.6048514143951644,
       "support": [],
       "resistance": [
         4114.5,
@@ -796,18 +796,18 @@
     "silver": {
       "label": "Silver (COMEX SI=F)",
       "asOf": "2026-11-23",
-      "last": 43.07500076293945,
+      "last": 43.084999084472656,
       "trend": "downtrend",
-      "sma20": 49.37750034332275,
-      "sma50": 55.97336013793945,
-      "sma200": 67.34153984069825,
-      "pctFromSma50": -23.043746780992926,
-      "pctFromSma200": -36.03502256580888,
+      "sma20": 49.378000259399414,
+      "sma50": 55.973560104370115,
+      "sma200": 67.34158983230591,
+      "pctFromSma50": -23.026159129176406,
+      "pctFromSma200": -36.020222878962386,
       "recentCross": null,
-      "rsi14": 29.62120003478961,
-      "dailyVol30": 0.03156604355850733,
-      "dailyVol90": 0.02587771924682768,
-      "slope20PctPerDay": -1.2093123971370219,
+      "rsi14": 29.65683667929298,
+      "dailyVol30": 0.031581189640692786,
+      "dailyVol90": 0.025882914011472146,
+      "slope20PctPerDay": -1.2087002487972958,
       "support": [],
       "resistance": [
         52.56399917602539,
