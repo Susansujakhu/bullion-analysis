@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T15:02:58.359Z",
+  "generatedAt": "2026-11-25T16:00:11.072Z",
   "horizonSessions": 5,
   "metals": {
     "gold": {
@@ -7,94 +7,94 @@
       "label": "Gold",
       "basis": {
         "date": "2026-11-25",
-        "spotUsdOz": 3468.2,
+        "spotUsdOz": 3446.9,
         "usdNpr": 148.96,
         "nprPerTola": 241400,
-        "markupPct": 24.6,
+        "markupPct": 25.37,
         "markupTrailingMedianPct": 21.13,
         "observations": 255
       },
       "projection": {
-        "centralNprPerTola": 237857,
-        "centralChangePct": -1.47,
+        "centralNprPerTola": 237127,
+        "centralChangePct": -1.77,
         "band68": {
-          "lo": 230443,
-          "hi": 249006
+          "lo": 229706,
+          "hi": 248288
         },
         "band95": {
-          "lo": 218536,
-          "hi": 261939
+          "lo": 217789,
+          "hi": 261239
         }
       },
       "drivers": {
-        "markupNowPct": 24.6,
-        "markupExpectedPct": 22.76,
-        "markupMovePp": -1.84,
-        "decayFactor": 0.47,
-        "ar1Phi": 0.8599,
+        "markupNowPct": 25.37,
+        "markupExpectedPct": 23.14,
+        "markupMovePp": -2.24,
+        "decayFactor": 0.473,
+        "ar1Phi": 0.8609,
         "ar1HalfLifeSessions": 4.6,
         "ar1R2": 0.661,
-        "spotDailyVolPct": 1.906,
-        "spot5SessionSdPct": 4.26,
-        "combinedSdPct": 3.71,
-        "combinedSdIgnoringStickinessPct": 5.1,
-        "stickinessDampeningPct": 27.4,
-        "vsSpotAloneDampeningPct": 13,
-        "spotMarkupCorr": -0.514,
+        "spotDailyVolPct": 1.918,
+        "spot5SessionSdPct": 4.29,
+        "combinedSdPct": 3.72,
+        "combinedSdIgnoringStickinessPct": 5.12,
+        "stickinessDampeningPct": 27.3,
+        "vsSpotAloneDampeningPct": 13.2,
+        "spotMarkupCorr": -0.515,
         "stickinessPpPerPctSpot": -0.619
       },
       "scenarios": [
         {
           "spotPct": -5,
-          "spotUsdOz": 3294.8,
-          "markupPct": 25.86,
-          "nprPerTola": 231639,
-          "changePct": -4.04
+          "spotUsdOz": 3274.6,
+          "markupPct": 26.23,
+          "nprPerTola": 230899,
+          "changePct": -4.35
         },
         {
           "spotPct": -2,
-          "spotUsdOz": 3398.8,
-          "markupPct": 24,
-          "nprPerTola": 235426,
-          "changePct": -2.47
+          "spotUsdOz": 3378,
+          "markupPct": 24.37,
+          "nprPerTola": 234685,
+          "changePct": -2.78
         },
         {
           "spotPct": 0,
-          "spotUsdOz": 3468.2,
-          "markupPct": 22.76,
-          "nprPerTola": 237831,
-          "changePct": -1.48
+          "spotUsdOz": 3446.9,
+          "markupPct": 23.14,
+          "nprPerTola": 237089,
+          "changePct": -1.79
         },
         {
           "spotPct": 2,
-          "spotUsdOz": 3537.6,
-          "markupPct": 21.52,
-          "nprPerTola": 240140,
-          "changePct": -0.52
+          "spotUsdOz": 3515.8,
+          "markupPct": 21.9,
+          "nprPerTola": 239398,
+          "changePct": -0.83
         },
         {
           "spotPct": 5,
-          "spotUsdOz": 3641.6,
-          "markupPct": 19.67,
-          "nprPerTola": 243424,
-          "changePct": 0.84
+          "spotUsdOz": 3619.2,
+          "markupPct": 20.04,
+          "nprPerTola": 242683,
+          "changePct": 0.53
         }
       ],
       "technicals": {
         "label": "Gold (COMEX GC=F)",
         "asOf": "2026-11-25",
-        "last": 3485.60009765625,
+        "last": 3472.699951171875,
         "trend": "downtrend",
-        "sma20": 3868.869970703125,
-        "sma50": 4063.395986328125,
-        "sma200": 4422.723995361328,
-        "pctFromSma50": -14.219531904248361,
-        "pctFromSma200": -21.18883969897192,
+        "sma20": 3868.224963378906,
+        "sma50": 4063.1379833984374,
+        "sma200": 4422.659494628906,
+        "pctFromSma50": -14.53157718588518,
+        "pctFromSma200": -21.479373318491024,
         "recentCross": null,
-        "rsi14": 27.625375518817492,
-        "dailyVol30": 0.01905752467911857,
-        "dailyVol90": 0.01566584260996186,
-        "slope20PctPerDay": -0.805319725066279,
+        "rsi14": 27.25575426891156,
+        "dailyVol30": 0.019177708128129276,
+        "dailyVol90": 0.015723570751379548,
+        "slope20PctPerDay": -0.8136180299924939,
         "support": [],
         "resistance": [
           4114.5,
@@ -353,94 +353,94 @@
       "label": "Silver",
       "basis": {
         "date": "2026-11-25",
-        "spotUsdOz": 38.73,
+        "spotUsdOz": 38.455,
         "usdNpr": 148.96,
         "nprPerTola": 3040,
-        "markupPct": 40.52,
+        "markupPct": 41.52,
         "markupTrailingMedianPct": 27.67,
         "observations": 255
       },
       "projection": {
-        "centralNprPerTola": 2818,
-        "centralChangePct": -7.29,
+        "centralNprPerTola": 2804,
+        "centralChangePct": -7.76,
         "band68": {
-          "lo": 2602,
-          "hi": 3011
+          "lo": 2588,
+          "hi": 2996
         },
         "band95": {
-          "lo": 2466,
-          "hi": 3187
+          "lo": 2452,
+          "hi": 3172
         }
       },
       "drivers": {
-        "markupNowPct": 40.52,
-        "markupExpectedPct": 29.88,
-        "markupMovePp": -10.64,
-        "decayFactor": 0.172,
-        "ar1Phi": 0.703,
+        "markupNowPct": 41.52,
+        "markupExpectedPct": 30.08,
+        "markupMovePp": -11.44,
+        "decayFactor": 0.174,
+        "ar1Phi": 0.7048,
         "ar1HalfLifeSessions": 2,
         "ar1R2": 0.371,
-        "spotDailyVolPct": 3.194,
-        "spot5SessionSdPct": 7.14,
-        "combinedSdPct": 5.43,
-        "combinedSdIgnoringStickinessPct": 8.18,
-        "stickinessDampeningPct": 33.6,
+        "spotDailyVolPct": 3.204,
+        "spot5SessionSdPct": 7.16,
+        "combinedSdPct": 5.45,
+        "combinedSdIgnoringStickinessPct": 8.19,
+        "stickinessDampeningPct": 33.5,
         "vsSpotAloneDampeningPct": 23.9,
-        "spotMarkupCorr": -0.656,
+        "spotMarkupCorr": -0.657,
         "stickinessPpPerPctSpot": -0.9
       },
       "scenarios": [
         {
           "spotPct": -5,
-          "spotUsdOz": 36.79,
-          "markupPct": 34.38,
-          "nprPerTola": 2762,
-          "changePct": -9.15
+          "spotUsdOz": 36.53,
+          "markupPct": 34.58,
+          "nprPerTola": 2746,
+          "changePct": -9.66
         },
         {
           "spotPct": -2,
-          "spotUsdOz": 37.96,
-          "markupPct": 31.68,
-          "nprPerTola": 2792,
-          "changePct": -8.16
+          "spotUsdOz": 37.69,
+          "markupPct": 31.88,
+          "nprPerTola": 2776,
+          "changePct": -8.68
         },
         {
           "spotPct": 0,
-          "spotUsdOz": 38.73,
-          "markupPct": 29.88,
-          "nprPerTola": 2810,
-          "changePct": -7.57
+          "spotUsdOz": 38.45,
+          "markupPct": 30.08,
+          "nprPerTola": 2794,
+          "changePct": -8.08
         },
         {
           "spotPct": 2,
-          "spotUsdOz": 39.5,
-          "markupPct": 28.08,
-          "nprPerTola": 2826,
-          "changePct": -7.03
+          "spotUsdOz": 39.22,
+          "markupPct": 28.28,
+          "nprPerTola": 2811,
+          "changePct": -7.54
         },
         {
           "spotPct": 5,
-          "spotUsdOz": 40.67,
-          "markupPct": 25.38,
-          "nprPerTola": 2848,
-          "changePct": -6.31
+          "spotUsdOz": 40.38,
+          "markupPct": 25.58,
+          "nprPerTola": 2833,
+          "changePct": -6.82
         }
       ],
       "technicals": {
         "label": "Silver (COMEX SI=F)",
         "asOf": "2026-11-25",
-        "last": 38.97999954223633,
+        "last": 38.880001068115234,
         "trend": "downtrend",
-        "sma20": 47.9806001663208,
-        "sma50": 55.01912002563476,
-        "sma200": 66.92918479919433,
-        "pctFromSma50": -29.15190296741462,
-        "pctFromSma200": -41.75933912957871,
+        "sma20": 47.975600242614746,
+        "sma50": 55.01712005615234,
+        "sma200": 66.92868480682372,
+        "pctFromSma50": -29.331086344699642,
+        "pctFromSma200": -41.90831452861416,
         "recentCross": null,
-        "rsi14": 24.211526408853786,
-        "dailyVol30": 0.0319415381967114,
-        "dailyVol90": 0.026492087607672656,
-        "slope20PctPerDay": -1.6145857686013372,
+        "rsi14": 24.097191092205293,
+        "dailyVol30": 0.03203592094018541,
+        "dailyVol90": 0.026537095768583006,
+        "slope20PctPerDay": -1.6224126993592547,
         "support": [],
         "resistance": [
           52.56399917602539,
@@ -697,95 +697,95 @@
   },
   "basis": {
     "date": "2026-11-25",
-    "spotUsdOz": 3468.2,
+    "spotUsdOz": 3446.9,
     "usdNpr": 148.96,
     "nprPerTola": 241400,
-    "markupPct": 24.6,
+    "markupPct": 25.37,
     "markupTrailingMedianPct": 21.13,
     "observations": 255
   },
   "projection": {
-    "centralNprPerTola": 237857,
-    "centralChangePct": -1.47,
+    "centralNprPerTola": 237127,
+    "centralChangePct": -1.77,
     "band68": {
-      "lo": 230443,
-      "hi": 249006
+      "lo": 229706,
+      "hi": 248288
     },
     "band95": {
-      "lo": 218536,
-      "hi": 261939
+      "lo": 217789,
+      "hi": 261239
     }
   },
   "drivers": {
-    "markupNowPct": 24.6,
-    "markupExpectedPct": 22.76,
-    "markupMovePp": -1.84,
-    "decayFactor": 0.47,
-    "ar1Phi": 0.8599,
+    "markupNowPct": 25.37,
+    "markupExpectedPct": 23.14,
+    "markupMovePp": -2.24,
+    "decayFactor": 0.473,
+    "ar1Phi": 0.8609,
     "ar1HalfLifeSessions": 4.6,
     "ar1R2": 0.661,
-    "spotDailyVolPct": 1.906,
-    "spot5SessionSdPct": 4.26,
-    "combinedSdPct": 3.71,
-    "combinedSdIgnoringStickinessPct": 5.1,
-    "stickinessDampeningPct": 27.4,
-    "vsSpotAloneDampeningPct": 13,
-    "spotMarkupCorr": -0.514,
+    "spotDailyVolPct": 1.918,
+    "spot5SessionSdPct": 4.29,
+    "combinedSdPct": 3.72,
+    "combinedSdIgnoringStickinessPct": 5.12,
+    "stickinessDampeningPct": 27.3,
+    "vsSpotAloneDampeningPct": 13.2,
+    "spotMarkupCorr": -0.515,
     "stickinessPpPerPctSpot": -0.619
   },
   "scenarios": [
     {
       "spotPct": -5,
-      "spotUsdOz": 3294.8,
-      "markupPct": 25.86,
-      "nprPerTola": 231639,
-      "changePct": -4.04
+      "spotUsdOz": 3274.6,
+      "markupPct": 26.23,
+      "nprPerTola": 230899,
+      "changePct": -4.35
     },
     {
       "spotPct": -2,
-      "spotUsdOz": 3398.8,
-      "markupPct": 24,
-      "nprPerTola": 235426,
-      "changePct": -2.47
+      "spotUsdOz": 3378,
+      "markupPct": 24.37,
+      "nprPerTola": 234685,
+      "changePct": -2.78
     },
     {
       "spotPct": 0,
-      "spotUsdOz": 3468.2,
-      "markupPct": 22.76,
-      "nprPerTola": 237831,
-      "changePct": -1.48
+      "spotUsdOz": 3446.9,
+      "markupPct": 23.14,
+      "nprPerTola": 237089,
+      "changePct": -1.79
     },
     {
       "spotPct": 2,
-      "spotUsdOz": 3537.6,
-      "markupPct": 21.52,
-      "nprPerTola": 240140,
-      "changePct": -0.52
+      "spotUsdOz": 3515.8,
+      "markupPct": 21.9,
+      "nprPerTola": 239398,
+      "changePct": -0.83
     },
     {
       "spotPct": 5,
-      "spotUsdOz": 3641.6,
-      "markupPct": 19.67,
-      "nprPerTola": 243424,
-      "changePct": 0.84
+      "spotUsdOz": 3619.2,
+      "markupPct": 20.04,
+      "nprPerTola": 242683,
+      "changePct": 0.53
     }
   ],
   "technicals": {
     "gold": {
       "label": "Gold (COMEX GC=F)",
       "asOf": "2026-11-25",
-      "last": 3485.60009765625,
+      "last": 3472.699951171875,
       "trend": "downtrend",
-      "sma20": 3868.869970703125,
-      "sma50": 4063.395986328125,
-      "sma200": 4422.723995361328,
-      "pctFromSma50": -14.219531904248361,
-      "pctFromSma200": -21.18883969897192,
+      "sma20": 3868.224963378906,
+      "sma50": 4063.1379833984374,
+      "sma200": 4422.659494628906,
+      "pctFromSma50": -14.53157718588518,
+      "pctFromSma200": -21.479373318491024,
       "recentCross": null,
-      "rsi14": 27.625375518817492,
-      "dailyVol30": 0.01905752467911857,
-      "dailyVol90": 0.01566584260996186,
-      "slope20PctPerDay": -0.805319725066279,
+      "rsi14": 27.25575426891156,
+      "dailyVol30": 0.019177708128129276,
+      "dailyVol90": 0.015723570751379548,
+      "slope20PctPerDay": -0.8136180299924939,
       "support": [],
       "resistance": [
         4114.5,
@@ -796,18 +796,18 @@
     "silver": {
       "label": "Silver (COMEX SI=F)",
       "asOf": "2026-11-25",
-      "last": 38.97999954223633,
+      "last": 38.880001068115234,
       "trend": "downtrend",
-      "sma20": 47.9806001663208,
-      "sma50": 55.01912002563476,
-      "sma200": 66.92918479919433,
-      "pctFromSma50": -29.15190296741462,
-      "pctFromSma200": -41.75933912957871,
+      "sma20": 47.975600242614746,
+      "sma50": 55.01712005615234,
+      "sma200": 66.92868480682372,
+      "pctFromSma50": -29.331086344699642,
+      "pctFromSma200": -41.90831452861416,
       "recentCross": null,
-      "rsi14": 24.211526408853786,
-      "dailyVol30": 0.0319415381967114,
-      "dailyVol90": 0.026492087607672656,
-      "slope20PctPerDay": -1.6145857686013372,
+      "rsi14": 24.097191092205293,
+      "dailyVol30": 0.03203592094018541,
+      "dailyVol90": 0.026537095768583006,
+      "slope20PctPerDay": -1.6224126993592547,
       "support": [],
       "resistance": [
         52.56399917602539,
