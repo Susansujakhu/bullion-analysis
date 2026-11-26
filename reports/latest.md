@@ -1,4 +1,4 @@
-# Bullion read - 2026-11-26
+# Bullion read - 2026-11-27
 
 **Nepali markups on 2026-11-26 — gold +21.74% (66th pctile), silver +33.24% (90th pctile). Silver is dear by local standards.**
 
@@ -6,9 +6,9 @@
 
 | | |
 |---|---|
-| Gold | **$3,570.3 / troy oz** |
-| Silver | **$41.315 / troy oz** |
-| Gold:silver ratio | 86.42 |
+| Gold | **$3,568.7 / troy oz** |
+| Silver | **$41.275 / troy oz** |
+| Gold:silver ratio | 86.46 |
 | USD/NPR (NRB selling, 2026-11-25) | 148.96 |
 | INR/NPR | 1.6015 |
 
@@ -16,12 +16,16 @@ Sources: gold-api.com (spot); Nepal Rastra Bank (official).
 
 ## Gold
 
+FENEGOSIDA last published on **2026-11-26**, 1 day ago. The indicated figure carries today's world price and rupee through the measured markup of +21.74%.
+
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated now** | **NPR 2,42,800** | NPR 2,08,165 |
+| **Indicated now** | **NPR 2,42,691** | NPR 2,08,072 |
 | Last published (2026-11-26) | NPR 2,42,800 | NPR 2,08,160 |
 | World parity, same day | NPR 1,99,437 | — |
-| At the median markup instead | NPR 2,41,451 | — |
+| At the median markup instead | NPR 2,41,343 | — |
+
+**Expect the next print around -0.0%** against the last one (NPR -109 per tola), if the markup holds.
 
 | Markup | |
 |---|---|
@@ -35,11 +39,11 @@ Sources: gold-api.com (spot); Nepal Rastra Bank (official).
 
 | Step | Adds | Running total / tola |
 |---|---:|---:|
-| International value of 1 tola | — | NPR 1,99,437 |
-| Freight, insurance, bank commission | NPR 1,994 | NPR 2,01,431 |
-| Customs duty | NPR 9,331 | NPR 2,10,762 |
-| VAT @ 13% | NPR 27,399 | NPR 2,38,161 |
-| Dealer margin | NPR 7,145 | NPR 2,45,306 |
+| International value of 1 tola | — | NPR 1,99,348 |
+| Freight, insurance, bank commission | NPR 1,993 | NPR 2,01,341 |
+| Customs duty | NPR 9,331 | NPR 2,10,672 |
+| VAT @ 13% | NPR 27,387 | NPR 2,38,059 |
+| Dealer margin | NPR 7,142 | NPR 2,45,201 |
 
 Ladder total +23.00% against a markup measured at +21.74%.
 </details>
@@ -56,12 +60,16 @@ Over 1 month the Nepali gold rate moved -14.0%: -12.4% from the world price, -2.
 
 ## Silver
 
+FENEGOSIDA last published on **2026-11-26**, 1 day ago. The indicated figure carries today's world price and rupee through the measured markup of +33.24%.
+
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated now** | **NPR 3,075** | NPR 2,636 |
+| **Indicated now** | **NPR 3,072** | NPR 2,634 |
 | Last published (2026-11-26) | NPR 3,075 | NPR 2,636.5 |
 | World parity, same day | NPR 2,308 | — |
-| At the median markup instead | NPR 2,948 | — |
+| At the median markup instead | NPR 2,945 | — |
+
+**Expect the next print around -0.1%** against the last one (NPR -3 per tola), if the markup holds.
 
 | Markup | |
 |---|---|
@@ -75,13 +83,13 @@ Over 1 month the Nepali gold rate moved -14.0%: -12.4% from the world price, -2.
 
 | Step | Adds | Running total / tola |
 |---|---:|---:|
-| International value of 1 tola | — | NPR 2,308 |
-| Freight, insurance, bank commission | NPR 23 | NPR 2,331 |
-| Customs duty | NPR 315 | NPR 2,646 |
-| VAT @ 13% | NPR 344 | NPR 2,990 |
-| Dealer margin | NPR 90 | NPR 3,080 |
+| International value of 1 tola | — | NPR 2,306 |
+| Freight, insurance, bank commission | NPR 23 | NPR 2,329 |
+| Customs duty | NPR 315 | NPR 2,644 |
+| VAT @ 13% | NPR 344 | NPR 2,987 |
+| Dealer margin | NPR 90 | NPR 3,077 |
 
-Ladder total +33.44% against a markup measured at +33.24%.
+Ladder total +33.45% against a markup measured at +33.24%.
 
 **This ladder is calibrated, not independent.** Silver's duty was back-solved from observed prices rather than read from the Finance Act, so it describes the markup instead of confirming it.
 </details>
@@ -100,15 +108,15 @@ Over 1 month the Nepali silver rate moved -22.5%: -23.9% from the world price, -
 
 | | Now | Median | |
 |---|---:|---:|---|
-| World ratio | **86.42** | 66.7 | 98.8th percentile of 256 days |
+| World ratio | **86.46** | 66.7 | 99.2th percentile of 256 days |
 | Nepal ratio | **78.96** | 63.22 | published rates |
 
-Nepal's ratio sits **9.4% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys 78.96 tola of silver in Kathmandu against 86.42 internationally.
+Nepal's ratio sits **9.5% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys 78.96 tola of silver in Kathmandu against 86.46 internationally.
 
 The ratio is the standard bullion yardstick, and locally it carries extra information: the two metals do not attract the same markup, so the Nepali ratio drifts from the world one whenever one metal becomes relatively costlier to import than the other.
 
 ---
 
-Generated 2026-11-26T17:20:47.987Z · flags: silver-premium-high
+Generated 2026-11-26T18:38:37.031Z · flags: silver-premium-high, nepal-market-closed
 
 Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.

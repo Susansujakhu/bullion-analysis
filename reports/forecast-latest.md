@@ -9,12 +9,12 @@
 | Now | NPR 2,42,800 | NPR 3,075 |
 | **Central, 5 sessions** | **NPR 2,42,265** | **NPR 2,971** |
 | Change | -0.22% | -3.38% |
-| 68% band | NPR 2,34,750 – NPR 2,53,549 | NPR 2,744 – NPR 3,175 |
+| 68% band | NPR 2,34,761 – NPR 2,53,532 | NPR 2,744 – NPR 3,175 |
 | Markup now | +21.7% | +33.2% |
 | Reversion half-life | 4.5 sessions | 1.9 sessions |
 | Stickiness (corr) | -0.515 | -0.657 |
-| World daily vol | 1.891% | 3.228% |
-| Combined 5-session sd | ±3.69% | ±5.47% |
+| World daily vol | 1.888% | 3.224% |
+| Combined 5-session sd | ±3.68% | ±5.47% |
 
 Silver's markup reverts roughly 2.4× faster than gold's, and silver is the more volatile metal by a wide margin. The two are not one asset with different price tags.
 
@@ -24,18 +24,18 @@ Silver's markup reverts roughly 2.4× faster than gold's, and silver is the more
 |---|---:|---:|
 | Now (2026-11-26) | NPR 2,42,800 | — |
 | **Central, 5 sessions out** | **NPR 2,42,265** | -0.22% |
-| 68% band | NPR 2,34,750 — NPR 2,53,549 | |
-| 95% band | NPR 2,22,749 — NPR 2,66,665 | |
+| 68% band | NPR 2,34,761 — NPR 2,53,532 | |
+| 95% band | NPR 2,22,777 — NPR 2,66,628 | |
 
 The markup is +21.74% against a trailing median of +21.24%; history says about 54% of that gap decays within 5 sessions (AR(1) φ=0.8573, half-life 4.5 sessions, R²=0.66). That decay is why the central case is not simply today's price.
 
 | Band composition | |
 |---|---|
-| World price, 5-session sd | ±4.23% |
+| World price, 5-session sd | ±4.22% |
 | Markup reversion | -0.27pp |
 | Spot/markup correlation | -0.515 |
-| **Combined sd** | **±3.69%** |
-| Same, legs assumed independent | ±5.11% |
+| **Combined sd** | **±3.68%** |
+| Same, legs assumed independent | ±5.1% |
 
 Local prices are sticky: the markup absorbs about 0.62pp of every 1% world move in the opposite direction, narrowing the band by 27.8% and leaving the Nepali rate 12.8% less volatile than the world price itself.
 
@@ -57,10 +57,10 @@ The band uses empirical quantiles of this model's own past errors rather than a 
 
 | | |
 |---|---|
-| Last (2026-11-26) | $3,598 |
+| Last (2026-11-26) | $3,595 |
 | Trend | downtrend |
 | 20 / 50 / 200-day average | $3,850 / $4,048 / $4,415 |
-| Distance from 50 / 200-day | -11.1% / -18.5% |
+| Distance from 50 / 200-day | -11.2% / -18.6% |
 | RSI(14) | 34 (neutral) |
 | Realised vol, 30d / 90d | 1.89% / 1.55% |
 | Resistance above | $4,115, $4,152, $4,168 |
@@ -100,11 +100,11 @@ The markup is +33.24% against a trailing median of +27.76%; history says about 8
 
 | Band composition | |
 |---|---|
-| World price, 5-session sd | ±7.22% |
+| World price, 5-session sd | ±7.21% |
 | Markup reversion | -4.58pp |
 | Spot/markup correlation | -0.657 |
 | **Combined sd** | **±5.47%** |
-| Same, legs assumed independent | ±8.33% |
+| Same, legs assumed independent | ±8.32% |
 
 Local prices are sticky: the markup absorbs about 0.90pp of every 1% world move in the opposite direction, narrowing the band by 34.3% and leaving the Nepali rate 24.2% less volatile than the world price itself.
 
@@ -126,12 +126,12 @@ The band uses empirical quantiles of this model's own past errors rather than a 
 
 | | |
 |---|---|
-| Last (2026-11-26) | $41.79 |
+| Last (2026-11-26) | $41.76 |
 | Trend | downtrend |
 | 20 / 50 / 200-day average | $47.51 / $54.57 / $66.72 |
-| Distance from 50 / 200-day | -23.4% / -37.4% |
+| Distance from 50 / 200-day | -23.5% / -37.4% |
 | RSI(14) | 32 (neutral) |
-| Realised vol, 30d / 90d | 3.23% / 2.65% |
+| Realised vol, 30d / 90d | 3.22% / 2.65% |
 | Resistance above | $52.56, $60.02, $61.17 |
 | Support below | **none** — at or below every swing low in the lookback |
 
@@ -165,6 +165,6 @@ Deviation from each observation's own trailing median, in percentage points.
 
 ---
 
-Generated 2026-11-26T17:20:48.409Z · horizon 5 sessions
+Generated 2026-11-26T18:38:37.425Z · horizon 5 sessions
 
 **Information only. Not investment advice.** This is a statistical description of published prices, not a recommendation to buy or sell anything. Dealer buy/sell spreads alone exceed most of the moves projected here, and bullion in Nepal is a hold-for-years asset rather than a weekly trade.
