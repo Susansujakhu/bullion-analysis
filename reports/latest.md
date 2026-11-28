@@ -6,10 +6,10 @@
 
 | | |
 |---|---|
-| Gold | **$3,642.65 / troy oz** |
-| Silver | **$43.335 / troy oz** |
-| Gold:silver ratio | 84.06 |
-| USD/NPR (NRB selling, 2026-11-26) | 147.88 |
+| Gold | **$3,650 / troy oz** |
+| Silver | **$43.23 / troy oz** |
+| Gold:silver ratio | 84.43 |
+| USD/NPR (NRB selling, 2026-11-27) | 148.22 |
 | INR/NPR | 1.6015 |
 
 Sources: gold-api.com (spot); Nepal Rastra Bank (official).
@@ -20,12 +20,12 @@ FENEGOSIDA last published on **2026-11-27**, 1 day ago. The indicated figure car
 
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated now** | **NPR 2,46,876** | NPR 2,11,660 |
+| **Indicated now** | **NPR 2,47,943** | NPR 2,12,575 |
 | Last published (2026-11-27) | NPR 2,46,100 | NPR 2,10,990 |
 | World parity, same day | NPR 2,01,368 | — |
-| At the median markup instead | NPR 2,44,563 | — |
+| At the median markup instead | NPR 2,45,620 | — |
 
-**Expect the next print around +0.3%** against the last one (NPR 776 per tola), if the markup holds.
+**Expect the next print around +0.8%** against the last one (NPR 1,843 per tola), if the markup holds.
 
 | Markup | |
 |---|---|
@@ -39,13 +39,13 @@ FENEGOSIDA last published on **2026-11-27**, 1 day ago. The indicated figure car
 
 | Step | Adds | Running total / tola |
 |---|---:|---:|
-| International value of 1 tola | — | NPR 2,02,003 |
-| Freight, insurance, bank commission | NPR 2,020 | NPR 2,04,023 |
-| Customs duty | NPR 9,331 | NPR 2,13,354 |
-| VAT @ 13% | NPR 27,736 | NPR 2,41,090 |
-| Dealer margin | NPR 7,233 | NPR 2,48,323 |
+| International value of 1 tola | — | NPR 2,02,876 |
+| Freight, insurance, bank commission | NPR 2,029 | NPR 2,04,905 |
+| Customs duty | NPR 9,331 | NPR 2,14,236 |
+| VAT @ 13% | NPR 27,851 | NPR 2,42,087 |
+| Dealer margin | NPR 7,263 | NPR 2,49,349 |
 
-Ladder total +22.93% against a markup measured at +22.21%.
+Ladder total +22.91% against a markup measured at +22.21%.
 </details>
 
 | Window | World price | USD/NPR | Nepali rate | Markup |
@@ -64,12 +64,12 @@ FENEGOSIDA last published on **2026-11-27**, 1 day ago. The indicated figure car
 
 | | Per tola | Per 10 g |
 |---|---:|---:|
-| **Indicated now** | **NPR 3,199** | NPR 2,742 |
+| **Indicated now** | **NPR 3,198** | NPR 2,742 |
 | Last published (2026-11-27) | NPR 3,195 | NPR 2,739.5 |
 | World parity, same day | NPR 2,400 | — |
 | At the median markup instead | NPR 3,070 | — |
 
-**Expect the next print around +0.1%** against the last one (NPR 4 per tola), if the markup holds.
+**Expect the next print around +0.1%** against the last one (NPR 3 per tola), if the markup holds.
 
 | Markup | |
 |---|---|
@@ -86,8 +86,8 @@ FENEGOSIDA last published on **2026-11-27**, 1 day ago. The indicated figure car
 | International value of 1 tola | — | NPR 2,403 |
 | Freight, insurance, bank commission | NPR 24 | NPR 2,427 |
 | Customs duty | NPR 315 | NPR 2,742 |
-| VAT @ 13% | NPR 356 | NPR 3,099 |
-| Dealer margin | NPR 93 | NPR 3,192 |
+| VAT @ 13% | NPR 356 | NPR 3,098 |
+| Dealer margin | NPR 93 | NPR 3,191 |
 
 Ladder total +32.81% against a markup measured at +33.10%.
 
@@ -108,15 +108,15 @@ Over 1 month the Nepali silver rate moved -19.7%: -19.0% from the world price, -
 
 | | Now | Median | |
 |---|---:|---:|---|
-| World ratio | **84.06** | 66.8 | 97.7th percentile of 257 days |
+| World ratio | **84.43** | 66.8 | 98.1th percentile of 257 days |
 | Nepal ratio | **77.03** | 63.23 | published rates |
 
-Nepal's ratio sits **9.1% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys 77.03 tola of silver in Kathmandu against 84.06 internationally.
+Nepal's ratio sits **9.6% below** the world ratio, which means silver carries the heavier local markup of the two — it is relatively dearer here than gold is. One tola of gold buys 77.03 tola of silver in Kathmandu against 84.43 internationally.
 
 The ratio is the standard bullion yardstick, and locally it carries extra information: the two metals do not attract the same markup, so the Nepali ratio drifts from the world one whenever one metal becomes relatively costlier to import than the other.
 
 ---
 
-Generated 2026-11-27T18:28:15.733Z · flags: silver-premium-high, silver-big-daily-move, nepal-market-closed
+Generated 2026-11-28T13:44:16.625Z · flags: silver-premium-high, silver-big-daily-move, nepal-market-closed
 
 Information only, not investment advice. Dealer buy/sell spreads are not reflected in any figure here.
